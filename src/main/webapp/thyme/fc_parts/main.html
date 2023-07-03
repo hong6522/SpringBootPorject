@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body th:fragment="main-body">
+<br />
+나는 바디
+	<th:block layout:fragment="content"></th:block>
+	<br/>
+	<hr />
+	<th:block layout:fragment="add-content"></th:block>
+
+</html>
