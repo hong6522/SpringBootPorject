@@ -3,18 +3,144 @@
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="fc_total/template">
 <th:block layout:fragment="title">
+<style>
+		.login_wrapper{
+			width:1200px;
+			margin:auto;
+		}
+		.login_main{
+			width:500px;
+			height:400px;
+			margin:auto;
+			margin-top:80px;
+		}
+		
+		.login_main_title{
+			width:150px;
+			height:50px;
+			margin-left:210px;
+			margin-top:30px;
+			float: left;
+			font-size:2rem;
+			font-weight: bold;
+		}
+		#login_id{
+			border:1px solid #ccc;
+			width:500px;
+			height:40px;
+			margin-top:50px;
+			font-size:1.3rem;
+		}
+		#login_pw{
+			border:1px solid #ccc;
+			margin-top:40px;
+			width:500px;
+			height:40px;
+			font-size:1.3rem;
+		}
+		#login_button{
+			width:501px;
+			height:50px;
+			background:#ccc;
+			border:0px;
+			margin-top:20px;
+		}
+		.login_user_set_wrapper{
+			width:300px;
+			height:30px;
+			margin-left:460px;
+			margin-top:10px;
+		}
+		.login_user_set{
+			width:80px;
+			height:30px;
+			font-size:0.8rem;
+			float:left;
+			margin-left:20px;
+			color:#888;
+		}
+		#naver_id_login{
+			margin:0 50px 0 40px;
+		}
+		.logingroup{
+			display:flex;
+			height:50px;
+			margin-top:30px;
+			
+		}
+	</style>
 <head th:replace="fc_parts/top"></head>
 	<title>로그인페이지</title>
 
 </th:block>
 
 <th:block layout:fragment="content">
-	<h2>메인 로그인페이지</h2>
+	
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+   <div class="login_wrapper">
+   		<div class="login_main">
+   			<div class="login_main_title">LOGIN</div>
+
+   				<input type="text" id="login_id" placeholder="아이디"/>
+   				<input type="text" id="login_pw" placeholder="비밀번호"/>
+				<input type="button" value="로그인" id="login_button" />
+   			
+   			<div class="logingroup">
+	   			  <div id="naver_id_login"></div>
+			      <div id="kakao_login"><img src="../../../../img/kakao_login.png" alt="" onclick="kakaoLogin();"/></div>
+		       </div>
+   		</div>
+   				
+		     <!--   <a href="javascript:void(0)">
+		          <div onclick="kakaoLogout();">카카오 로그아웃</div>
+		      </a>-->
+
+   		<div class="login_user_set_wrapper">
+   			<a href=""><div class="login_user_set" th:text="아이디찾기"></div></a>
+   			<a href=""><div class="login_user_set" th:text="비밀번호찾기"></div></a>
+   			<a href=""><div class="login_user_set" th:text="회원가입"></div></a>
+   		</div>
+   </div>
+    
+
+    <script type="text/javascript">
+        var naver_id_login = new naver_id_login("kp49e667EXXMJhByMOAz", "http://localhost:80/mainPage");
+        var state = naver_id_login.getUniqState();
+        naver_id_login.setButton("green", 3,42);
+        naver_id_login.setDomain("http://localhost:80");
+        naver_id_login.setState(state);
+        naver_id_login.init_naver_id_login();
+    </script>
+
+	<script>
+	Kakao.init('bb3538084a6c4aa13e17687010ba8df0'); //발급받은 키 중 javascript키를 사용해준다.
+	console.log(Kakao.isInitialized()); // sdk초기화여부판단
+	//카카오로그인
+	function kakaoLogin() {
+	    Kakao.Auth.login({
+	      success: function (response) {
+	        Kakao.API.request({
+	          url: '/v2/user/me',
+	          success: function (response) {
+	        	  console.log(response)
+	          },
+	          fail: function (error) {
+	            console.log(error)
+	          },
+	        })
+	      },
+	      fail: function (error) {
+	        console.log(error)
+	      },
+	    })
+	  }
+	</script>
+
 </th:block>
 
-<th:block layout:fragment="add-content">
-	<h3>로그인내용</h3>
-</th:block>
 <th:block layout:frgment="main-foot">
 <body th:replace="fc_parts/footer::main-foot"></body>
 </th:block>
