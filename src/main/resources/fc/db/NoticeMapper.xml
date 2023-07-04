@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.NoticeMapper">
+    
+
+
+      
+<!--notice 리스트 -->  
+  <select id="nlist" parameterType="noticeDTO" resultType="noticeDTO">
+    SELECT * FROM notice
+    <where>
+        <if test="sch != null and sch != ''">
+            <trim prefix="AND" prefixOverrides="AND">
+                <if test="kind == 'title'">
+                    title LIKE CONCAT('%', #{sch}, '%')
+                </if>
+                <if test="kind == 'id'">
+                    id LIKE CONCAT('%', #{sch}, '%')
+                </if>
+            </trim>
+        </if>
+    </where>
+    ORDER BY reg_date DESC
+    <if test="sch == null or sch == ''">
+        <if test="start != null and limit != null">
+            LIMIT #{start}, #{limit}
+        </if>
+    </if>
+</select>
+
+    
+  
+ <!--총 페이지 갯수 -->    
+    <select id="ntotalcount" resultType="int">
+        SELECT COUNT(*) FROM notice
+        <where>
+            <if test="sch != null">
+                id LIKE CONCAT('%', #{sch}, '%')
+            </if>
+        </where>
+    </select>
+    
+	
+ <!--공지사항 디테일 --> 	
+	<select id="ndetail"  resultType="noticeDTO">
+	select * from notice where no = #{no}
+	</select>
+	
+<!--공지사항 조회수 --> 	
+	<update id="ncnt" parameterType="noticeDTO">
+		update notice set notice_cnt = notice_cnt+1 where  no = #{no}
+		
+	</update>
+	
+
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.ReviewMapper">
+    
+<!--review리스트 -->
+  <select id="rlist" parameterType="reviewDTO" resultType="reviewDTO">
+    SELECT * FROM fassion_review
+    <where>
+        <if test="sch != null and sch != ''">
+            <trim prefix="AND" prefixOverrides="AND">
+                <if test="kind == 'title'">
+                    title LIKE CONCAT('%', #{sch}, '%')
+                </if>
+                <if test="kind == 'id'">
+                    id LIKE CONCAT('%', #{sch}, '%')
+                </if>
+            </trim>
+        </if>
+    </where>
+    ORDER BY reg_date desc
+    <if test="sch == null or sch == ''">
+        <if test="start != null and limit != null">
+            LIMIT #{start}, #{limit}
+        </if>
+    </if>
+</select>
+ 
+<!--총페이지 갯수 -->  
+    <select id="rtotalcount" resultType="int">
+        SELECT COUNT(*) FROM fassion_review
+        <where>
+            <if test="sch != null">
+                id LIKE CONCAT('%', #{sch}, '%') OR title LIKE CONCAT('%', #{sch}, '%')
+            </if>
+        </where>
+    </select>
+    
+    
+    
+ <!--review 디테일 -->   
+    <select id="rdetail"  resultType="reviewDTO">
+	select * from fassion_review where no = #{no}
+	</select>
+
+
+    
+    
+<!--review 조회수 -->  
+    <update id="rcnt" parameterType="reviewDTO">
+		update fassion_review set review_cnt = review_cnt+1 where  no = #{no}
+		
+	</update>
+	
+<!--review 게시글 작성 --> 	
+	<insert id="rinsert" parameterType="reviewDTO" >
+	<selectKey keyProperty="no" resultType="Integer" order="BEFORE">
+			select max(no)+1 from fassion_review
+		</selectKey>
+	
+		insert into fassion_review (no, title, type, content ,id, reg_date ,secret_chk, pw, qna_cnt)
+		values
+		               ( #{no}, #{title}, #{type}, #{content}, #{id}, sysdate(), #{secret_chk} , #{pw}, -1 )
+	</insert>
+	
+	
+<!--review 게시글 삭제 --> 	
+	<delete id="qdelete"  parameterType="reviewDTO">
+		delete from fassion_review where no = #{no} and  id = #{id} 
+	</delete>
+	
+<!--review 게시글 수정 --> 
+	<update id="qmodify" parameterType="reviewDTO" >
+		update fassion_review set title = #{title}, content =  #{content}, type = #{type} 
+		where no = #{no} and id = #{id} 
+	</update>
+	
+
+
+		         
+	
+    
+    
+</mapper>

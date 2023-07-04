@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.QnaMapper">
+    
+<!--qna리스트 -->
+  <select id="qlist" parameterType="qnaDTO" resultType="qnaDTO">
+    SELECT * FROM qna
+    <where>
+        <if test="sch != null and sch != ''">
+            <trim prefix="AND" prefixOverrides="AND">
+                <if test="kind == 'title'">
+                    title LIKE CONCAT('%', #{sch}, '%')
+                </if>
+                <if test="kind == 'id'">
+                    id LIKE CONCAT('%', #{sch}, '%')
+                </if>
+            </trim>
+        </if>
+    </where>
+    ORDER BY reg_date desc
+    <if test="sch == null or sch == ''">
+        <if test="start != null and limit != null">
+            LIMIT #{start}, #{limit}
+        </if>
+    </if>
+</select>
+ 
+<!--총페이지 갯수 -->  
+    <select id="qtotalcount" resultType="int">
+        SELECT COUNT(*) FROM qna
+        <where>
+            <if test="sch != null">
+                id LIKE CONCAT('%', #{sch}, '%') OR title LIKE CONCAT('%', #{sch}, '%')
+            </if>
+        </where>
+    </select>
+    
+    
+    
+ <!--qna 디테일 -->   
+    <select id="qdetail"  resultType="qnaDTO">
+	select * from qna where no = #{no}
+	</select>
+
+
+    
+    
+<!--qna 조회수 -->  
+    <update id="qcnt" parameterType="qnaDTO">
+		update qna set qna_cnt = qna_cnt+1 where  no = #{no}
+		
+	</update>
+	
+<!--qna 게시글 작성 --> 	
+	<insert id="qinsert" parameterType="qnaDTO" >
+	<selectKey keyProperty="no" resultType="Integer" order="BEFORE">
+			select max(no)+1 from qna
+		</selectKey>
+	
+		insert into qna (no, title, type, content ,id, reg_date ,secret_chk, pw, qna_cnt)
+		values
+		               ( #{no}, #{title}, #{type}, #{content}, #{id}, sysdate(), #{secret_chk} , #{pw}, -1 )
+	</insert>
+	
+	
+<!--qna 게시글 삭제  	
+	<delete id="qdelete"  parameterType="qnaDTO">
+		delete from qna where no = #{no} and  id = #{id} 	
+	</delete>
+ -->
+	<delete id="qdelete"  parameterType="qnaDTO">
+		delete from qna where no = #{no}  
+	</delete>
+	
+	<!--
+	<delete id="qdelete"  parameterType="qnaDTO">
+		delete from qna where no = #{no} and  id = #{id} 
+	</delete>
+	-->
+<!--qna 게시글 수정 --> 
+	<update id="qmodify" parameterType="qnaDTO" >
+		update qna set title = #{title}, content =  #{content}, type = #{type} 
+		where no = #{no} and id = #{id} 
+	</update>
+	
+
+
+<!--비밀글 비밀번호 체크 -->  
+    <select id="pwchk" resultType="int" parameterType="qnaDTO">
+        SELECT COUNT(*) FROM qna where no = #{no} and pw = #{pw}      
+    </select>
+		         
+	<!-- myqna  -->   
+    <select id="myqnalist"  resultType="qnaDTO" parameterType="qnaDTO">
+	select * from qna where id = #{id}  ORDER BY reg_date desc
+	</select>
+    
+    
+</mapper>
