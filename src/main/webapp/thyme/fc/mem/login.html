@@ -75,7 +75,7 @@ layout:decorate="fc_total/template">
 </th:block>
 
 <th:block layout:fragment="content">
-	
+	 
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -83,21 +83,19 @@ layout:decorate="fc_total/template">
    <div class="login_wrapper">
    		<div class="login_main">
    			<div class="login_main_title">LOGIN</div>
-
-   				<input type="text" id="login_id" placeholder="아이디"/>
-   				<input type="text" id="login_pw" placeholder="비밀번호"/>
+   				<input type="text" id="login_id" placeholder="아이디" name="id"/>
+   				<input type="text" id="login_pw" placeholder="비밀번호" name="pw"/>
 				<input type="button" value="로그인" id="login_button" />
-   			
    			<div class="logingroup">
 	   			  <div id="naver_id_login"></div>
 			      <div id="kakao_login"><img src="../../../../img/kakao_login.png" alt="" onclick="kakaoLogin();"/></div>
 		       </div>
-   		</div>
+  		</div>
    				
 		     <!--   <a href="javascript:void(0)">
 		          <div onclick="kakaoLogout();">카카오 로그아웃</div>
 		      </a>-->
-
+ 
    		<div class="login_user_set_wrapper">
    			<a href=""><div class="login_user_set" th:text="아이디찾기"></div></a>
    			<a href=""><div class="login_user_set" th:text="비밀번호찾기"></div></a>
@@ -114,7 +112,7 @@ layout:decorate="fc_total/template">
         naver_id_login.setState(state);
         naver_id_login.init_naver_id_login();
     </script>
-
+   
 	<script>
 	Kakao.init('bb3538084a6c4aa13e17687010ba8df0'); //발급받은 키 중 javascript키를 사용해준다.
 	console.log(Kakao.isInitialized()); // sdk초기화여부판단
@@ -126,6 +124,7 @@ layout:decorate="fc_total/template">
 	          url: '/v2/user/me',
 	          success: function (response) {
 	        	  console.log(response)
+	        	  loginSession()
 	          },
 	          fail: function (error) {
 	            console.log(error)
@@ -137,11 +136,27 @@ layout:decorate="fc_total/template">
 	      },
 	    })
 	  }
+	
+	function loginSession(){
+		//alert("실행?")
+	$.ajax({
+			url:"/ajax/loginSession",	 // 내용을 보내고 가져올 페이지
+			type:"POST",
+			data:{type:"kakao"},
+			
+			success:function(ddd){	// 성공시
+				//alert("세션에 넣었다")
+			},
+			error:function(ee){		// 실패시
+				console.log(ee)
+			}
+		}) 
+	}
 	</script>
 
 </th:block>
 
-<th:block layout:frgment="main-foot">
+<th:block layout:fragment="main-foot">
 <body th:replace="fc_parts/footer::main-foot"></body>
 </th:block>
 </html>
