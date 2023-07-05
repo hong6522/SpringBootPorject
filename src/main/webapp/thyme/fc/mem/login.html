@@ -79,13 +79,14 @@ layout:decorate="fc_total/template">
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-
+<form method="post">
    <div class="login_wrapper">
    		<div class="login_main">
    			<div class="login_main_title">LOGIN</div>
    				<input type="text" id="login_id" placeholder="아이디" name="id"/>
    				<input type="text" id="login_pw" placeholder="비밀번호" name="pw"/>
-				<input type="button" value="로그인" id="login_button" />
+				<input type="submit" value="로그인" id="login_button" />
+</form>
    			<div class="logingroup">
 	   			  <div id="naver_id_login"></div>
 			      <div id="kakao_login"><img src="../../../../img/kakao_login.png" alt="" onclick="kakaoLogin();"/></div>

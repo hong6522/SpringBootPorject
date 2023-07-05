@@ -10,4 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MemberMapper {
 	List<MemberDTO> mem(MemberDTO advcx);
+	
+	MemberDTO login(MemberDTO dto);
 }

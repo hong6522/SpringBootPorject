@@ -19,5 +19,13 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</where>
 </select>
 
+<select id="login" resultType="mDTO" parameterType="mDTO">
+	SELECT * FROM member
+	<where>
+		id = #{id} and pw = #{pw}
+	</where>
+</select>
+
+
 	
 </mapper>

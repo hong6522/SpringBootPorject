@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top"></head>
+	<title>회원가입</title>
+</th:block>
+
+<th:block layout:fragment="content">
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	.join_wrapper{
+		width:1200px;
+		margin:auto;
+	}
+</style>
+<div class="join_wrapper">내용</div>
+</th:block>
+
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</body>
+</html>
