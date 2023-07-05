@@ -10,7 +10,9 @@ import lombok.Data;
 @Data
 public class MemberDTO {
 	Integer age;
-	String name,tell,email,id,pw,rank,gender,memo,address1,address2,address3,address4,address5,kind,pid,pname,sch;
-	Date joindate,birth;
+	String name,tell,birth,email,id,pw,rank,gender,memo,address1,address2,address3,address4,address5,kind,pid,pname,sch;
+	Date joindate;
+	
+	
 	
 }

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="fc_total/template">
+
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top">
+
+</head>
+<title>디테일</title>
+
+</th:block>
+
+
+ 
+ 
+<th:block layout:fragment="content">
+<style>
+
+table{
+	border-top: 2px solid #000;
+	border-bottom: 2px solid #000;
+}
+td>a{
+	border-radius: 5px;
+	width: 80px;
+	text-align: center;
+	color: #000;
+	border: 1px solid #fff;
+	padding: 5px;
+	background: #fff;
+	text-decoration:none;
+}
+.center_notice>td{
+	border-bottom: 1px solid #000;
+	padding: 3px;
+	background: #fff;
+	color: #000;
+}
+.center_notice>td:first-of-type{
+	padding-left: 50px;
+	width:600px;
+}
+.center_content{
+	padding: 10px 50px 10px 50px;
+	border: 1px solid #000;
+	border-radius: 5px;
+	margin: 5px;
+	background-color: white;
+	color:black;
+}
+tr:last-of-type>td{
+	padding: 10px;
+	border-top: 2px solid #000;
+}
+td>a:hover{
+	background: #fff;
+    color: #fff;
+	border: 1px solid #000;
+}
+img{
+	margin: 5px 0 10px 0;
+}
+h2{
+	margin: 30px 0 30px 0;
+	font-weight: bold;
+}
+</style>
+
+<h1>QNA</h1>
+<table width="90%">
+ <tr class="center_notice">
+ 	<td>제목</td><td th:text="${mainData.title}" ></td>
+ </tr>
+ <tr class="center_notice">
+ 	<td>작성자</td><td th:text="${mainData.id}"></td>
+ </tr>
+ <tr class="center_notice">
+ 	<td>작성일</td><td th:text="${mainData.reg_dateStr}"></td>
+ </tr>
+ <tr class="center_notice">
+ 	<td>조회수</td><td th:text="${mainData.qna_cnt}"></td>
+ </tr>
+ <tr>
+ 	<td colspan="2">
+ 		<div class="center_content" th:text="${mainData.contentBr}"></div>
+ 	</td>
+ </tr>
+ 
+ <span th:if ="${mainData.getAnswer} != null" >
+ <tr>
+ 	<td>관리자 답변</td><td th:text="${mainData.getAnswer}" ></td>
+ </tr>
+<tr>
+ 	<td>관리자 답변일시</td><td th:text="${mainData.answer_Date}"></td>
+ 
+ </tr>
+ 
+ <tr>
+ <td>관리자 아이디</td>	<td th:text="${mainData.admin_Id}"></td>
+ </tr>
+ </span>
+ 
+ <tr>
+
+       
+		<td colspan="2" align="right">
+			
+			<span th:if="${id == mainData.id}">
+          	<a th:href="|/center/qnaModify/${mainData.no}|" th:text="수정"/>
+          	<a th:href="|/center/qnaDelete/${mainData.no}|" th:text="삭제"/>
+      		 </span>
+           
+			 <a th:href="@{|/myPage/myqna|}" th:text="목록으로"></a>
+			
+
+		</td>
+	</tr>
+	
+	
+</table>
+		
+
+</th:block>
+
+
+
+
+
+
+
+
+<th:block layout:fragment="add-content">
+	<h3>내용</h3>
+</th:block>
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>

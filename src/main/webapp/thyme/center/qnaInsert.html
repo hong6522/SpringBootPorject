@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="fc_total/template">
+
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top">
+
+</head>
+<title>d</title>
+
+</th:block>
+
+
+ 
+ 
+<th:block layout:fragment="content">
+<body>
+<h1>insert</h1>
+<form method="post" th:object="${qnaDTO}">
+	<table border="" width="60%">
+		<tr>
+			<td>제목</td>
+			<td><input type="text" th:field="*{title}"/></td>
+		</tr>
+		<tr>
+			<td>종류</td>
+			<td>
+		     <select name="type">
+		     <option value="환불/교환">환불/교환</option>
+		     <option value="주문/결제">주문/결제</option>
+		     <option value="회원정보">회원정보</option>
+		     <option value="배송">배송</option>
+		     <option value="상품확인">상품확인</option>     
+		     </select>
+			
+			
+			</td>
+		</tr>
+		<tr>
+			<td>질문</td>
+			<td><input type="text" th:field="*{content}"/></td>
+		</tr>
+		<tr>
+			<td>작성자</td>
+			<td><input type="text" name="id" th:value=${id}  readonly/></td>
+		</tr>
+		<tr>
+			<td>답변 비밀글 여부</td>
+			<td><input type="radio" name="secret_chk" th:checked="*{secret_chk}" th:value="1"  />설정
+			<input type="radio" name="secret_chk" th:checked="*{!secret_chk}" th:value="0"  />미설정</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2"><input type="text" name="pw" placeholder="비밀글 비밀번호를 입력하세요" />
+		</tr>
+	
+		<tr> <td><a th:href="@{|/center/qna?nowPage=${pd.nowPage}|}" th:text="목록으로"></a> </td> </tr>
+	
+		<tr>
+			<td colspan="2" align="center"> 
+				<input type="submit" value="작성" />
+			</td>
+		</tr>
+	</table>
+</form>
+
+
+</th:block>
+
+
+
+
+
+
+
+
+<th:block layout:fragment="add-content">
+	<h3>내용</h3>
+</th:block>
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>

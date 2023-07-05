@@ -26,6 +26,11 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</where>
 </select>
 
+<insert id="join" parameterType="mDTO">
+	insert into member (id , pw , name , address1 , address2 , address3 ,address4 ,address5 ,tell ,birth ,email ,join_date)
+	values
+	(#{id} , #{pw} , #{name} , #{address1} , #{address2} , #{address3} ,#{address4} ,#{address5} ,#{tell} ,#{birth} ,#{email},sysdate())
+</insert>
 
 	
 </mapper>

@@ -1,6 +1,7 @@
 package fc.control;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ import jakarta.servlet.http.HttpSession;
 public class MemController {
 	
 	@Resource
-	MemberMapper mm;
+	MemberMapper mp;
 	
 	@RequestMapping("logOut")
 	String session_Out(HttpSession session) {
@@ -32,14 +33,16 @@ public class MemController {
 	}
 	
 	@PostMapping("login")
-	String login_complate(HttpSession session,MemberDTO dto) {
+	String login_complate(Model mm,HttpSession session,MemberDTO dto) {
 		System.out.println(dto);
-		MemberDTO mdto = mm.login(dto);
+		MemberDTO mdto = mp.login(dto);
 		System.out.println(mdto);
 		session.setAttribute("type", "nomal");
 		session.setAttribute("email", mdto.getEmail());
 		
-		return "mainPage";
+		mm.addAttribute("msg", mdto.getName()+" 님 환영합니다.");
+		mm.addAttribute("goUrl", "/mainPage");
+		return "alert";
 	}
 	
 	@GetMapping("join")
@@ -49,10 +52,16 @@ public class MemController {
 	}
 	
 	@PostMapping("join")
-	String mem_join_com(MemberDTO dto) {
+	String mem_join_com(Model mm,MemberDTO dto) {
 		System.out.println(dto);
 		
-		return "mainPage";
+		int cnt = mp.join(dto);
+		
+		System.out.println(cnt);
+		mm.addAttribute("msg", "회원가입 완료");
+		mm.addAttribute("goUrl", "/fc/mem/login");
+		return "alert";
+		
 	}
 	
 }

@@ -12,4 +12,6 @@ public interface MemberMapper {
 	List<MemberDTO> mem(MemberDTO advcx);
 	
 	MemberDTO login(MemberDTO dto);
+	
+	int join(MemberDTO dto);
 }

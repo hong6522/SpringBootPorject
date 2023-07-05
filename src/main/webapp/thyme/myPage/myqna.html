@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="fc_total/template">
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top"></head>
+	<title>마이페이지</title>
+
+</th:block>
+
+<th:block layout:fragment="content">
+	<h2>나의 qna</h2>
+		
+	<table border="" width="80%">	
+		
+	<tr>
+		<td>번호</td>
+		<td>종류</td>
+		<td>제목</td>
+		<td>작성자</td>
+		<td>작성일</td>
+		<td>답변</td>
+	</tr>
+	
+	<tr th:each="dto , dtoStat: ${mainData}">
+		<td th:text="${dtoStat.index+1}"></td>
+		<td th:text="${dto.type}"/>	<td>
+				 
+				 
+		<a th:href="@{|../myPage/myqnaDetail/${dto.no}|}" th:text="${dto.title}"
+		 th:if="${dto.secret_chk} == false" >
+		 </a> 
+			 
+		 <a th:href="@{|../center/secretForm/${dto.no}|}"  th:if="${dto.secret_chk} == true" > 비밀글입니다.
+		<img th:src="@{/img/unlock.png}" width="25px" height="20px"/>
+ 		</a>
+		
+		 </td>
+		
+		
+		<td th:text="${dto.id}"/>				
+		<td th:text="${dto.reg_dateStr}"/>
+
+		<td th:text="답변대기중" th:if="${dto.getAnswer} == null"/></td>
+		<td  th:text="답변완료" th:unless="${dto.getAnswer} == null"/></td>
+	</tr>
+	
+	<tr>
+			
+		<td colspan="7" align="center"><a th:href="@{../center/qnaInsert}" th:text="작성하기"></a></td>
+	
+	</tr>
+	
+	</table>
+	
+	
+	
+	
+	
+</th:block>
+
+<th:block layout:fragment="add-content">
+	
+</th:block>
+<th:block layout:frgment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>

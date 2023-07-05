@@ -20,8 +20,32 @@
 		width:1200px;
 		margin:auto;
 	}
+	.join_main{
+		width:600px;
+		height:500px;
+		background:#f0f;
+		margin:auto;
+	}
 </style>
-<div class="join_wrapper">내용</div>
+<div class="join_wrapper">
+<form method="post">
+	<div class="join_main">
+		id:<input type="text" name="id" /></br>
+		pw:<input type="text" name="pw" /></br>
+		이름:<input type="text" name="name" /></br>
+		기본주소지:<input type="text" name="address1" /></br>
+		추가주소지:<input type="text" name="address2" /></br>
+		추가주소지:<input type="text" name="address3" /></br>
+		추가주소지:<input type="text" name="address4" /></br>
+		추가주소지:<input type="text" name="address5" /></br>
+		전화번호:<input type="text" name="tell"/></br>
+		생일:<input type="date" name="birth"/></br>
+		* 생일을 입력하지 않을시 추가 이벤트 혜택을 받으실수 없습니다.</br>
+		이메일:<input type="text" name="email"/></br>
+		<input type="submit" value="가입하기"/>
+	</div>
+</form>
+</div>
 </th:block>
 
 <th:block layout:fragment="main-foot">
