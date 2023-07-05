@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<<<<<<< HEAD
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
 Kakao.init('bb3538084a6c4aa13e17687010ba8df0'); //발급받은 키 중 javascript키를 사용해준다.
@@ -23,9 +22,7 @@ function kakaoLogout() {
   }  
 
 </script>
-=======
 
->>>>>>> 426b61748f8a0929d24aeab30d74ac964755c22b
 <head>
 <meta charset="UTF-8">
 </head>
@@ -127,65 +124,65 @@ function kakaoLogout() {
 <div class="head1">
 		<div class="menu_mem_wrapper">
 			<span th:if="${session.type}==null">
-			<a th:href="|/fc/mem/login|">
+			<a th:href="|/fc_mem/login|">
        			<div class="menu_teg_go" th:text="로그인" ></div>
        		</a>
    				<div class="block"></div>
-			<a th:href="|/fc/mem/join|">
+			<a th:href="|/fc_mem/join|">
 				<div class="menu_teg_go" th:text="회원가입"></div>
 			</a>
    			
    			</span>
    			<span th:if="${session.type}==kakao">
-   			<a th:href="|/fc/mem/logOut|">
+   			<a th:href="|/fc_mem/logOut|">
        			<div class="menu_teg_go" th:text="로그아웃" onclick="kakaoLogout()"></div>
        		</a>
 	   			<div class="block"></div>
-			<a th:href="|/fc/mem/myPage|" >
+			<a th:href="|/fc_mem/myPage|" >
 					<div class="menu_teg_go" th:text="마이페이지"></div>
 			</a>
 					<div class="block"></div>
-			<a th:href="|/fc/mem/basket|" >
+			<a th:href="|/fc_mem/basket|" >
 					<div class="menu_teg_go" th:text="장바구니"></div>
 			</a>
 					<div class="block"></div>
-			<a th:href="|/fc/mem/History|">
+			<a th:href="|/fc_mem/History|">
 					<div class="menu_teg_go"  th:text="주문조회"></div>
 			</a>
    			</span>
    			
    			<span th:if="${session.type}==naver">
-   			<a th:href="|/fc/mem/logOut|">
+   			<a th:href="|/fc_mem/logOut|">
        			<div class="menu_teg_go" th:text="로그아웃" ></div>
        		</a>
 	   			<div class="block"></div>
-			<a th:href="|/fc/mem/myPage|" >
+			<a th:href="|/fc_mem/myPage|" >
 					<div class="menu_teg_go" th:text="마이페이지"></div>
 			</a>
 					<div class="block"></div>
-			<a th:href="|/fc/mem/basket|" >
+			<a th:href="|/fc_mem/basket|" >
 					<div class="menu_teg_go" th:text="장바구니"></div>
 			</a>
 					<div class="block"></div>
-			<a th:href="|/fc/mem/History|">
+			<a th:href="|/fc_mem/History|">
 					<div class="menu_teg_go"  th:text="주문조회"></div>
 			</a>
    			</span>
    			
    			<span th:if="${session.type}==nomal">
-   			<a th:href="|/fc/mem/logOut|">
+   			<a th:href="|/fc_mem/logOut|">
        			<div class="menu_teg_go" th:text="로그아웃" ></div>
        		</a>
 	   			<div class="block"></div>
-			<a th:href="|/fc/mem/myPage|" >
+			<a th:href="|/fc_mem/myPage|" >
 					<div class="menu_teg_go" th:text="마이페이지"></div>
 			</a>
 					<div class="block"></div>
-			<a th:href="|/fc/mem/basket|" >
+			<a th:href="|/fc_mem/basket|" >
 					<div class="menu_teg_go" th:text="장바구니"></div>
 			</a>
 					<div class="block"></div>
-			<a th:href="|/fc/mem/History|">
+			<a th:href="|/fc_mem/History|">
 					<div class="menu_teg_go"  th:text="주문조회"></div>
 			</a>
    			</span>

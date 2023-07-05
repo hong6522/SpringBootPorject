@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import fc.db.CenterPData;
+import fc.db.MemberDTO;
+import fc.db.MemberMapper;
 import fc.db.QnaDTO;
 import fc.db.QnaMapper;
 import fc.db.ReviewDTO;
@@ -24,29 +26,44 @@ QnaMapper qm;
 
 @Resource
 ReviewMapper rm;
-	
+
+@Resource
+MemberMapper mp;
+
 @RequestMapping("/myqna")
  String myqna(QnaDTO dto, Model mm, HttpSession session) {
 	//String id = (String)session.getAttribute("id");
-	String id = "qqq";
+	MemberDTO mDTO;
+	if(session.getAttribute("type")!=null) {
+		mDTO = new MemberDTO();
+		mDTO.setEmail((String)session.getAttribute("email"));
+		MemberDTO myPage = mp.myPage(mDTO);
+		mm.addAttribute("mainData", qm.myqnalist(myPage.getId()));
+		return "myPage/myqna";
+	}
+	else {
+		return "/fc/mem/login";
+	}
 	
-	//dto.setId(id);
-	//qm.myqnalist(dto);
-	mm.addAttribute("mainData", qm.myqnalist(id));
-	return "myPage/myqna";
 }
 
 @RequestMapping("/myqnaDetail/{no}")
-String qnaDetail(Model mm, QnaDTO dto , HttpServletRequest request) {
+String qnaDetail(Model mm, QnaDTO dto ,HttpSession session) {
 	//String id = (String)session.getAttribute("id");
-	String id = "qqq";	
+	MemberDTO mDTO;	
 	
 	qm.qcnt(dto.getNo());
-	
-	
+//	if(session.getAttribute("type")!=null) {
+//		mDTO = new MemberDTO();
+//		mDTO.setEmail((String)session.getAttribute("email"));
+//		MemberDTO myPage = mp.myPage(mDTO);
+//		mm.addAttribute("mainData", qm.myqnalist(myPage.getId()));
+//		return "myPage/myqna";
+//	}
+//	
 	
 	mm.addAttribute("mainData", qm.qdetail(dto));
-	mm.addAttribute("id", id); //세션아이디
+	
 	
 	
 	return "myPage/myqnaDetail";
@@ -56,14 +73,17 @@ String qnaDetail(Model mm, QnaDTO dto , HttpServletRequest request) {
 
 @RequestMapping("/myreview")
 String myreview(ReviewDTO dto ,Model mm, HttpSession session) {
-	//String id = (String)session.getAttribute("id");
-	String id = "qqq";
-    
-	//qm.myqnalist(dto);
-	
-	
-	mm.addAttribute("mainData", rm.myreviewlist(id));
-	return "myPage/myreview";
+	MemberDTO mDTO;
+	if(session.getAttribute("type")!=null) {
+		mDTO = new MemberDTO();
+		mDTO.setEmail((String)session.getAttribute("email"));
+		MemberDTO myPage = mp.myPage(mDTO);
+		mm.addAttribute("mainData", rm.myreviewlist(myPage.getId()));
+		return "myPage/myreview";
+	}
+	else {
+		return "/fc/mem/login";
+	}
 }
 
 @RequestMapping("/myreviewDetail/{no}/{order_code}")

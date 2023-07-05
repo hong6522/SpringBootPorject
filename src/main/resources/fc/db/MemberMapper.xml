@@ -32,5 +32,11 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	(#{id} , #{pw} , #{name} , #{address1} , #{address2} , #{address3} ,#{address4} ,#{address5} ,#{tell} ,#{birth} ,#{email},sysdate())
 </insert>
 
+<select id="myPage" resultType="mDTO" parameterType="mDTO">
+	SELECT * FROM member
+	<where>
+		email = #{email}
+	</where>
+</select>
 	
 </mapper>

@@ -14,4 +14,6 @@ public interface MemberMapper {
 	MemberDTO login(MemberDTO dto);
 	
 	int join(MemberDTO dto);
+	
+	MemberDTO myPage(MemberDTO dto);
 }
