@@ -39,7 +39,7 @@ td>a{
 }
 .center_notice>td:first-of-type{
 	padding-left: 50px;
-	width:600px;
+	width:200px;
 }
 .center_content{
 	padding: 10px 50px 10px 50px;
@@ -65,10 +65,14 @@ h2{
 	margin: 30px 0 30px 0;
 	font-weight: bold;
 }
+.cen_mulfile{
+  width:250px;
+  height:250px;
+}
 </style>
 
-<h1>QNA</h1>
-<table width="90%">
+<h1>리뷰</h1>
+<table width="30%">
  <tr class="center_notice">
  	<td>제목</td><td th:text="${mainData.title}" ></td>
  </tr>
@@ -79,57 +83,35 @@ h2{
  	<td>작성일</td><td th:text="${mainData.reg_dateStr}"></td>
  </tr>
  <tr class="center_notice">
- 	<td>조회수</td><td th:text="${mainData.qna_cnt}"></td>
+ 	<td>조회수</td><td th:text="${mainData.review_cnt}"></td>
  </tr>
+ 
+ 
+ 
  <tr>
  	<td colspan="2">
+ 			
+ 		 <span th:if="${mainData.upfile} != null">
+ 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile}}"/>
+ 		 </span>
+ 		 <span th:if="${mainData.upfile2} != null">
+ 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile2}}"/>
+ 		 </span>
+ 		 <span th:if="${mainData.upfile3} != null">
+ 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile3}}"/>
+ 		 </span>
  		<div class="center_content" th:text="${mainData.contentBr}"></div>
+ 		 	 
  	</td>
- </tr>
- 
- <span th:if ="${mainData.getAnswer} != null" >
- <tr>
- 	<td>관리자 답변</td><td th:text="${mainData.getAnswer}" ></td>
- 	<td>관리자 답변일시</td><td th:text="${mainData.answer_Date}"></td>
- 
- </tr>
- 
- <tr>
- <td>관리자 아이디</td>	<td th:text="${mainData.admin_Id}"></td>
- </tr>
- </span>
- 
- 
- 
- <tr>
- 
-          <td th:text="${pd.start}"> </td>
+ </tr><tr>
 		<td colspan="2" align="right">
-			
-			<span th:if="${id == mainData.id}">
-          	<a th:href="|/center/qnaModify/${mainData.no}|" th:text="수정"/>
-          	<a th:href="|/center/qnaDelete/${mainData.no}|" th:text="삭제"/>
-      		 </span>
-        
-        
-        
-			 <a th:href="@{|/center/qna?nowPage=${pd.nowPage}|}" th:text="목록으로"></a>
-			
-
+			<a th:href="|/myPage/myreview|" th:text="목록으로" ></a>
 		</td>
 	</tr>
-	
-	
 </table>
 		
 
 </th:block>
-
-
-
-
-
-
 
 
 <th:block layout:fragment="add-content">

@@ -45,10 +45,14 @@ layout:decorate="fc_total/template">
 		<tr>
 			<td><input type="submit" value="제출"/></td>
 		</tr>
-
+		
+		<tr>
+		<td><a th:href="@{|/center/qna?nowPage=${pd.nowPage}|}" th:text="목록으로"></a></td>
+		</tr>
 		
 	</table>
 </form>
+
 </th:block>
 
 

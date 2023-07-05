@@ -86,6 +86,8 @@ h2{
  	<td>조회수</td><td th:text="${mainData.review_cnt}"></td>
  </tr>
  
+ 
+ 
  <tr>
  	<td colspan="2">
  			
@@ -103,7 +105,8 @@ h2{
  	</td>
  </tr><tr>
 		<td colspan="2" align="right">
-			<a th:href="|/center/review|" th:text="목록으로" ></a>
+			
+			 <a th:href="@{|/center/review?nowPage=${pd.nowPage}|}" th:text="목록으로"></a>
 		</td>
 	</tr>
 </table>

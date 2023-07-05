@@ -29,15 +29,18 @@ layout:decorate="fc_total/template">
 	<tr>
 		<td>번호</td>
 		<td>제목</td>
+		<td>상품명</td>
 		<td>아이디</td>
 		<td>등록일</td>
 		<td>조회수</td>
 	
 	</tr>
+	
 	<tr th:each="dto , dtoStat: ${mainData}">
 		 <td th:text="${pd.getStart() + dtoStat.index+1}"></td>
 		 
-		<td><a th:href="@{|reviewDetail/${dto.no}/${dto.order_Code}|}" th:text="${dto.title}"/></td>
+		<td><a th:href="@{|reviewDetail/${dto.no}/${dto.order_Code}/${pd.nowPage}|}" th:text="${dto.title}"/></td>
+		<td th:text="${dto.fassion_name}"/>
 		<td th:text="${dto.id}"/>
 		<td th:text="${dto.reg_dateStr}"/>
 		<td th:text="${dto.review_cnt}"/>

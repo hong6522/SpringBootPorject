@@ -27,7 +27,7 @@ layout:decorate="fc_total/template">
 		<td th:text="${dto.type}"/>	<td>
 				 
 				 
-		<a th:href="@{|../center/qnaDetail/${dto.no}|}" th:text="${dto.title}"
+		<a th:href="@{|../myPage/myqnaDetail/${dto.no}|}" th:text="${dto.title}"
 		 th:if="${dto.secret_chk} == false" >
 		 </a> 
 			 

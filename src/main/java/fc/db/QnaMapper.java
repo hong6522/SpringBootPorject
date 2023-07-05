@@ -27,8 +27,6 @@ public interface QnaMapper {
 	int qdelete(int no);
 	
 	
-	
-	
     int pwchk(QnaDTO dto);
 	
 	

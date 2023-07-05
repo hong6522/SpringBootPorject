@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ReviewMapper {
 	
 	List<ReviewDTO> rlist(CenterPData pd);
+	
+	List<ReviewDTO> myreviewlist(String id);
 		
 	ReviewDTO rdetail(ReviewDTO bdedsde);
 	

@@ -15,7 +15,7 @@ public class ReviewDTO {
 	
 	
 	//MultipartFile upfile, upfile2 , upfile3;
-	String fashion_Name , title , content , order_Code, id , sch, kind, upfile, upfile2 , upfile3 ;
+	String fassion_name , title , content , order_Code, id , sch, kind, upfile, upfile2 , upfile3 ;
 	Integer star_num , review_cnt , no;
 	Date reg_date;
 	

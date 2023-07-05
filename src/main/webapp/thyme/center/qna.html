@@ -64,15 +64,16 @@ layout:decorate="fc_total/template">
 		<td th:text="${dto.type}"/>
 		
 		<td>
+				  
 				 
-				 
-			<a th:href="@{|qnaDetail/${dto.no}|}" th:text="${dto.title}"
+			<a th:href="@{|qnaDetail/${dto.no}/${pd.nowPage}|}" th:text="${dto.title}"
 			 th:if="${dto.secret_chk} == false" >
 			 </a> 
 			 
-			 <a th:href="@{|secretForm/${dto.no}|}"  th:if="${dto.secret_chk} == true" > 비밀글입니다.
+			 <span
+			th:if="${dto.secret_chk} == true" > 비밀글입니다.
 			<img th:src="@{/img/unlock.png}" width="25px" height="20px"/>
-	 		</a>
+	 		</span>
 		
 		 </td>
 		

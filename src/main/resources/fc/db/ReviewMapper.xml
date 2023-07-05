@@ -67,18 +67,22 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	
 	
 <!--review 게시글 삭제 --> 	
-	<delete id="qdelete"  parameterType="reviewDTO">
+	<delete id="rdelete"  parameterType="reviewDTO">
 		delete from fassion_review where no = #{no} and  id = #{id} 
 	</delete>
 	
 <!--review 게시글 수정 --> 
-	<update id="qmodify" parameterType="reviewDTO" >
+	<update id="rmodify" parameterType="reviewDTO" >
 		update fassion_review set title = #{title}, content =  #{content}, type = #{type} 
 		where no = #{no} and id = #{id} 
 	</update>
 	
 
-
+<!-- myreview  -->   
+    <select id="myreviewlist"  resultType="reviewDTO" parameterType="reviewDTO">
+	select * from fassion_review where id = #{id}
+	 ORDER BY reg_date desc
+	</select>
 		         
 	
     

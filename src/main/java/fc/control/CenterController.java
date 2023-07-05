@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -106,13 +107,20 @@ public class CenterController {
 	}
 	
 	
-	@RequestMapping("/qnaDetail/{no}")
-	String qnaDetail(Model mm, QnaDTO dto) {
+	@RequestMapping("/qnaDetail/{no}/{nowpage}")
+	String qnaDetail(Model mm,@PathVariable int nowpage, QnaDTO dto , HttpServletRequest request) {
 		//String id = (String)session.getAttribute("id");
 		String id = "qqq";	
-		
+		new CenterPData(request);
+		CenterPData pd = (CenterPData)request.getAttribute("pd");
 		qm.qcnt(dto.getNo());
+		int ntotal = qm.qtotalcount();
+		  pd.setTotal(ntotal);
+		System.out.println("pdnow"+pd.getNowPage());
 		
+		pd.setNowPage(nowpage);
+		
+		mm.addAttribute("pdata", pd);
 		mm.addAttribute("mainData", qm.qdetail(dto));
 		mm.addAttribute("id", id); //세션아이디
 		
@@ -122,9 +130,13 @@ public class CenterController {
 	
 	
 	@GetMapping("/qnaInsert")
-	String qnaInsert(QnaDTO dto , Model mm,  HttpSession session) {
+	String qnaInsert(QnaDTO dto , Model mm,  HttpSession session  , HttpServletRequest request) {
 		//String id = (String)session.getAttribute("id");
 		String id = "qqq";						
+		new CenterPData(request);
+		CenterPData pd = (CenterPData)request.getAttribute("pd");
+		
+		mm.addAttribute("pdata", pd);
 		mm.addAttribute("id",id );
 		
 		return "center/qnaInsert";
@@ -133,8 +145,11 @@ public class CenterController {
 	
 	@PostMapping("/qnaInsert")
 	String  qnaInsertComplete(Model mm, QnaDTO dto) {
+		
 		qm.qinsert(dto);
+		
 		//System.out.println(dto.no);
+		
 		mm.addAttribute("msg", "입력되었습니다.");
 		mm.addAttribute("goUrl", "qnaDetail/"+dto.getNo());
 		return "center/alert";
@@ -143,14 +158,16 @@ public class CenterController {
 	
 	
 	@GetMapping("/qnaModify/{no}")
-	String qnaModify(QnaDTO dto , Model mm) {
+	String qnaModify(QnaDTO dto , Model mm , HttpServletRequest request) {
 		//String id = (String)session.getAttribute("id");
 		String id = "qqq";	
-		
+		new CenterPData(request);
+		CenterPData pd = (CenterPData)request.getAttribute("pd");
 		
 		mm.addAttribute("mainData", qm.qdetail(dto));
+		mm.addAttribute("pdata", pd);
 	//	mm.addAttribute("id",id );
-	//	System.out.println(dto.getNo());
+
 		return "center/qnaModify";
 	}
 	
@@ -177,40 +194,7 @@ public class CenterController {
 	    return "center/alert";
 	}
 	
-//	@GetMapping("/qnaDelete/{no}")
-//	String qnaDelete(QnaDTO dto , Model mm) {
-//		//String id = (String)session.getAttribute("id");
-//		//String id = "qqq";	
-//		
-//		
-//		mm.addAttribute("mainData", qm.qdetail(dto));
-//	//	mm.addAttribute("id",id );
-//		return "center/qnaDelete";
-//	}
-//	
-//	
-//	
-//	@PostMapping("/qnaDelete/{no}")
-//	String  qnaDeleteComplete(Model mm, QnaDTO dto) {
-//	
-//	    
-//	    int cnt = qm.qdelete(dto);
-//	    String msg = "삭제 불가";
-//		String goUrl = "/center/qnaDelete/"+dto.getNo();
-//	   
-//	  
-//	    if (cnt > 0) {
-//	        msg = "삭제되었습니다.";
-//	        goUrl = "/center/qna";
-//	        mm.addAttribute("msg", msg);
-//	        mm.addAttribute("goUrl", goUrl);
-//	    }
-//	    mm.addAttribute("msg", msg);
-//        mm.addAttribute("goUrl", goUrl);
-//	   
-//	    
-//	    return "center/alert";
-//	}
+
 	
 	@RequestMapping(value = "qnaDelete/{no}", method = RequestMethod.GET )
 	String qnaDelete(QnaDTO dto , Model mm) {
@@ -240,25 +224,25 @@ public class CenterController {
 		return "center/secretForm";
 	}
 	
-	@PostMapping("/secretForm/{no}")
-	String secretFormComple(QnaDTO dto , Model mm) {
-		//String id = (String)session.getAttribute("id");
-		String msg = "암호인증실패";
-		String goUrl="/center/secretForm/"+dto.getNo();
-		
-		 int cnt = qm.pwchk(dto);
-		 System.out.println(cnt);
-		 if (cnt > 0) {
-		        msg = "암호인증성공";
-		        goUrl = "/center/qnaDetail/"+dto.getNo();
-		        mm.addAttribute("msg", msg);
-		        mm.addAttribute("goUrl", goUrl);
-		    }
-		 mm.addAttribute("msg", msg);
-	     mm.addAttribute("goUrl", goUrl);
-		 
-		return "center/alert";
-	}
+//	@PostMapping("/secretForm/{no}")
+//	String secretFormComple(QnaDTO dto , Model mm) {
+//		//String id = (String)session.getAttribute("id");
+//		String msg = "암호인증실패";
+//		String goUrl="/center/secretForm/"+dto.getNo();
+//		
+//		 int cnt = qm.pwchk(dto);
+//		 System.out.println(cnt);
+//		 if (cnt > 0) {
+//		        msg = "암호인증성공";
+//		        goUrl = "/center/qnaDetail/"+dto.getNo();
+//		        mm.addAttribute("msg", msg);
+//		        mm.addAttribute("goUrl", goUrl);
+//		    }
+//		 mm.addAttribute("msg", msg);
+//	     mm.addAttribute("goUrl", goUrl);
+//		 
+//		return "center/alert";
+//	}
 	
 	
 	
@@ -294,23 +278,19 @@ public class CenterController {
 	}
 	
 	
-	@RequestMapping("/reviewDetail/{no}/{order_code}")
-	String reviewDetail(Model mm , ReviewDTO dto , MultipartFile ff  ) {
+	@RequestMapping("/reviewDetail/{no}/{order_code}/{nowpage}")
+	String reviewDetail(Model mm , ReviewDTO dto ,@PathVariable int nowpage ,HttpServletRequest request  ) {
 		//String id = (String)session.getAttribute("id");
-		String id = "qqq"	;
-				
-		
-		
-		
+		String id = "qqq"	;		
+		new CenterPData(request);
+		CenterPData pd = (CenterPData)request.getAttribute("pd");
 		rm.rcnt(dto.getNo());
 		
 //		System.out.println(upfile+","+upfile2+","+upfile3);
-//		System.out.println(upfile+","+upfile2+","+upfile3);
-//		System.out.println(upfile+","+upfile2+","+upfile3);
-//		System.out.println(upfile+","+upfile2+","+upfile3);
-//		System.out.println(upfile+","+upfile2+","+upfile3);
-		System.out.println(dto.getNo());
-		System.out.println(dto.getUpfile());
+
+		pd.setStartPage(nowpage);
+		
+		mm.addAttribute("pdata", pd);
 		mm.addAttribute("mainData", rm.rdetail(dto));
 		
 	//System.out.println(mm.getAttribute("mainData"));

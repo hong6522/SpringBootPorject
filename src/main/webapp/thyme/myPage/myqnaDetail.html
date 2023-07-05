@@ -90,6 +90,8 @@ h2{
  <span th:if ="${mainData.getAnswer} != null" >
  <tr>
  	<td>관리자 답변</td><td th:text="${mainData.getAnswer}" ></td>
+ </tr>
+<tr>
  	<td>관리자 답변일시</td><td th:text="${mainData.answer_Date}"></td>
  
  </tr>
@@ -99,21 +101,17 @@ h2{
  </tr>
  </span>
  
- 
- 
  <tr>
- 
-          <td th:text="${pd.start}"> </td>
+
+       
 		<td colspan="2" align="right">
 			
 			<span th:if="${id == mainData.id}">
           	<a th:href="|/center/qnaModify/${mainData.no}|" th:text="수정"/>
           	<a th:href="|/center/qnaDelete/${mainData.no}|" th:text="삭제"/>
       		 </span>
-        
-        
-        
-			 <a th:href="@{|/center/qna?nowPage=${pd.nowPage}|}" th:text="목록으로"></a>
+           
+			 <a th:href="@{|/myPage/myqna|}" th:text="목록으로"></a>
 			
 
 		</td>
