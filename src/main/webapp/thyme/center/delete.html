@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>insertForm</title>
+</head>
+<body>
+<h1>deleteForm</h1>
+<h2>비밀번호를 입력하세요</h2>
+<form method="post" th:object="${boardDTO}">
+	<table border="">
+	
+
+	<input type="hidden" value="${mainData.id}">
+	
+	
+	<tr>
+		<td><input type="text" th:field="*{pw}"/></td>
+	</tr>
+	
+		
+		<tr>
+			<td colspan="2" align="center"> 
+				<input type="submit" value="삭제하기" />
+			</td>
+		</tr>
+	</table>
+</form>
+</body>
+</html>

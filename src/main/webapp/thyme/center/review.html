@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="fc_total/template">
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top"></head>
+	<title>review</title>
+
+</th:block>
+
+<th:block layout:fragment="content">
+	<h2>review</h2>
+	 
+	<table border="" width=60%>
+	<form action="?" th:object="${reviewDTO}">
+		<tr>
+			<td colspan="6" align="center">
+				<select name="kind" >
+				<option value="title">제목</option>
+				<option value="id">아이디</option>
+			   </select>
+				<input type="text" th:field="*{sch}"/>		
+				<input type="submit" value="검색" />
+			</td>
+		</tr>
+	</form>
+	
+	
+	<tr>
+		<td>번호</td>
+		<td>제목</td>
+		<td>상품명</td>
+		<td>아이디</td>
+		<td>등록일</td>
+		<td>조회수</td>
+	
+	</tr>
+	
+	<tr th:each="dto , dtoStat: ${mainData}">
+		 <td th:text="${pd.getStart() + dtoStat.index+1}"></td>
+		 
+		<td><a th:href="@{|reviewDetail/${dto.no}/${dto.order_Code}/${pd.nowPage}|}" th:text="${dto.title}"/></td>
+		<td th:text="${dto.fassion_name}"/>
+		<td th:text="${dto.id}"/>
+		<td th:text="${dto.reg_dateStr}"/>
+		<td th:text="${dto.review_cnt}"/>
+	</tr>
+	
+	
+	
+	 
+<tr>
+    <td colspan="7" align="center">
+        <span th:if="${pd.startPage > 1}">
+            <a th:href="@{'?nowPage=' + ${pd.startPage - 1}}">◀</a>
+        </span>
+        <span th:each="p : ${#numbers.sequence(pd.startPage, pd.endPage)}">
+            <a th:if="${pd.nowPage == p}" th:text="${p}"></a>
+            <a th:unless="${pd.nowPage == p}" th:href="@{'?nowPage=' + ${p}}" th:text="${p}"></a>
+        </span>
+        <span th:if="${pd.endPage < pd.totalPage}">
+            <a th:href="@{'?nowPage=' + ${pd.endPage + 1}}">▶</a>
+        </span>
+    </td>
+</tr>
+
+
+
+
+</table>
+	
+	
+</th:block>
+
+
+
+
+
+
+
+
+<th:block layout:fragment="add-content">
+	<h4>이동</h4>
+	<a th:href="|/center/qna|" th:text="qna" />
+	<a th:href="|/center/review|" th:text="review" />
+</th:block>
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>
