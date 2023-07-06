@@ -29,6 +29,12 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		</where>
 	</select>
 	
+	<select id="pro_select" resultType="pDTO" parameterType="pDTO">
+		SELECT * FROM product
+		<where>
+			kind = #{kind}
+		</where>
+	</select>
 	
 	
 	<insert id="insert" parameterType="pDTO" >
