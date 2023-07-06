@@ -28,6 +28,7 @@ function kakaoLogout() {
 </head>
 <th:block layout:fragment="title">
 <style>
+<<<<<<< HEAD
 	*{
 		margin: 0;
 		padding: 0;
@@ -226,5 +227,34 @@ function kakaoLogout() {
 		
 </div> 
 <hr/>
+=======
+*{
+	margin: 0;
+	padding: 0;
+}
+.head{
+	width: 1200px;
+	height: 100px;
+	background: #8fa;
+}
+.head>div{
+	float: left;
+	width: 150px;
+	height: 70px;
+	background: #333;
+	color: #eee;
+	margin: 15px 70px;
+	line-height: 70px;
+	font-size: 1.2rem;
+	text-align: center;
+}
+</style>
+<div class="head">
+	<div><a th:href="|/mainPage|" th:text="Fashion.CODE"></a></div>
+	<div><a th:href="|/fc/login|" th:text="로그인"></a></div>
+	<div>상품</div>
+	<div>게시판</div>
+</div>	
+>>>>>>> 67d7275da5537c761ce266c777d2dd89e8f9f296
 </th:block>
 </html>
