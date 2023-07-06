@@ -42,6 +42,16 @@ li{
 .navigations:last-child>ul> li > a{
 	font-size: 12px;
 }
+#menuicon, #menuicoff{
+	margin-bottom: 5px;
+}
+a{
+	text-decoration: none;
+	color: #000;
+}
+a:hover{
+	color: #fff;
+}
 </style>
 <script type="text/javascript" src="../../jquery/jquery_3_6_3.js"></script>
 <script type="text/javascript" src="../../jquery/jquery-ui.min.js"></script>
@@ -66,7 +76,7 @@ $(function() {
 		<input type="checkbox"  />
 		<label for="menuicon">
 		     <img src="/icon/list.png" class="menu" id="menuicon" alt="메뉴 아이콘" />
-		     <img src="/icon/list.png" class="menu" id="menuicoff" alt="메뉴 아이콘" />
+		     <img src="/icon/cancel.png" class="menu" id="menuicoff" alt="메뉴 아이콘" />
 		</label>
 	</div>
 
@@ -75,18 +85,18 @@ $(function() {
 			<li><a href="AdminNotice"><img src="/icon/tshirt.png" class="menu"  alt=""/></a></li>
 			<li><a href="AdminHome"><img src="/icon/checkout.png" class="menu"  alt=""/></a></li>
 			<li><a href="AdminUseList"><img src="/icon/person.png" class="menu"  alt=""/></a></li>
-			<li><a href="AdminSales"><img src="/icon/salary.png" class="menu"  alt=""/></a></li>
+			<li><a href="/ad_page/calculate"><img src="/icon/salary.png" class="menu"  alt=""/></a></li>
 			<li><a href="AdminSales"><img src="/icon/all.png" class="menu"  alt="" /></a></li>
 		</ul>
 	</div>
 	
 	<div class="navigations">
 		<ul>
-			<li><a href="AdminNotice">상품관리</a></li>
-			<li><a href="AdminHome">주문관리</a></li>
-			<li><a href="AdminUseList">회원관리</a></li>
-			<li><a href="AdminSales">매출정산</a></li>
-			<li><a href="AdminSales">종합관리</a></li>
+			<li><a href="AdminNotice" class="menuName">상품관리</a></li>
+			<li><a href="AdminHome" class="menuName">주문관리</a></li>
+			<li><a href="AdminUseList" class="menuName">회원관리</a></li>
+			<li><a href="/ad_page/calculate" class="menuName">매출정산</a></li>
+			<li><a href="AdminSales" class="menuName">종합관리</a></li>
 		</ul>
 	</div>
 </div>
