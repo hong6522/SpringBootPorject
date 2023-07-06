@@ -10,5 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ProductMapper {
 	List<ProductDTO> pro(ProductDTO advcx);
 	
+	List<ProductDTO> pro_select(ProductDTO advcx);
+	
 	int insert(ProductDTO desgfd);
 }
