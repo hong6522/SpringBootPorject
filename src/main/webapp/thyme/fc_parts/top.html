@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+Kakao.init('bb3538084a6c4aa13e17687010ba8df0'); //발급받은 키 중 javascript키를 사용해준다.
+
+//카카오로그아웃  
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+    
+  }  
+
+</script>
 
 <head>
 <meta charset="UTF-8">
@@ -31,7 +52,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 		text-align: center;
 		line-height: 100px;
 		font-size: 4rem;
-		margin-left: 10px;
+		margin-left: 40px;
 		background:#fff;
 	}
 	.menu_mem_wrapper{
@@ -58,7 +79,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 		float:left;
 	}
 	.search{
-		width:350px;
+		width:330px;
 		height:35px;
 		float:left;
 		background:#fff;
@@ -79,7 +100,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 		width:600px;
 		height:50px;
 		float: left;
-		margin-left: 250px;
+		margin-left: 290px;
 	}
 	
 	#search_img{
@@ -99,29 +120,73 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	}
 	
 </style>
+
 <div class="head1">
 		<div class="menu_mem_wrapper">
-			
-			<a th:href="|/fc/mem/login|">
-				<div class="menu_teg_go"  th:text="로그인"></div>
-			</a>
-				<div class="block"></div>
-			<a th:href="|/fc/mem/join|">
+			<span th:if="${session.type}==null">
+			<a th:href="|/fc_mem/login|">
+       			<div class="menu_teg_go" th:text="로그인" ></div>
+       		</a>
+   				<div class="block"></div>
+			<a th:href="|/fc_mem/join|">
 				<div class="menu_teg_go" th:text="회원가입"></div>
 			</a>
-				<div class="block"></div>
-			<a th:href="|/fc/mem/myPage|" >
-				<div class="menu_teg_go" th:text="마이페이지"></div>
+   			
+   			</span>
+   			<span th:if="${session.type}==kakao">
+   			<a th:href="|/fc_mem/logOut|">
+       			<div class="menu_teg_go" th:text="로그아웃" onclick="kakaoLogout()"></div>
+       		</a>
+	   			<div class="block"></div>
+			<a th:href="|/fc_mem/myPage|" >
+					<div class="menu_teg_go" th:text="마이페이지"></div>
 			</a>
-				<div class="block"></div>
-			<a th:href="|/fc/mem/basket|" >
-				<div class="menu_teg_go" th:text="장바구니"></div>
+					<div class="block"></div>
+			<a th:href="|/fc_mem/basket|" >
+					<div class="menu_teg_go" th:text="장바구니"></div>
 			</a>
-				<div class="block"></div>
-			<a th:href="|/fc/mem/History|">
-				<div class="menu_teg_go"  th:text="주문조회"></div>
-			</a>	
-				
+					<div class="block"></div>
+			<a th:href="|/fc_mem/History|">
+					<div class="menu_teg_go"  th:text="주문조회"></div>
+			</a>
+   			</span>
+   			
+   			<span th:if="${session.type}==naver">
+   			<a th:href="|/fc_mem/logOut|">
+       			<div class="menu_teg_go" th:text="로그아웃" ></div>
+       		</a>
+	   			<div class="block"></div>
+			<a th:href="|/fc_mem/myPage|" >
+					<div class="menu_teg_go" th:text="마이페이지"></div>
+			</a>
+					<div class="block"></div>
+			<a th:href="|/fc_mem/basket|" >
+					<div class="menu_teg_go" th:text="장바구니"></div>
+			</a>
+					<div class="block"></div>
+			<a th:href="|/fc_mem/History|">
+					<div class="menu_teg_go"  th:text="주문조회"></div>
+			</a>
+   			</span>
+   			
+   			<span th:if="${session.type}==nomal">
+   			<a th:href="|/fc_mem/logOut|">
+       			<div class="menu_teg_go" th:text="로그아웃" ></div>
+       		</a>
+	   			<div class="block"></div>
+			<a th:href="|/fc_mem/myPage|" >
+					<div class="menu_teg_go" th:text="마이페이지"></div>
+			</a>
+					<div class="block"></div>
+			<a th:href="|/fc_mem/basket|" >
+					<div class="menu_teg_go" th:text="장바구니"></div>
+			</a>
+					<div class="block"></div>
+			<a th:href="|/fc_mem/History|">
+					<div class="menu_teg_go"  th:text="주문조회"></div>
+			</a>
+   			</span>
+
 		</div>
 		<a th:href="|/mainPage|" >
 			<div class="menu_logo" th:text="Fashion.CODE"></div>
@@ -130,6 +195,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 		<div class="search"><input type="text" id="search_box"/><img src="/img/search.png" alt="" id="search_img"/></div>
 		</form>
 </div>
+
 <div class="head2">
 	<div class="list_wrapper">
 	
@@ -159,5 +225,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	</div>
 		
 </div> 
+<hr/>
 </th:block>
 </html>

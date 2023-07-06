@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.MemberMapper">
+
+	<select id="mem" resultType="mDTO" parameterType="mDTO">
+	SELECT * FROM member
+	<where>
+		<trim prefix=" " suffixOverrides="AND | OR">
+			<if test="sch != null and kind =='pid'">
+				id LIKE CONCAT('%', #{sch}, '%')
+			</if>
+			<if test="sch != null and kind =='pname'">
+				name LIKE CONCAT('%', #{sch}, '%')
+			</if>
+		</trim>
+	</where>
+</select>
+
+<select id="login" resultType="mDTO" parameterType="mDTO">
+	SELECT * FROM member
+	<where>
+		id = #{id} and pw = #{pw}
+	</where>
+</select>
+
+<insert id="join" parameterType="mDTO">
+	insert into member (id , pw , name , address1 , address2 , address3 ,address4 ,address5 ,tell ,birth ,email ,join_date)
+	values
+	(#{id} , #{pw} , #{name} , #{address1} , #{address2} , #{address3} ,#{address4} ,#{address5} ,#{tell} ,#{birth} ,#{email},sysdate())
+</insert>
+
+<select id="myPage" resultType="mDTO" parameterType="mDTO">
+	SELECT * FROM member
+	<where>
+		email = #{email}
+	</where>
+</select>
+	
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.ProductMapper">
+
+	<select id="pro" resultType="pDTO" parameterType="pDTO">
+		SELECT * FROM product
+		<where>
+			 <trim suffix=" " suffixOverrides = "and | or">
+	            <if test="sch!=null">
+	               proKind = #{sch} and
+	            </if>
+	           
+	           <if test="start!=null">
+	               <if test="end!=null">
+	                  reg_date >= #{start} and <![CDATA[reg_date <= #{end}]]> and
+	               </if>
+	            </if>
+	            
+	            <if test="startPrice!=null">
+	               <if test="endPrice!=null">
+	                  sellPrice >= #{startPrice} and <![CDATA[sellPrice <= #{endPrice}]]>
+	               </if>
+	            </if>
+	           
+	         </trim>
+		</where>
+	</select>
+	
+	<select id="pro_select" resultType="pDTO" parameterType="pDTO">
+		SELECT * FROM product
+		<where>
+			kind = #{kind}
+		</where>
+	</select>
+	
+	
+	<insert id="insert" parameterType="pDTO" >
+		<selectKey keyProperty="num" resultType="Integer" order="BEFORE">
+			select max(num)+1 from product
+		</selectKey>
+		insert into product (num,kind,proKind,proName,proDetail,pf1,pf2,proSize,color,sel,memPoint,supplyPrice,sellPrice,proCnt,reg_date)
+		values
+		(#{num}, #{kind}, #{proKind}, #{proName}, #{proDetail},#{pf1},#{pf2},#{proSize},#{color},#{sel},#{memPoint},#{supplyPrice},#{sellPrice},#{proCnt},sysdate())
+	</insert>
+</mapper>

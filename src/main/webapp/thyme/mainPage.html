@@ -2,18 +2,114 @@
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="fc_total/template">
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+  var naver_id_login = new naver_id_login("kp49e667EXXMJhByMOAz", "http://localhost:80/mainPage");
+  
+  naver_id_login.get_naver_userprofile("naverSignInCallback()");
+
+  function naverSignInCallback() {
+	//alert(naver_id_login.getProfileData('name')+" 님 환영합니다.");
+	//alert("생일"+naver_id_login.getProfileData('birthday'));
+    ///alert("이메일"+naver_id_login.getProfileData('email'));
+    //alert("이름"+naver_id_login.getProfileData('name'));
+	//sessionStorage.setItem('type', 'api_naver'); //키 값 : userId, 데이터 : tang
+	//sessionStorage.setItem('name', naver_id_login.getProfileData('name'));
+	  loginSession()
+  }
+  
+  function loginSession(){
+	  //alert("실행?")
+		$.ajax({
+				url:"/ajax/loginSession",	 // 내용을 보내고 가져올 페이지
+				type:"POST",
+				data:{type:"naver"},
+				
+				success:function(ddd){	// 성공시
+					//alert("세션에 넣었다")
+				},
+				error:function(ee){		// 실패시
+					console.log(ee)
+				}
+			}) 
+		}
+  
+</script>
 <th:block layout:fragment="title">
 <head th:replace="fc_parts/top"></head>
+
+
 	<title>FCProj</title>
 </th:block>
 
 <th:block layout:fragment="content">
-	<h2>메인 내용내용</h2>
+
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.main_wrapper{
+		width:1200px;
+		height:500px;
+		margin:auto;
+		background:#f0f;
+	}
+	
+	.pro_color{
+		width:15px;
+		height:15px;
+		border-radius: 25px;
+		margin-left:5px;
+		float:left;
+	}
+	.pro_wrapper{
+		width:200px;
+		height:350px;
+		border:1px soild #000;
+		background:#ff0;
+		float:left;
+		color:#000;
+		text-align: center;
+	}
+	#pro_img{
+		width:200px;
+		height:250px;
+	}
+	.pro_price{
+		background:#00f;
+		float:left;
+	}
+</style>
+
+<script>
+
+//alert(sessionStorage.getItem('type'));
+
+</script>
+<div class="main_wrapper">
+	<div class="main_top"></div>
+	<div class="main_midle">
+		<div th:each="dto : ${mainData}">
+			<a th:href="|pro/detail/${dto.num}|">
+				<div class="pro_wrapper">
+					<div><img th:src="|../img/${dto.proImg}|" alt="" id="pro_img"/></div>
+					<div th:text="${dto.proName}"></div>
+					<div th:each="cc : ${dto.colorStr}">
+						<div th:style="'background-color: ' + ${cc} + ' ;'" class="pro_color"></div>
+					</div>
+					<div th:text="${dto.sellPrice}" clas="pro_price">KWR</div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+</head>
+<body>
+
 </th:block>
 
-<th:block layout:fragment="add-content">
-	<h3>나는 추가내용</h3>
-</th:block>
 <th:block layout:frgment="main-foot">
 <body th:replace="fc_parts/footer::main-foot"></body>
 </th:block>
