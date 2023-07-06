@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.MemberMapper">
+
+	<select id="mem" resultType="mDTO" parameterType="mDTO">
+	SELECT * FROM member
+	<where>
+		<trim prefix=" " suffixOverrides="AND | OR">
+			<if test="sch != null and kind =='pid'">
+				id LIKE CONCAT('%', #{sch}, '%')
+			</if>
+			<if test="sch != null and kind =='pname'">
+				name LIKE CONCAT('%', #{sch}, '%')
+			</if>
+		</trim>
+	</where>
+</select>
+
+	
+</mapper>
