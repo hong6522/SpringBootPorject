@@ -1,4 +1,4 @@
-package fc.controller;
+package fc.control;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,10 +9,10 @@ public class FCController {
 	@RequestMapping("/mainPage")
 	String index() {
 		
-		return "index";
+		return "mainPage";
 	}
 	
-	@RequestMapping("/fc/login")
+	@RequestMapping("/fc/mem/login")
 	String login() {
 		
 		return "fc/mem/login";

@@ -4,20 +4,99 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <body th:fragment="main-foot">
 <style>
-div{
+.fotter_wrapper{
 	width: 1200px;
-	height: 200px;
-	background: #333;
+	background: #ff0;
 	color: #eee;
+	margin:auto;
+}
+.fotter_main{
+	width:390px;
+	height:500px;
+	background:#f0f;
+	float:left;
+	margin-left:5px;
+	margin-right:5px;
+}
+.fotter_content_title{
+	width:390px;
+	height:50px;
+	background:#fff;
+	padding-top:50px;
+	line-height:50px;
+	text-align: center;
+	color:#000;
+	font-weight: bold;
+}
+.fotter_content_title_block{
+	width:390px;
+	height:1px;
+	background:#ccc;
+}
+.fotter_content{
+	width:390px;
+	height:445px;
+	background:#fff;
+}
+.fotter_content_bold{
+	color:#000;
+	font-size: 2rem;
+	font-weight: bold;
+	display: block;
+}
+.fotter_content_text{
+	color:#888;
+	display: block;
 }
 </style>
-<div>
-여기는 바텀입니다.<br/>
-bottombottombottombottombottombottombottombottombottombottombottombottom<br/>
-bottombottombottombottombottombottombottombottombottombottombottombottom<br/>
-bottombottombottombottombottombottombottombottombottombottombottombottom<br/>
-bottombottombottombottombottombottombottombottombottombottombottombottom<br/>
-bottombottombottombottombottombottombottombottombottombottombottombottom
+<div class="fotter_wrapper">
+	<div class="fotter_main">
+		<div class="fotter_content_title">CUSTOMER CENTER</div>
+		<div class="fotter_content_title_block"></div>
+		<div class="fotter_content">
+			<div class="fotter_content_bold">
+			</br>
+			010-1234-5678</br>
+			010-9874-6532
+			</div>
+			<div class="fotter_content_text">
+			</br>
+			- 평일 : 09:00 ~ 18:00</br>
+			(점심시간 12:00 ~ 13:00)</br></br></br>
+			- 토/일요일 , 공휴일 휴무
+			</div>
+		</div>
+	</div>
+	
+	<div class="fotter_main">
+		<div class="fotter_content_title">BANK INFO. EXCHANGE/RETURN</div>
+		<div class="fotter_content_title_block"></div>
+		<div class="fotter_content">
+			<div class="fotter_content_text">
+			</br></br>
+			농협은행 111-1111-1111-11 예금주 : 홍길동</br>
+			</br></br></br>
+			</div>
+			<div class="fotter_content_text">
+			</br>
+			교환 / 반품</br>
+			(점심시간 12:00 ~ 13:00)</br></br></br>
+			- 토/일요일 , 공휴일 휴무
+			</div>
+		</div>
+	</div>
+	
+	<div class="fotter_main">
+		<div class="fotter_content_title">ABOUT US</div>
+		<div class="fotter_content_title_block"></div>
+		<div class="fotter_content">
+		<div class="fotter_content_text">
+			</br></br>
+			- 평일 : 09:00 ~ 18:00</br>
+			(점심시간 12:00 ~ 13:00)</br></br></br>
+			- 토/일요일 , 공휴일 휴무
+			</div></div>
+	</div>
 </div>
 </body>
 </html>
