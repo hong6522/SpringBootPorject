@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.CalculateMapper">
+
+	<select id="list" resultType="calDTO" parameterType="calDTO" >
+		select * from calculate
+		<where>
+			<trim suffix=" " suffixOverrides = "and | or">
+				<if test="cal_kind!=null">
+					cal_kind = #{cal_kind} and
+				</if>
+				<if test="cal_cate!=null">
+					cal_cate = #{cal_cate} and
+				</if>
+				<if test="sch!=null">
+					<if test="sch!=''">
+						cal_name like concat ('%', #{sch}, '%') and
+					</if>
+				</if>
+				<if test="cal_refund!=null">
+					cal_refund = #{cal_refund} and
+				</if>
+				<if test="beforeDate!=null and beforeDate!=''">
+					<if test="afterDate!=null and afterDate!=''">
+						cal_date >= #{beforeDate} and <![CDATA[cal_date <= #{afterDate}]]>
+					</if>
+				</if>
+			</trim>
+		</where>
+	</select>
+	
+</mapper>

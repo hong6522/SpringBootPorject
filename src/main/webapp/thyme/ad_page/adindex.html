@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+
+<style>
+head{
+	margin-right: 50px;
+}
+.context{
+	float: left;
+}
+.Graph{
+	width: 1600px;
+	float: left;
+}
+</style>
+<div>
+	<div class="context">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>Fassion Code</title>
+		</th:block>
+	</div>
+	<div class="context">
+		<th:block layout:fragment="content">
+			<h1>정산하기</h1>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+			
+			<canvas id="myChart" style="width:600px"></canvas>
+			
+			<div class="Graph">
+				<canvas id="outerChart" style="width:100%;max-width:500px"></canvas>
+				<canvas id="shirtChart" style="width:100%;max-width:500px"></canvas>
+				<canvas id="pantsChart" style="width:100%;max-width:500px"></canvas>
+				<canvas id="shoesChart" style="width:100%;max-width:500px"></canvas>
+			</div>
+			
+			<script th:inline="javascript">
+			const xValues = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+			
+			new Chart("myChart", {
+			  type: "line",
+			  data: {
+			    labels: xValues,
+			    datasets: [{ 
+			      label: '아우터',
+			      data: [[${OutMonData}]],
+			      borderColor: "red",
+			      fill: false
+			    }, { 
+			      label: '상의',
+			      data: [[${ShiMonData}]],
+			      borderColor: "green",
+			      fill: false
+			    }, { 
+			      label: '하의',
+			      data: [[${PanMonData}]],
+			      borderColor: "blue",
+			      fill: false
+			    },{ 
+				      label: '신발',
+				      data: [[${ShoMonData}]],
+				      borderColor: "yellow",
+				      fill: false
+				}]
+			  },
+			  options: {
+			    legend: {display: true}
+			  }
+			});
+			/*아우터 그래프*/ 
+			const oValues = [[${outerArr}]];
+			
+			const oyValues = [[${oArr}]];
+			const obarColors = [
+			  "#b91d47",
+			  "#00aba9",
+			  "#2b5797",
+			  "#e8c3b9",
+			  "#1e7145"
+			];
+
+			new Chart("outerChart", {
+			  type: "pie",
+			  data: {
+			    labels: oValues,
+			    datasets: [{
+			      backgroundColor: obarColors,
+			      data: oyValues
+			    }]
+			  },
+			  options: {
+			    title: {
+			      display: true,
+			      text: "이번 달 아우터 종류별 판매량"
+			    }
+			  }
+			});
+			/*상의 그래프*/
+			const sValues = [[${shirtArr}]];
+			
+			const syValues = [[${sArr}]];
+			const sbarColors = [
+			  "#b91d47",
+			  "#00aba9",
+			  "#2b5797",
+			  "#e8c3b9",
+			  "#1e7145"
+			];
+
+			new Chart("shirtChart", {
+			  type: "pie",
+			  data: {
+			    labels: sValues,
+			    datasets: [{
+			      backgroundColor: sbarColors,
+			      data: syValues
+			    }]
+			  },
+			  options: {
+			    title: {
+			      display: true,
+			      text: "이번 달 상의 종류별 판매량"
+			    }
+			  }
+			});
+			
+			/*하의 그래프*/
+			const pValues = [[${pantsArr}]];
+			
+			const pyValues = [[${pArr}]];
+			const pbarColors = [
+			  "#b91d47",
+			  "#00aba9",
+			  "#2b5797",
+			  "#e8c3b9",
+			  "#1e7145"
+			];
+
+			new Chart("pantsChart", {
+			  type: "pie",
+			  data: {
+			    labels: pValues,
+			    datasets: [{
+			      backgroundColor: pbarColors,
+			      data: pyValues
+			    }]
+			  },
+			  options: {
+			    title: {
+			      display: true,
+			      text: "이번 달 하의 종류별 판매량"
+			    }
+			  }
+			});
+			
+			/*신발 그래프*/
+			const shValues = [[${shoesArr}]];
+			
+			const shyValues = [[${shoArr}]];
+			const shbarColors = [
+			  "#b91d47",
+			  "#00aba9",
+			  "#2b5797",
+			  "#e8c3b9",
+			  "#1e7145"
+			];
+
+			new Chart("shoesChart", {
+			  type: "pie",
+			  data: {
+			    labels: shValues,
+			    datasets: [{
+			      backgroundColor: shbarColors,
+			      data: shyValues
+			    }]
+			  },
+			  options: {
+			    title: {
+			      display: true,
+			      text: "이번 달 신발 종류별 판매량"
+			    }
+			  }
+			});
+			</script>
+			<form action="" th:object="${salesDTO}">
+				<table border="">
+					<tr>
+						<td>날짜</td>
+						<td>
+							<select th:field="*{schDate}">
+								<option value="01">1월</option>
+								<option value="02">2월</option>
+								<option value="03">3월</option>
+								<option value="04">4월</option>
+								<option value="05">5월</option>
+								<option value="06">6월</option>
+								<option value="07">7월</option>
+								<option value="08">8월</option>
+								<option value="09">9월</option>
+								<option value="10">10월</option>
+								<option value="11">11월</option>
+								<option value="12">12월</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><input type="submit" value="날짜검색" /></td>
+					</tr>
+				</table>
+			</form>
+			
+		</th:block>
+		<th:block layout:fragment="add-content">
+			
+		</th:block>
+	</div>
+</div>
+</html>
