@@ -13,9 +13,15 @@ layout:decorate="fc_total/template">
 <th:block layout:fragment="content">
 <body>
 <h1>delete</h1>
-
+<h2></h2>
 <form method="post" th:object="${mainData}">
 	<table border="">
+	
+	
+	<tr>
+		<td><input type="text" th:field="*{id}"/></td>
+	</tr>
+	
 		
 		<tr>
 			<td colspan="2" align="center"> 

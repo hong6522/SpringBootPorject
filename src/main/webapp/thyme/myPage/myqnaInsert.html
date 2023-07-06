@@ -50,8 +50,9 @@ layout:decorate="fc_total/template">
 			<input type="radio" name="secret_chk" th:checked="*{!secret_chk}" th:value="0"  />미설정</td>
 		</tr>
 		
+		
 	
-		<tr> <td><a th:href="@{|/center/qna?nowPage=${pd.nowPage}|}" th:text="목록으로"></a> </td> </tr>
+		<tr> <td><a th:href="@{|/myPage/myqna|}" th:text="목록으로"></a> </td> </tr>
 	
 		<tr>
 			<td colspan="2" align="center"> 

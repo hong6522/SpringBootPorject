@@ -77,6 +77,9 @@ h2{
  	<td>제목</td><td th:text="${mainData.title}" ></td>
  </tr>
  <tr class="center_notice">
+ 	<td>상품명</td><td th:text="${mainData.fassion_name}" ></td>
+ </tr>
+ <tr class="center_notice">
  	<td>작성자</td><td th:text="${mainData.id}"></td>
  </tr>
  <tr class="center_notice">
@@ -91,20 +94,25 @@ h2{
  <tr>
  	<td colspan="2">
  			
- 		 <span th:if="${mainData.upfile} != null">
- 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile}}"/>
- 		 </span>
- 		 <span th:if="${mainData.upfile2} != null">
- 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile2}}"/>
- 		 </span>
- 		 <span th:if="${mainData.upfile3} != null">
- 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile3}}"/>
- 		 </span>
+		 <span th:if="${mainData.upfile != null and mainData.upfile != ''}">
+		  <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile}}"/>
+		</span>
+		
+ 		 
+ 		 <span th:if="${mainData.upfile1 != null and mainData.upfile1 != ''}">
+		  <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile1}}"/>
+		</span>
+ 		  <span th:if="${mainData.upfile2 != null and mainData.upfile2 != ''}">
+		  <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile2}}"/>
+		</span>
  		<div class="center_content" th:text="${mainData.contentBr}"></div>
  		 	 
  	</td>
  </tr><tr>
 		<td colspan="2" align="right">
+		
+			<a th:href="|/myPage/myreviewModify/${mainData.no}|" th:text="수정"/>
+          	<a th:href="|/myPage/myreviewDelete/${mainData.no}|" th:text="삭제"/>
 			<a th:href="|/myPage/myreview|" th:text="목록으로" ></a>
 		</td>
 	</tr>

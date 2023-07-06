@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="fc_total/template">
+
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top">
+
+</head>
+<title>d</title>
+
+</th:block>
+
+
+ 
+ 
+<th:block layout:fragment="content">
+<body>
+<h1>insert</h1>
+<form action="" method="post" th:object="${reviewDTO}"  enctype="multipart/form-data" >
+	<table border="" width="60%">
+		<tr>
+			<td>제목</td>
+			<td><input type="text" th:field="*{title}"/></td>
+		</tr>
+		<tr>
+			<td>상품명</td>
+			<td><input type="text" th:field="*{fassion_name}"/></td>
+		</tr>
+		
+		<tr>
+			<td>내용</td>
+			<td><textarea  th:field="*{content}"/></textarea></td>
+		</tr>
+		<tr>
+			<td>파일1</td>
+			<td><input type="file" multiple="multiple" th:field=*{ff1}  readonly/></td>
+		</tr>
+		<tr>
+			<td>파일2</td>
+			<td><input type="file" multiple="multiple" th:field=*{ff2}  readonly/></td>
+		</tr>
+		<tr>
+			<td>파일3</td>
+			<td><input type="file" multiple="multiple" th:field=*{ff3}  readonly/></td>
+		</tr>
+		<tr>
+		<td>아이디</td>
+		<td><input type="text" name="id" th:value=${id}  readonly/></td>
+		</tr>
+		
+	
+		<tr>
+			<td>평가</td>
+			<td><input type="text"  th:value=${star_num} /></td>
+		</tr>
+		<tr> <td><a th:href="@{|/myPage/myreview|}" th:text="목록으로"></a> </td> </tr>
+		
+		<tr>
+			<td colspan="2" align="center"> 
+				<input type="submit" value="작성" />
+			</td>
+		</tr>
+	</table>
+</form>
+
+
+</th:block>
+
+
+
+
+
+
+
+
+<th:block layout:fragment="add-content">
+	<h3>내용</h3>
+</th:block>
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>
