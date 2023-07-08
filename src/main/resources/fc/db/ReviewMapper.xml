@@ -59,9 +59,9 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 			select max(no)+1 from fassion_review
 		</selectKey>
 	
-		insert into fassion_review (no, title, fassion_name, content ,id, reg_date ,upfile , upfile1 , upfile2, star_num, review_cnt)
+		insert into fassion_review (no, title, fashion_name, content ,id, reg_date ,upfile , upfile1 , upfile2,  review_cnt)
 		values
-		               ( #{no}, #{title}, #{fassion_name}, #{content}, #{id}, sysdate(), #{upfile}, #{upfile1} ,#{upfile2} ,#{star_num} , -1 )
+		               ( #{no}, #{title}, #{fashion_name}, #{content}, #{id}, sysdate(), #{upfile}, #{upfile1} ,#{upfile2}  , -1 )
 	</insert>
 	
 	

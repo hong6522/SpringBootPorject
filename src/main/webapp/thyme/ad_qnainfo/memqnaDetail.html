@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="fc_total/template">
+
+<title>Admin_QNAdetail</title>
+
+<script th:inline="javascript">
+  function confirmDelete(postId) {
+    var confirmed = confirm("게시글을 삭제하시겠습니까?");
+    
+    return confirmed;
+    if (confirmed) {
+      window.location.href = '/memqnaDelete/' + postId;
+    }
+  }
+</script>
+
+<h1>Admin_QNAdetail</h1>
+<table border="" width="90%">
+ <tr class="center_notice">
+ 	<td>제목</td><td th:text="${mainData.title}" ></td>
+ </tr>
+ <tr class="center_notice">
+ 	<td>작성자</td><td th:text="${mainData.id}"></td>
+ </tr>
+ <tr class="center_notice">
+ 	<td>작성일</td><td th:text="${mainData.reg_dateStr}"></td>
+ </tr>
+ <tr class="center_notice">
+ 	<td>조회수</td><td th:text="${mainData.qna_cnt}"></td>
+ </tr>
+ <tr>
+ 	<td>내용</td><td th:text="${mainData.contentBr}"></td>
+ </tr>
+ 
+
+ <tr>
+ 	<td>관리자 답변</td><td th:text="${mainData.getAnswer}" ></td>
+ </tr>
+  
+ <tr>
+ 	<td>관리자 답변일시</td><td th:text="${mainData.answer_Date}"></td>
+ </tr>
+
+ 
+ 
+ 
+ <tr>
+ 
+		<td colspan="2" align="right">			
+			
+			<span th:if="${mainData.answer_chk} == false">
+          	<a th:href="@{/ad_qnainfo/memqnaReply/{postId}/{nowPage}(postId=${mainData.no}, nowPage=${pd.nowPage})}" th:text="답변"></a>
+			</span>
+			<span th:if="${mainData.answer_chk} == true">
+			  <a th:href="@{/ad_qnainfo/memqnaModify/{postId}/{nowPage}(postId=${mainData.no}, nowPage=${pd.nowPage})}" th:text="답변수정"></a>
+			</span>
+          	 <a th:href="@{/ad_qnainfo/memqnaDelete/{no}(no=${mainData.no})}" type="button" onclick="return confirmDelete('${mainData.no}')">삭제</a>
+          
+			 <a th:href="@{|/ad_qnainfo/memqna?nowPage=${pd.nowPage}|}" th:text="목록으로"></a>		
+
+		</td>
+	</tr>
+	
+	
+</table>
+		
+
+
+
+
+</html>

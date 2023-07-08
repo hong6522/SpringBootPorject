@@ -9,6 +9,8 @@ public interface QnaMapper {
 	
 	List<QnaDTO> qlist(CenterPData pd);
 	
+	List<QnaDTO> adqlist(AdQnaPData pd);
+	
 	List<QnaDTO> myqnalist(String id);
 	
 	//QnaDTO myqnalist(QnaDTO bdedsde);
@@ -29,8 +31,8 @@ public interface QnaMapper {
 	
     int pwchk(QnaDTO dto);
 	
+    int adreply (QnaDTO dto);
 	
-	
-	
+    int  admodify(QnaDTO dto);
 
 }

@@ -60,9 +60,9 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 			select max(no)+1 from qna
 		</selectKey>
 	
-		insert into qna (no, title, type, content ,id, reg_date ,secret_chk, pw, qna_cnt)
+		insert into qna (no, title, type, content ,id, reg_date ,secret_chk, qna_cnt)
 		values
-		               ( #{no}, #{title}, #{type}, #{content}, #{id}, sysdate(), #{secret_chk} , #{pw}, -1 )
+		               ( #{no}, #{title}, #{type}, #{content}, #{id}, sysdate(), #{secret_chk} , -1 )
 	</insert>
 	
 	
@@ -97,6 +97,47 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
     <select id="myqnalist"  resultType="qnaDTO" parameterType="qnaDTO">
 	select * from qna where id = #{id}  ORDER BY reg_date desc
 	</select>
-    
+
+
+	
+	
+<!--관리자qna리스트 -->
+ <select id="adqlist" parameterType="qnaDTO" resultType="qnaDTO">
+  SELECT *
+  FROM qna
+  <where>
+    <if test="sch != null and sch != ''">
+      <trim prefix="AND" prefixOverrides="AND">
+        <if test="kind == 'title'">
+          title LIKE CONCAT('%', #{sch}, '%')
+        </if>
+        <if test="kind == 'id'">
+          id LIKE CONCAT('%', #{sch}, '%') 
+        </if>
+      </trim>
+    </if>
+  </where>
+  <if test="sch == null or sch == ''">
+    ORDER BY answer_chk ASC, reg_date desc
+    <if test="start != null and limit != null">
+      LIMIT #{start}, #{limit}
+    </if>
+  </if>
+</select>
+
+
+<!-- 관리자 qna 답변  -->
+  
+    <update id="adreply" parameterType="qnaDTO">
+		update qna set answer_Date = sysdate()  ,  getAnswer = #{getAnswer} , answer_chk = true  where  no = #{no}   
+		
+	</update>
+<!-- 관리자 qna 수정  -->
+  
+    <update id="admodify" parameterType="qnaDTO">
+	  update qna set getAnswer = #{getAnswer}  where no= #{no}
+		
+	</update>
+   
     
 </mapper>

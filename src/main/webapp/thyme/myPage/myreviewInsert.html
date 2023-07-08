@@ -24,7 +24,7 @@ layout:decorate="fc_total/template">
 		</tr>
 		<tr>
 			<td>상품명</td>
-			<td><input type="text" th:field="*{fassion_name}"/></td>
+			<td><input type="text" th:field="*{fashion_name}"/></td>
 		</tr>
 		
 		<tr>
@@ -49,10 +49,6 @@ layout:decorate="fc_total/template">
 		</tr>
 		
 	
-		<tr>
-			<td>평가</td>
-			<td><input type="text"  th:value=${star_num} /></td>
-		</tr>
 		<tr> <td><a th:href="@{|/myPage/myreview|}" th:text="목록으로"></a> </td> </tr>
 		
 		<tr>

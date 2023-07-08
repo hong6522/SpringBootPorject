@@ -3,7 +3,9 @@ package fc.control;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,7 +55,6 @@ public class CenterController {
 		  pd.setTotal(ntotal);
 		List<NoticeDTO> mainData = cm.nlist(pd);
 		 String sch = request.getParameter("sch");
-		 System.out.println(sch);
 		
 		  pd.setTotal(ntotal);
 		   // or "id" based on the selected option
@@ -74,11 +75,18 @@ public class CenterController {
 		return "center/notice";		
 	}
 	
-	@RequestMapping("/noticeDetail/{no}")
-	String centerDetail(Model mm, NoticeDTO dto) {
+	@RequestMapping("/noticeDetail/{no}/{nowpage}")
+	String centerDetail(Model mm, NoticeDTO dto , @PathVariable int nowpage, HttpServletRequest request) {
 		//System.out.println(dto.getId());
-		System.out.println(dto);
+		new CenterPData(request);
+		CenterPData pd = (CenterPData)request.getAttribute("pd");
+		int ntotal = cm.ntotalcount();
+		  pd.setTotal(ntotal);
+		  pd.setNowPage(nowpage);
+		
 		cm.ncnt(dto.no);
+		
+		mm.addAttribute("pdata", pd);
 		mm.addAttribute("mainData", cm.ndetail(dto));
 		
 		
@@ -169,12 +177,14 @@ public class CenterController {
 			mm.addAttribute("id", myPage.getId());
 			mm.addAttribute("mainData", qm.qdetail(dto));
 			
+			
+			
 			return  "center/qnaInsert";
 		}
 		
 		
 		mm.addAttribute("pdata", pd);
-		mm.addAttribute("msg", "비회원은 접근이 불가합니다.");
+		mm.addAttribute("msg", "로그인이 필요한 서비스입니다. 회원으로 로그인 후 글 작성이 가능합니다.");
 		mm.addAttribute("goUrl", "/center/qna");
 		
 		
@@ -207,8 +217,9 @@ public class CenterController {
 		new CenterPData(request);
 		CenterPData pd = (CenterPData)request.getAttribute("pd");
 	
-		int ntotal = qm.qtotalcount();
-		  pd.setTotal(ntotal);
+		int qtotal = qm.qtotalcount();
+		  pd.setTotal(qtotal);
+		  pd.setNowPage(nowpage);
 		  
 		  
 		  
@@ -226,6 +237,12 @@ public class CenterController {
 	
 		new CenterPData(request);
 		CenterPData pd = (CenterPData)request.getAttribute("pd");
+		
+		int qtotal = qm.qtotalcount();
+		  pd.setTotal(qtotal);
+		  
+		  pd.setNowPage(nowpage);
+		  
 	    int cnt = qm.qmodify(dto);
 	    
 	    String msg = "수정 불가";   
@@ -339,7 +356,7 @@ public class CenterController {
 		
 
 		pd.setNowPage(nowpage);
-		
+		pd.setNowPage(nowpage);
 		if(session.getAttribute("type")!=null) {
 			mDTO = new MemberDTO();
 			mDTO.setEmail((String)session.getAttribute("email"));
@@ -368,8 +385,6 @@ public class CenterController {
 		CenterPData pd = (CenterPData)request.getAttribute("pd");	
 		int rtotal = rm.rtotalcount();
 		pd.setTotal(rtotal);
-		  
-	
 		pd.setNowPage(nowpage);
 		
 		mm.addAttribute("mainData", rm.rdetail(dto));
@@ -385,7 +400,8 @@ public class CenterController {
 	    	
 			new CenterPData(request);
 			CenterPData pd = (CenterPData)request.getAttribute("pd");	
-	
+			int rtotal = rm.rtotalcount();
+			pd.setTotal(rtotal);
 			pd.setNowPage(nowpage);
 			System.out.println(dto.getFf1().getName());
 		

@@ -71,6 +71,7 @@ String myqnaDetail(Model mm, QnaDTO dto , HttpServletRequest request , HttpSessi
 	MemberDTO myPage = mp.myPage(mDTO);
 	mm.addAttribute("mainData", qm.qdetail(dto));
 	mm.addAttribute("id", myPage.getId());
+	mm.addAttribute("no", dto.no);
 	return "myPage/myqnaDetail";
     }
 	else {
@@ -127,37 +128,36 @@ String myreviewDetail(Model mm , ReviewDTO dto , MultipartFile ff ,  HttpSession
 //System.out.println(mm.getAttribute("mainData"));
 }
 
-@RequestMapping("/myqnaDetail/{no}/{nowpage}")
-String myqnaDetail(Model mm,@PathVariable int nowpage, QnaDTO dto , HttpServletRequest request , HttpSession session) {
-	//String id = (String)session.getAttribute("id");
-	//String id = "qqq";	
-	new CenterPData(request);
-	CenterPData pd = (CenterPData)request.getAttribute("pd");
-	qm.qcnt(dto.getNo());
-	int ntotal = qm.qtotalcount();
-	pd.setTotal(ntotal);
-	pd.setNowPage(nowpage);
-	
-	MemberDTO mDTO;
-	if(session.getAttribute("type")!=null) {
-
-		mDTO = new MemberDTO();
-		mDTO.setEmail((String)session.getAttribute("email"));
-		MemberDTO myPage = mp.myPage(mDTO);
-		mm.addAttribute("pdata", pd);
-		mm.addAttribute("mainData", qm.qdetail(dto));
-		mm.addAttribute("id", myPage.getId());
-		return "myPage/myqnaDetail";
-	    }
-		else {
-			return "/fc/mem/login";
-		}
-	
-
-	
-	
-
-}
+//@RequestMapping("/myqnaDetail/{no}/{nowpage}")
+//String myqnaDetail(Model mm,@PathVariable int nowpage, QnaDTO dto , HttpServletRequest request , HttpSession session) {
+//	//String id = (String)session.getAttribute("id");
+//	//String id = "qqq";	
+//	System.out.println("sssssssssss"+dto.no);
+//	new CenterPData(request);
+//	CenterPData pd = (CenterPData)request.getAttribute("pd");
+//	qm.qcnt(dto.getNo());
+//	int ntotal = qm.qtotalcount();
+//	pd.setTotal(ntotal);
+//	pd.setNowPage(nowpage);
+//	
+//	MemberDTO mDTO;
+//	if(session.getAttribute("type")!=null) {
+//
+//		mDTO = new MemberDTO();
+//		mDTO.setEmail((String)session.getAttribute("email"));
+//		MemberDTO myPage = mp.myPage(mDTO);
+//		mm.addAttribute("pdata", pd);
+//		mm.addAttribute("mainData", qm.qdetail(dto));
+//		mm.addAttribute("id", myPage.getId());
+//		mm.addAttribute("no", dto.getNo() );
+//		return "myPage/myqnaDetail";
+//	    }
+//		else {
+//			return "/fc/mem/login";
+//		}	
+//	
+//
+//}
 
 
 @GetMapping("/myqnaInsert")
@@ -342,7 +342,7 @@ String  myreviewInsertComplete(Model mm, ReviewDTO dto , HttpServletRequest requ
 	//System.out.println(dto.no);
 	//dto.setFf1(dto.getFf1());
 	mm.addAttribute("msg", "입력되었습니다.");
-	mm.addAttribute("goUrl", "myreview");
+	mm.addAttribute("goUrl", "/myPage/myreviewDetail/"+dto.no);
 	return "center/alert";
 }
 

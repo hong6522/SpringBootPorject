@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="fc_total/template">
+
+</head>
+<title>d</title>
+
+
+<h1>modifyForm</h1>
+<form method="post" th:object="${mainData}">
+	<table border="">
+	
+			<tr>
+			<td>관리자답변</td>
+			<td><input type="text" th:field="*{getAnswer}" /></td>
+		</tr>
+
+		<tr >
+			<td colspan="2"><input type="submit" value="제출"/></td>
+		</tr>
+		
+		<tr>
+		<td colspan="2"><a th:href="@{|/ad_qnainfo/memqnaDetail/${mainData.no}/${pd.nowPage}|}" th:text="목록으로"></a></td>
+		</tr>
+		
+	</table>
+</form>
+
+
+</html>

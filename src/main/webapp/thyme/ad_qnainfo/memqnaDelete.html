@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="fc_total/template">
+
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top">
+
+</head>
+<title>d</title>
+
+</th:block>
+
+<th:block layout:fragment="content">
+<body>
+<h1>delete</h1>
+
+<form method="post" th:object="${mainData}">
+	<table border="">
+		
+		<tr>
+			<td colspan="2" align="center"> 
+				<input type="submit" value="삭제하기" />
+			</td>
+		</tr>
+	</table>
+</form>
+</th:block>
+
+
+
+
+
+
+
+
+<th:block layout:fragment="add-content">
+	<h3>내용</h3>
+</th:block>
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>
