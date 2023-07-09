@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+
+<style>
+head{
+	margin-right: 50px;
+}
+.context{
+	float: left;
+}
+.Graph{
+	width: 1600px;
+	float: left;
+}
+</style>
+<div>
+	<div class="context">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>주문관리</title>
+		</th:block>
+	</div>
+	
+	<div class="context">
+		<th:block layout:fragment="content">
+		<!-- <script>
+			function modifySh(no){
+				alert("수정되었습니다.");
+				location.href="shippingList/"+no;
+			} 
+		</script> -->
+			<table border="">
+				<tr>
+					<td><a href="orderList">주문목록</a></td>
+					<td>배송관리</td>
+					<td><a href="refundList">취소·환불관리</a></td>
+				</tr>
+			</table>
+			<h1>주문목록</h1>
+			<h3>배송 준비중 목록</h3>
+			<table border="">
+				<tr>
+					<td>주문번호</td>
+					<td>구매자ID</td>
+					<td>수령인</td>
+					<td>수령지</td>
+					<td>상품카테고리</td>
+					<td>상품명</td>
+					<td>상품수량</td>
+					<td>상품가격</td>
+					<td>구매날짜</td>
+					<td>베송여부</td>
+					<td>주문상태</td>
+					<td>환불날짜</td>
+					<td>배송상태수정</td>
+				</tr>
+				<tr th:each="dto:${beforeData}">
+					<td th:text="${dto.order_no}"></td>
+					<td th:text="${dto.order_ID}"></td>
+					<td th:text="${dto.order_name}"></td>
+					<td th:text="${dto.order_place}"></td>
+					<td th:text="${dto.order_cate}"></td>
+					<td th:text="${dto.order_product}"></td>
+					<td th:text="${dto.order_cnt}"></td>
+					<td th:text="${dto.order_price}"></td>
+					<td th:text="${dto.order_dateStr}"></td>
+					<td th:text="${dto.order_shipping}"></td>
+					<td th:text="${dto.order_state}"></td>
+					<td th:text="${dto.cancleStr}"></td>
+					<td>
+						<form action="" method="post" th:object="${shippingDTO}">
+							<input type="hidden" name="schNo" th:value="${dto.order_no}" />
+							<select th:field="*{shippingChk}">
+									<option value="배송준비중">배송준비중</option>
+									<option value="배송중">배송중</option>
+									<option value="배송완료">배송완료</option>
+							</select>
+							<input type="submit" value="수정" />
+						</form>
+					</td>
+				</tr>
+			</table>
+			
+			<h3>배송중 목록</h3>
+			<table border="">
+				<tr>
+					<td>주문번호</td>
+					<td>구매자ID</td>
+					<td>수령인</td>
+					<td>수령지</td>
+					<td>상품카테고리</td>
+					<td>상품명</td>
+					<td>상품수량</td>
+					<td>상품가격</td>
+					<td>구매날짜</td>
+					<td>베송여부</td>
+					<td>주문상태</td>
+					<td>환불날짜</td>
+					<td>배송상태수정</td>
+				</tr>
+				<tr th:each="dto:${ingData}">
+					<td th:text="${dto.order_no}"></td>
+					<td th:text="${dto.order_ID}"></td>
+					<td th:text="${dto.order_name}"></td>
+					<td th:text="${dto.order_place}"></td>
+					<td th:text="${dto.order_cate}"></td>
+					<td th:text="${dto.order_product}"></td>
+					<td th:text="${dto.order_cnt}"></td>
+					<td th:text="${dto.order_price}"></td>
+					<td th:text="${dto.order_dateStr}"></td>
+					<td th:text="${dto.order_shipping}"></td>
+					<td th:text="${dto.order_state}"></td>
+					<td th:text="${dto.cancleStr}"></td>
+					<td>
+						<form action="" method="post" th:object="${shippingDTO}">
+							<input type="hidden" name="schNo" th:value="${dto.order_no}" />
+							<select th:field="*{shippingChk}">
+									<option value="배송중">배송중</option>
+									<option value="배송준비중">배송준비중</option>
+									<option value="배송완료">배송완료</option>
+							</select>
+							<input type="submit" value="수정" />
+						</form>
+					</td>
+				</tr>
+			</table>
+			
+			<h3>배송완료 목록</h3>
+			<table border="">
+				<tr>
+					<td>주문번호</td>
+					<td>구매자ID</td>
+					<td>수령인</td>
+					<td>수령지</td>
+					<td>상품카테고리</td>
+					<td>상품명</td>
+					<td>상품수량</td>
+					<td>상품가격</td>
+					<td>구매날짜</td>
+					<td>베송여부</td>
+					<td>주문상태</td>
+					<td>환불날짜</td>
+					<td>배송상태수정</td>
+				</tr>
+				<tr th:each="dto:${afterData}">
+					<td th:text="${dto.order_no}"></td>
+					<td th:text="${dto.order_ID}"></td>
+					<td th:text="${dto.order_name}"></td>
+					<td th:text="${dto.order_place}"></td>
+					<td th:text="${dto.order_cate}"></td>
+					<td th:text="${dto.order_product}"></td>
+					<td th:text="${dto.order_cnt}"></td>
+					<td th:text="${dto.order_price}"></td>
+					<td th:text="${dto.order_dateStr}"></td>
+					<td th:text="${dto.order_shipping}"></td>
+					<td th:text="${dto.order_state}"></td>
+					<td th:text="${dto.cancleStr}"></td>
+					<td>
+						<form action="" method="post" th:object="${shippingDTO}">
+							<input type="hidden" name="schNo" th:value="${dto.order_no}" />
+							<select th:field="*{shippingChk}">
+									<option value="배송완료">배송완료</option>
+									<option value="배송준비중">배송준비중</option>
+									<option value="배송중">배송중</option>
+							</select>
+							<input type="submit" value="수정" />
+						</form>
+					</td>
+				</tr>
+			</table>
+				
+		</th:block>
+		<th:block layout:fragment="add-content">
+			
+		</th:block>
+	</div>
+</div>
+</html>
