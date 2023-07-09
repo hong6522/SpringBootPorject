@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import fc.db.RefundDTO;
+import fc.db.RefundMapper;
 import fc.db.ShippingDTO;
 import fc.db.ShippingMapper;
 import jakarta.annotation.Resource;
@@ -19,6 +21,8 @@ public class ShippingController {
 
 	@Resource
 	ShippingMapper shim;
+	@Resource
+	RefundMapper refm;
 	
 	@RequestMapping("/ad_page/order/orderList")
 	String orderList(Model mm, ShippingDTO dto) {
@@ -115,6 +119,52 @@ public class ShippingController {
 			msg = "수정완료하였습니다.";
 		}
 		
+		mm.addAttribute("msg", msg);
+		mm.addAttribute("goUrl", goUrl);
+		
+		return "/alert";
+	}
+	
+	@RequestMapping("/ad_page/order/refundList")
+	String refundList(Model mm, RefundDTO dto) {
+		
+		ArrayList<RefundDTO> waitData = refm.waitList(dto);
+		ArrayList<RefundDTO> possData = refm.possList(dto);
+		ArrayList<RefundDTO> impoData = refm.impoList(dto);
+		
+		System.out.println(waitData);
+		
+		mm.addAttribute("waitData", waitData);
+		mm.addAttribute("possData", possData);
+		mm.addAttribute("impoData", impoData);
+		
+		return "ad_page/order/refundList";
+	}
+	
+	@GetMapping("/ad_page/order/refundDetail/{orderNo}")
+	String refundDetail(Model mm, RefundDTO dto) {
+		
+		RefundDTO mainData = refm.detail(dto); 
+		
+		mm.addAttribute("mainData", mainData);
+		
+		return "ad_page/order/refundDetail";
+	}
+	
+	@PostMapping("/ad_page/order/refundDetail/{orderNo}")
+	String refundComplete(Model mm, RefundDTO dto) {
+		
+		System.out.println(dto);
+		int res = refm.update(dto);
+		System.out.println(res);
+		String msg = "오류가 발생하였습니다.";
+		String goUrl = "/ad_page/order/refundList";
+		if(res==1) {
+			msg = "답변이 저장되었습니다.";
+		}
+		
+		mm.addAttribute("msg", msg);
+		mm.addAttribute("goUrl", goUrl);
 		
 		return "/alert";
 	}

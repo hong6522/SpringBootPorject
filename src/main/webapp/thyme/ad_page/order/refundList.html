@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
 
-</body>
+<style>
+head{
+	margin-right: 50px;
+}
+.context{
+	float: left;
+}
+.Graph{
+	width: 1600px;
+	float: left;
+}
+</style>
+<div>
+	<div class="context">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>취소·환불관리</title>
+		</th:block>
+	</div>
+	
+	<div class="context">
+		<th:block layout:fragment="content">
+		
+			<table border="">
+				<tr>
+					<td><a href="orderList">주문목록</a></td>
+					<td><a href="shippingList">배송관리</a></td>
+					<td>취소·환불관리</td>
+				</tr>
+			</table>
+			<h1>취소 · 환불 목록</h1>
+			<h3>답변대기 목록</h3>
+			<table border="">
+				<tr>
+					<td>주문번호</td>
+					<td>구매자ID</td>
+					<td>상품카테고리</td>
+					<td>상품명</td>
+					<td>취소 · 환불</td>
+					<td>답변상태</td>
+				</tr>
+				<tr th:each="dto:${waitData}">
+					<td th:text="${dto.orderNo}"></td>
+					<td th:text="${dto.re_orderID}"></td>
+					<td th:text="${dto.re_cate}"></td>
+					<td th:text="${dto.re_name}"></td>
+					<td th:text="${dto.re_state}"></td>
+					<td><a th:href="|refundDetail/${dto.orderNo}|"  th:text="${dto.re_answer}"></a></td>
+				</tr>
+			</table>
+			
+			<h3>취소·환불 가능 목록</h3>
+			<table border="">
+				<tr>
+					<td>주문번호</td>
+					<td>구매자ID</td>
+					<td>상품카테고리</td>
+					<td>상품명</td>
+					<td>취소 · 환불</td>
+					<td>답변상태</td>
+				</tr>
+				<tr th:each="dto:${possData}">
+					<td th:text="${dto.orderNo}"></td>
+					<td th:text="${dto.re_orderID}"></td>
+					<td th:text="${dto.re_cate}"></td>
+					<td th:text="${dto.re_name}"></td>
+					<td th:text="${dto.re_state}"></td>
+					<td><a th:href="|refundDetail/${dto.orderNo}|"  th:text="${dto.re_answer}"></a></td>
+				</tr>
+			</table>
+			
+			<h3>취소·환불 불가능 목록</h3>
+			<table border="">
+				<tr>
+					<td>주문번호</td>
+					<td>구매자ID</td>
+					<td>상품카테고리</td>
+					<td>상품명</td>
+					<td>취소 · 환불</td>
+					<td>답변상태</td>
+				</tr>
+				<tr th:each="dto:${impoData}">
+					<td th:text="${dto.orderNo}"></td>
+					<td th:text="${dto.re_orderID}"></td>
+					<td th:text="${dto.re_cate}"></td>
+					<td th:text="${dto.re_name}"></td>
+					<td th:text="${dto.re_state}"></td>
+					<td><a th:href="|refundDetail/${dto.orderNo}|"  th:text="${dto.re_answer}"></a></td>
+				</tr>
+			</table>
+			
+				
+		</th:block>
+		<th:block layout:fragment="add-content">
+			
+		</th:block>
+	</div>
+</div>
 </html>
