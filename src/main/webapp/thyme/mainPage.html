@@ -92,7 +92,7 @@ layout:decorate="fc_total/template">
 	<div class="main_top"></div>
 	<div class="main_midle">
 		<div th:each="dto : ${mainData}">
-			<a th:href="|pro/detail/${dto.num}|">
+			<a th:href="|/fc_pro/detail/${dto.num}|">
 				<div class="pro_wrapper">
 					<div><img th:src="|../img/${dto.proImg}|" alt="" id="pro_img"/></div>
 					<div th:text="${dto.proName}"></div>
