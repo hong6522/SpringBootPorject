@@ -36,13 +36,20 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		</where>
 	</select>
 	
+	<select id="pro_detail" resultType="pDTO" parameterType="pDTO">
+		SELECT * FROM product
+		<where>
+			num = #{num}
+		</where>
+	</select>
+	
 	
 	<insert id="insert" parameterType="pDTO" >
 		<selectKey keyProperty="num" resultType="Integer" order="BEFORE">
 			select max(num)+1 from product
 		</selectKey>
-		insert into product (num,kind,proKind,proName,proDetail,pf1,pf2,proSize,color,sel,memPoint,supplyPrice,sellPrice,proCnt,reg_date)
+		insert into product (num,kind,proKind,proName,proDetail,pf1,pf2,pf3,proSize,color,sel,memPoint,supplyPrice,sellPrice,proCnt,reg_date)
 		values
-		(#{num}, #{kind}, #{proKind}, #{proName}, #{proDetail},#{pf1},#{pf2},#{proSize},#{color},#{sel},#{memPoint},#{supplyPrice},#{sellPrice},#{proCnt},sysdate())
+		(#{num}, #{kind}, #{proKind}, #{proName}, #{proDetail},#{pf1},#{pf2},#{pf3},#{proSize},#{color},#{sel},#{memPoint},#{supplyPrice},#{sellPrice},#{proCnt},sysdate())
 	</insert>
 </mapper>

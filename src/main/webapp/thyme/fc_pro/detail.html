@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top"></head>
+
+
+	<title>상품상세페이지</title>
+</th:block>
+
+<th:block layout:fragment="content">
+
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.proDetail_wrapper{
+		width:1200px;
+		height:550px;
+		margin:auto;
+	}
+	#pro_img{
+		width:500px;
+		height:550px;
+	}
+	.pro_color{
+		width:30px;
+		height:30px;
+		border-radius: 25px;
+		float:left;
+	}
+	.detail_main_wrapper{
+		width:500px;
+		height:550px;
+		float:left;
+		margin-left:50px;
+	}
+	.pro_img_wrapper{
+		width:500px;
+		height:550px;
+		float: left;
+		margin-left:50px;
+	}
+	.detail_menu{
+		width:300px;
+		height:50px;
+		color:#444;
+		display: block;
+	}
+	#sell_cnt{
+		width:250px;
+		height:30px;
+	}
+	#detai_baskit_button{
+		color:#444;
+		width:250px;
+		height:60px;
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+  function basketGo() {
+    alert("시작?");
+
+    $.ajax({
+    	  url: "/ajax/addBasket",
+    	  method: "POST",
+    	  data: {
+    	    cnt: $("#sell_cnt").val(),
+    	    price: $("#hidden_price").val(),
+    	    num: $("#hidden_num").val()
+    	  },
+    	  success: function(ddd) { // 성공시
+    	    alert("다녀옴");
+    	  },
+    	  error: function(ee) { // 실패시
+    	    alert("실패");
+    	  }
+    	});
+  }
+</script>
+
+
+
+
+
+
+
+
+<form action="">
+<div class="proDetail_wrapper">
+	<div class="pro_img_wrapper"><img th:src="|../../img/${mainData.proImg}|" alt="" id="pro_img"/></div>
+	<div class="detail_main_wrapper">
+		<div class="detail_menu" th:text="${mainData.proName}"></div>
+		<div class="detail_menu">
+			<div th:each="cc : ${mainData.colorStr}">
+				<div th:style="'background-color: ' + ${cc} + ' ;'" class="pro_color"></div>
+			</div>
+		</div>
+		<div class="detail_menu" th:text="${mainData.sellPrice}"></div>
+		<input type="hidden" th:value="${mainData.sellPrice}" id="hidden_price"/>
+		<input type="hidden" th:value="${mainData.num}" id="hidden_num"/>
+		<div class="detail_menu">
+			<input type="number" id="sell_cnt" />
+		</div>
+		<div class="detail_menu">
+			<input type="button" id="detai_baskit_button" onclick="basketGo()" value="장바구니"/>
+		</div>
+		<div class="detail_menu">
+			<input type="button" id="detai_baskit_button" value="구매하기"/>
+		</div>
+	</div>
+</div>
+</form>
+<body>
+
+</th:block>
+
+<th:block layout:frgment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</body>
+</html>
