@@ -27,9 +27,20 @@ layout:decorate="fc_total/template">
 		<td th:text="${dto.type}"/>	<td>
 				 
 		
-		<a th:href="@{|/myPage/myqnaDetail/${dto.no}|}" th:text="${dto.title}"
-		 >
-		 </a> 
+		
+			 <span th:if="${dto.secret_chk} == true" > 
+			 <a th:href="@{|/myPage/myqnaDetail/${dto.no}|}" th:text="${dto.title}"></a>
+			 
+			<img th:src="@{/img/unlock.png}" width="25px" height="20px"/>
+	 		</span>
+	 		
+	 		 <span th:if="${dto.secret_chk} != true" > 
+			 <a th:href="@{|/myPage/myqnaDetail/${dto.no}|}" th:text="${dto.title}"></a>
+			 
+	 		</span>
+	 		
+	 	
+	
 			 
 		
 		

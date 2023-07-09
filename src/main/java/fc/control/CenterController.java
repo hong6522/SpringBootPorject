@@ -269,8 +269,21 @@ public class CenterController {
 		 int cnt = qm.qdelete(dto.no);
 		    String msg = "삭제 불가";
 			String goUrl = "/center/qnaDelete/"+dto.getNo();
+			
+//				MemberDTO mDTO;
+//			if(session.getAttribute("type")!=null) {
+//				mDTO = new MemberDTO();
+//				mDTO.setEmail((String)session.getAttribute("email"));
+//				MemberDTO myPage = mp.myPage(mDTO);
+//				mm.addAttribute("id", myPage.getId());
+//				mm.addAttribute("mainData", rm.rdetail(dto));
+//				mm.addAttribute("pdata", pd);
+//				
+//				return  "center/reviewDetail";
+//			}
 		   
-		  
+		  System.out.println(dto.getId());
+		  System.out.println(dto.getNo());
 		    if (cnt > 0) {
 		        msg = "삭제되었습니다.";
 		        goUrl = "/center/qna";

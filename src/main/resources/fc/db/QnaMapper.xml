@@ -39,13 +39,10 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
     </select>
     
     
-    
  <!--qna 디테일 -->   
     <select id="qdetail"  resultType="qnaDTO">
 	select * from qna where no = #{no}
 	</select>
-
-
     
     
 <!--qna 조회수 -->  
@@ -53,7 +50,6 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		update qna set qna_cnt = qna_cnt+1 where  no = #{no}
 		
 	</update>
-	
 <!--qna 게시글 작성 --> 	
 	<insert id="qinsert" parameterType="qnaDTO" >
 	<selectKey keyProperty="no" resultType="Integer" order="BEFORE">
@@ -82,11 +78,10 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	-->
 <!--qna 게시글 수정 --> 
 	<update id="qmodify" parameterType="qnaDTO" >
-		update qna set title = #{title}, content =  #{content}, type = #{type} 
+		update qna set title = #{title}, content =  #{content}, type = #{type}  , secret_chk = #{secret_chk}
 		where no = #{no} and id = #{id} 
 	</update>
 	
-
 
 <!--비밀글 비밀번호 체크 -->  
     <select id="pwchk" resultType="int" parameterType="qnaDTO">
@@ -97,7 +92,6 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
     <select id="myqnalist"  resultType="qnaDTO" parameterType="qnaDTO">
 	select * from qna where id = #{id}  ORDER BY reg_date desc
 	</select>
-
 
 	
 	
@@ -138,6 +132,5 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	  update qna set getAnswer = #{getAnswer}  where no= #{no}
 		
 	</update>
-   
-    
+       
 </mapper>
