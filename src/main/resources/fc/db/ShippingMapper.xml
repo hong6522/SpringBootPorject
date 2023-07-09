@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.ShippingMapper">
+
+	<select id="todayList" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+		<where>
+			 order_date like concat('%', #{today}, '%')
+		</where>
+	</select>
+	
+	<select id="MainList" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+	</select>
+	
+	<select id="beforeList" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+		<where>
+			 order_shipping = "배송준비중"
+		</where>
+	</select>
+	
+	<select id="ingList" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+		<where>
+			 order_shipping = "배송중"
+		</where>
+	</select>
+	
+	<select id="afterList" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+		<where>
+			 order_shipping = "배송완료"
+		</where>
+	</select>
+	
+	<update id="update" parameterType="shipDTO">
+		update shipping set order_shipping = #{shippingChk}
+		<where>
+			order_no = #{schNo}
+		</where>
+	</update>
+
+</mapper>
