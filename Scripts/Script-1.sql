@@ -28,3 +28,7 @@ values ("aaa","홍기훈","아케인리버 츄츄아일랜드","OUTWEAR","아케
 ("lll","홍티훈","아케인리버 아르카나","SHOES","아케인해적신발",2,32000,"2023-07-04","배송완료","환불",sysdate()),
 ("mmm","홍피훈","아케인리버 얌얌아일랜드","OUTWEAR","아케인전사망토",3,33000,"2023-07-05","배송중","주문완료",null),
 ("nnn","홍히훈","아케인리버 얌얌아일랜드","TOP","아케인도적상의",4,34000,sysdate(),"배송준비중","주문취소",null);
+
+select * from shipping where order_shipping = '배송준비중'
+
+update shipping set order_shipping = '배송완료' where order_ID = 'aaa'; 

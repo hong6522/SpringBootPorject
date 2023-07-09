@@ -8,8 +8,19 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	<select id="todayList" resultType="shipDTO" parameterType="shipDTO">
 		select * from shipping
 		<where>
-			order_date like concat ('%', #{today}, '%')
+			order_shipping = '배송준비중'
 		</where>
 	</select>
+	
+	<select id="MainList" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+	</select>
+	
+	<update id="update" parameterType="shipDTO">
+		update shipping set order_shipping = #{schShipping}
+		<where>
+			order_ID = #{order_ID}
+		</where>
+	</update>
 
 </mapper>

@@ -9,4 +9,8 @@ public interface ShippingMapper {
 
 	ArrayList<ShippingDTO> todayList(ShippingDTO dto);
 	
+	ArrayList<ShippingDTO> MainList(ShippingDTO dto);
+	
+	int update(ShippingDTO dto);
+	
 }
