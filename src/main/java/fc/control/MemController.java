@@ -22,6 +22,8 @@ public class MemController {
 	@Resource
 	BasketMapper bm;
 	
+	
+	
 	@RequestMapping("logOut")
 	String session_Out(HttpSession session) {
 		
@@ -86,6 +88,21 @@ public class MemController {
 	
 	@RequestMapping("myBasket")
 	String myBasket(Model mm,HttpSession session) {
+		MemberDTO mDTO;
+		if(session.getAttribute("type")!=null) {
+			mDTO = new MemberDTO();
+			mDTO.setEmail((String)session.getAttribute("email"));
+			MemberDTO member = mp.myPage(mDTO);
+			mm.addAttribute("mainData", bm.basket_list(member));
+			
+		}
+		
+		return "/fc_mem/myBasket";
+		
+	}
+	
+	@RequestMapping("goOrder")
+	String goOrder(Model mm,HttpSession session) {
 		MemberDTO mDTO;
 		if(session.getAttribute("type")!=null) {
 			mDTO = new MemberDTO();

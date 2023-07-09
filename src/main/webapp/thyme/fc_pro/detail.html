@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<body>
+
 <th:block layout:fragment="title">
 <head th:replace="fc_parts/top"></head>
 
@@ -61,10 +61,46 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
 <script>
+
+var IMP = window.IMP;
+IMP.init('imp35316716');
+
+function Pay() {
+   //iamport 대신 자신의 "가맹점 식별코드"를 사용
+  IMP.request_pay({
+    pg: "html5_inicis",
+    pay_method: "card",
+    merchant_uid : 'merchant_',
+    name : '결제테스트',
+    amount : 10, //$("#hidden_price").val()*$("#sell_cnt").val(),
+    buyer_email : 'iamport@siot.do',
+    buyer_name : '구매자',
+    buyer_tel : '010-1234-5678',
+    buyer_addr : '서울특별시 강남구 삼성동',
+    buyer_postcode : '123-456'
+  },
+  
+  function (rsp) { // callback
+	  if (rsp.success) {
+	      var msg = '결제가 완료되었습니다.';
+	      alert(msg);
+	      location.href = "/fc_mem/goOrder"
+	      frm.submit()
+	    } else {
+	      var msg = '결제에 실패하였습니다.';
+	      msg += '에러내용 : ' + rsp.error_msg;
+	      alert(msg);
+	    }
+  });
+}
+
+
   function basketGo() {
-    alert("시작?");
+    //alert("시작?");
 
     $.ajax({
     	  url: "/ajax/addBasket",
@@ -75,10 +111,10 @@
     	    num: $("#hidden_num").val()
     	  },
     	  success: function(ddd) { // 성공시
-    	    alert("다녀옴");
+    	    alert("장바구니에 추가되었습니다.");
     	  },
     	  error: function(ee) { // 실패시
-    	    alert("실패");
+    	    alert("실패하였습니다.");
     	  }
     	});
   }
@@ -111,7 +147,7 @@
 			<input type="button" id="detai_baskit_button" onclick="basketGo()" value="장바구니"/>
 		</div>
 		<div class="detail_menu">
-			<input type="button" id="detai_baskit_button" value="구매하기"/>
+			<input type="button" id="detai_baskit_button" value="구매하기" onclick="Pay()"/>
 		</div>
 	</div>
 </div>
@@ -123,5 +159,5 @@
 <th:block layout:frgment="main-foot">
 <body th:replace="fc_parts/footer::main-foot"></body>
 </th:block>
-</body>
+
 </html>
