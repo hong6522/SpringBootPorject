@@ -1,0 +1,1 @@
+select * from shipping where order_date like concat('%','2023-07-09','%'); 

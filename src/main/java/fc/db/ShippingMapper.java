@@ -11,6 +11,12 @@ public interface ShippingMapper {
 	
 	ArrayList<ShippingDTO> MainList(ShippingDTO dto);
 	
+	ArrayList<ShippingDTO> beforeList(ShippingDTO dto);
+	
+	ArrayList<ShippingDTO> ingList(ShippingDTO dto);
+	
+	ArrayList<ShippingDTO> afterList(ShippingDTO dto);
+	
 	int update(ShippingDTO dto);
 	
 }

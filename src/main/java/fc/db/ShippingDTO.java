@@ -10,7 +10,8 @@ import lombok.Data;
 @Data
 public class ShippingDTO {
 	
-	String order_ID, order_name, order_place, order_cate, order_product, order_shipping, order_state, order_dateStr, today, schShpping, cancleStr;
+	String order_ID, order_name, order_place, order_cate, order_product, order_shipping, order_state, order_dateStr,
+	today, schShpping, cancleStr,shippingChk, schNo;
 	int order_no, order_cnt, order_price;
 	Date order_date, order_cancleDate;
 
