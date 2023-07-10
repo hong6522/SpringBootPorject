@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.BoardMapper">
+
+	<select id="boardlist" resultType="bDTO" parameterType="bDTO">
+		select * from board
+
+	</select>
+	
+		
+	<insert id="insert" parameterType="bDTO" >
+		<selectKey keyProperty="no" resultType="Integer" order="BEFORE">
+			select max(no)+1 from board
+		</selectKey>
+	
+		insert into board (title, content, cnt, pid)
+		values
+		(#{title}, #{content}, 0,"관리자")
+	</insert>
+	
+	<sql id="wno">
+	 	where no = #{no}
+	</sql>
+	
+	<select id="detail" parameterType="bDTO" resultType="bDTO">
+		select * from board
+		<include refid="wno"/>
+	</select>
+	
+	<update id="modify" parameterType="bDTO">
+		update board set title = #{title}, content = #{content}
+		where no = #{no}
+	</update>
+	
+	<delete id="delete"  parameterType="bDTO">
+		delete from board where no = #{no}
+	</delete>
+	
+</mapper>

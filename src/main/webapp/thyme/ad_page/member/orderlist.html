@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+<title>주문내역</title>
+<style>
+head{
+	margin-right: 50px;
+}
+.wrapperMain>div{
+	float:left;
+}
+
+</style>
+<div class="wrapperMain">
+	<div class="top">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>회원관리</title>
+		</th:block>
+	</div>
+	<table border="">
+		<tr th:each="dto : ${mainData}">
+			<td style="width:300px" align="center"><a th:href="|/ad_page/member/ratingDetail/${dto.id}|" th:text="등급수정"></a></td>
+			<td style="width:300px" align="center"><a th:href="|/ad_page/member/qnainfo/${dto.id}|" th:text="${'Q&A 정보'}"></a></td>
+			<td style="width:300px" align="center"><a th:href="|/ad_page/member/orderlist/${dto.id}|" th:text="${'주문 내역'}"></a></td>
+			<td style="width:300px" align="center"><a th:href="|/ad_page/member/shoppingbasket/${dto.id}|" th:text="${'장바구니'}"></a></td>
+		</tr>
+	</table>
+	
+	
+	
+</div>
+</html>

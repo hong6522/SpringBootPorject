@@ -11,9 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MemberMapper {
 	List<MemberDTO> mem(MemberDTO advcx);
 	
-	MemberDTO login(MemberDTO dto);
+	MemberDTO addetail(MemberDTO djsafsnj);
 	
-	int join(MemberDTO dto);
-	
-	MemberDTO myPage(MemberDTO dto);
+	int changerank(MemberDTO gfsbf);
 }

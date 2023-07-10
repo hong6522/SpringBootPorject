@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+<style>
+head{
+	margin-right: 50px;
+}
+.wrapperMain>div{
+	float:left;
+}
+
+</style>
+<div class="wrapperMain">
+	<div class="top">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>회원관리</title>
+		</th:block>
+	</div>
+	<table border="">
+		<tr>
+			<td style="width:300px" align="center"><a href="rating">회원조회</a></td>
+		</tr>
+	</table>
+	<div class="body">
+	<form action="" th:object="${memberDTO}">
+		<table border="">
+			<tr>
+				<td>
+					<select th:field="*{kind}">
+						<option th:value="pid">아이디</option>
+						<option th:value="pname">이름</option>
+					</select>
+			 		<input type="text" th:field="*{sch}"/>
+				</td>
+				<td><input type="submit" value="검색"/></td>
+			</tr>
+		</table>
+	</form>
+		<table border="">
+			<tr>
+				<td>가입일</td>
+				<td>이름</td>
+				<td>아이디</td>
+				<td>등급</td>
+				<td>성별</td>
+				<td>나이</td>
+				<td>지역</td>
+				<td>메모</td>
+			</tr>
+			<tr th:each="dto, dtoStat : ${mainData}">
+				<td th:text="${dto.joindate}"></td>
+				<td th:text="${dto.name}"></td>
+				<td><a th:href="|/ad_page/member/ratingDetail/${dto.id}|" th:text="${dto.id}"></a></td>
+				<td th:text="${dto.rank}"></td>
+				<td th:text="${dto.genderStr}"></td>
+				<td th:text="${dto.age}"></td>
+				<td th:text="${dto.address1}"></td>
+				<td th:text="${dto.memo}"><textarea name="" id="" cols="30" rows="1" placeholder="메모 내용을 입력해주세요."></textarea></td>
+			</tr>
+			
+		</table>
+	</div>
+</div>
+</html>

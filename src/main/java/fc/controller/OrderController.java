@@ -4,11 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class FCAdController {
-	
-	@RequestMapping("/")
-	String adindex() {
-		return "adindex";
+@RequestMapping("/ad_page/order/")
+public class OrderController {
+	@RequestMapping("order")
+	String order() {
+		return "ad_page/order";
 	}
-
 }

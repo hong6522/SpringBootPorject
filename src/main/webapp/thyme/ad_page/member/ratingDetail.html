@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+<style>
+head{
+	margin-right: 50px;
+}
+.wrapperMain>div{
+	float:left;
+}
+
+</style>
+<div class="wrapperMain">
+	<div class="top">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>회원관리</title>
+		</th:block>
+	</div>
+	<table border="">
+		<tr th:each="dto : ${mainData}">
+			<td style="width:300px" align="center"><a th:href="|${dto.id}|" th:text="등급수정"></a></td>
+			<td style="width:300px" align="center"><a th:href="|/ad_page/member/qnainfo/${dto.id}|" th:text="${'Q&A 정보'}"></a></td>
+			<td style="width:300px" align="center"><a th:href="|/ad_page/member/orderlist/${dto.id}|" th:text="${'주문 내역'}"></a></td>
+			<td style="width:300px" align="center"><a th:href="|/ad_page/member/shoppingbasket/${dto.id}|" th:text="${'장바구니'}"></a></td>
+		</tr>
+	</table>
+<!-- th:object="memberDTO" -->
+<form action="/ad_page/member/changerank" >
+	<table border="">
+		<tr>
+			<td>등록일</td>
+			<td>이름</td>
+			<td>아이디</td>
+			<td>등급</td>
+			<td>성별</td>
+			<td>나이</td>
+			<td>지역</td>
+			<td>메모</td>
+		</tr>
+		<tr th:each="dto : ${mainData}">
+		<input type="hidden" th:value="${dto.id}" name="id"/>
+			<td th:text="${dto.joindate}"></td>
+			<td th:text="${dto.name}"></td>
+			<td th:text="${dto.id}"></td>			
+			<td>
+				<select name="rank">
+					<option value="">선택</option>
+					<option value="관리자">관리자</option>
+					<option value="일반회원">일반회원</option>
+					<option value="블랙리스트">블랙리스트</option>
+				</select>
+			</td>
+			<td th:text="${dto.gender}"></td>
+			<td th:text="${dto.age}"></td>
+			<td th:text="${dto.address1}"></td>
+			<td th:text="${dto.memo}"><textarea name="" id="" cols="30" rows="1" placeholder="메모 내용을 입력해주세요."></textarea></td>
+		</tr>
+		<tr>
+			<td colspan="8" align="right">
+				<input type="submit" value="수정완료" />
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+</html>

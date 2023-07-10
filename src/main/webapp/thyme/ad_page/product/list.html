@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+
+<style>
+head{
+	margin-right: 50px;
+}
+.wrapperMain>div{
+	float:left;
+}
+</style>
+<div class="wrapperMain">
+
+	<div class="top">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>상품 목록</title>
+		</th:block>
+	</div>
+	
+	<table border="">
+		<tr>
+			<td style="width:300px" align="center"><a href="list">상품목록</a></td>
+			<td style="width:300px" align="center"><a href="add">상품등록</a></td>
+			<td style="width:300px" align="center"><a href="inventory">재고관리</a></td>
+		</tr>
+	</table>
+	
+	<h2>상품 목록</h2>
+	<form action="" th:object="${productDTO}">
+		<table border="">
+			<tr>
+				<td>검색 분류</td>
+				<td>
+					<select th:field="*{sch}">
+						<option value="all" selected="selected">검색종류</option>
+						<option value="OUTWEAR">OUTWEAR</option>
+						<option value="TOP">TOP</option>
+						<option value="BOTTOM">BOTTOM</option>
+						<option value="SHOES">SHOES</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>등록일</td>
+				<td>
+					<input type="date" name="start"/> ~
+					<input type="date" name="end"/>
+				</td>
+			</tr>
+			<tr>
+				<td>가격</td>
+				<td>
+					<input type="text" name="startPrice"/> ~
+					<input type="text" name="endPrice"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="submit" value="검색"/></td>
+			</tr>
+		</table>
+	</form>
+	
+	<table border="">
+		<tr>	
+			<td>번호</td>
+			<td>진열 상태</td>
+			<td>상품 분류</td>
+			<td>상품명</td>
+			<td>상품설명</td>
+			<td colspan="2" align="center">상품이미지</td>
+			<td>재고</td>
+			<td>공급가</td>
+			<td>판매가</td>
+			<td>분류</td>
+			<td>등록일</td>
+		</tr>
+		<tr th:each="dto : ${mainData}">
+			<td th:text="${dto.num}"></td>
+			<td th:text="${dto.kind}"></td>
+			<td th:text="${dto.proKind}"></td>
+			<td><a th:href="|/ad_page/product/modify/${dto.proName}|" th:text="${dto.proName}"></a></td>
+			<td th:text="${dto.proDetail}"></td>
+			<td colspan="2"><img th:src="|/productImg/${dto.pf1}|"/><img th:src="|/productImg/${dto.pf2}|"/><img th:src="|/productImg/${dto.pf3}|"/></td>			
+			<td th:text="${dto.proCnt}"></td>
+			<td th:text="${dto.supplyPrice}"></td>
+			<td th:text="${dto.sellPrice}"></td>
+			<td th:text="${dto.sel}"></td>
+			<td th:text="${dto.reg_dateStr}"></td>
+		</tr>
+	</table>
+</div>
+
+</html>
