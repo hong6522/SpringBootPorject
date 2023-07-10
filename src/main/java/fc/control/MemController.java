@@ -52,7 +52,7 @@ public class MemController {
 		
 		if(mdto!=null) {
 			session.setAttribute("type", "nomal");
-			session.setAttribute("email", mdto.getEmail());
+			session.setAttribute("id", mdto.getId());
 			
 			mm.addAttribute("msg", mdto.getName()+" 님 환영합니다.");
 			mm.addAttribute("goUrl", "/mainPage/best");
@@ -89,10 +89,10 @@ public class MemController {
 	
 	@RequestMapping("myPage")
 	String myPage(Model mm,HttpSession session ,MemberDTO dto) {
-		if(session.getAttribute("email")!=null) {
-		dto.setEmail((String)session.getAttribute("email"));
-		MemberDTO myPage = mp.myPage(dto);
-		mm.addAttribute("mainData", myPage);
+		if(session.getAttribute("id")!=null) {
+		dto.setId((String)session.getAttribute("id"));
+		MemberDTO member = mp.myPage(dto);
+		mm.addAttribute("mainData", member);
 		return "/fc_mem/myPage";
 		}
 		else {
@@ -105,9 +105,9 @@ public class MemController {
 	@RequestMapping("myBasket")
 	String myBasket(Model mm,HttpSession session) {
 		MemberDTO mDTO;
-		if(session.getAttribute("type")!=null) {
+		if(session.getAttribute("id")!=null) {
 			mDTO = new MemberDTO();
-			mDTO.setEmail((String)session.getAttribute("email"));
+			mDTO.setId((String)session.getAttribute("id"));
 			MemberDTO member = mp.myPage(mDTO);
 			mm.addAttribute("mainData", bm.basket_list(member));
 			
@@ -119,14 +119,11 @@ public class MemController {
 	
 	@RequestMapping("goOrder")
 	String goOrder(Model mm,HttpSession session , ShippingDTO dto) {
-		System.out.println(dto);
-		MemberDTO mDTO;
-		if(session.getAttribute("type")!=null) {
+
+		if(session.getAttribute("id")!=null) {
 			System.out.println("들어옴?");
-			mDTO = new MemberDTO();
-			mDTO.setEmail((String)session.getAttribute("email"));
-			MemberDTO member = mp.myPage(mDTO);
-			dto.setOrder_ID(member.getId());
+
+			dto.setOrder_ID((String)session.getAttribute("id"));
 			System.out.println(dto);
 			sm.Order_insert(dto);
 			mm.addAttribute("msg", "결제완료");
@@ -142,7 +139,7 @@ public class MemController {
 	String listGoOrder(Model mm,HttpSession session , 
 			@RequestParam("selectedPro") List<Long> selectedPro) {
 
-		System.out.println(selectedPro);
+			System.out.println(selectedPro);
 		
 			mm.addAttribute("msg", "테스트임");
 			mm.addAttribute("goUrl", "/fc_mem/history");
@@ -156,9 +153,9 @@ public class MemController {
 	@RequestMapping("history")
 	String myhistory(HttpSession session,Model mm , ShippingDTO dto) {
 		MemberDTO mDTO;
-		if(session.getAttribute("type")!=null) {
+		if(session.getAttribute("id")!=null) {
 			mDTO = new MemberDTO();
-			mDTO.setEmail((String)session.getAttribute("email"));
+			mDTO.setId((String)session.getAttribute("id"));
 			MemberDTO member = mp.myPage(mDTO);
 		
 		dto.setOrder_ID(member.getId());

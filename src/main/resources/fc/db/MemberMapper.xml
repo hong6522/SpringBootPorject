@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 <select id="myPage" resultType="mDTO" parameterType="mDTO">
 	SELECT * FROM member
 	<where>
-		email = #{email}
+		id = #{id}
 	</where>
 </select>
 	

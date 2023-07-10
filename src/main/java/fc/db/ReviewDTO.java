@@ -9,35 +9,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
+
+
 @Alias("reviewDTO")
 @Data
 public class ReviewDTO {
 	
 	
 	//MultipartFile upfile, upfile2 , upfile3;
-	String fassion_name , title , content , order_Code, id , sch, kind, upfile, upfile2 , upfile3 ;
-	Integer star_num , review_cnt , no;
+	String fashion_name , title , content , order_Code, id , sch, kind, upfile, upfile1 , upfile2 ;
+	Integer star_num , review_cnt;
+	public Integer no;
 	Date reg_date;
 	
+	MultipartFile ff1, ff2 , ff3;
 	
-//	public MultipartFile getupfile() {
-//		return upfile;
-//	}
-//	public void setUpfile(MultipartFile upfile) {
-//		this.upfile = upfile;
-//	}
-//	public MultipartFile getupfile2() {
-//		return upfile2;
-//	}
-//	public void setUpfile2(MultipartFile upfile2) {
-//		this.upfile2 = upfile2;
-//	}
-//	public MultipartFile getupfile3() {
-//		return upfile2;
-//	}
-//	public void setUpfile3(MultipartFile upfile3) {
-//		this.upfile3 = upfile3;
-//	}
+	
 	
 	
 	public String getContentBr() {
