@@ -10,9 +10,9 @@ import lombok.Data;
 @Data
 public class ShippingDTO {
 	
-	String order_ID, order_name, order_place, order_cate, order_product, order_shipping, order_state, order_dateStr,
-	today, schShpping, cancleStr,shippingChk, schNo;
-	int order_no, order_cnt, order_price;
+	String order_ID, order_name, order_place, order_cate, order_product, order_shipping, order_state, order_dateStr ,
+	today, schShpping, cancleStr,shippingChk, schNo , order_color , order_size;
+	int order_no, order_cnt, order_price ,order_num;
 	Date order_date, order_cancleDate;
 
 }

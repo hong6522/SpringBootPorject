@@ -21,13 +21,34 @@
 		margin:auto;
 		background:#f0f;
 	}
+	.basket_cate{
+		width:150px;
+		height:50px;
+		float:left;
+	}
+	.basket_cate_wrapper{
+		display: block;
+		width:1200px;
+		height:50px;
+	}
 	
 </style>
 
 <div class="proBasket_wrapper">
-	<div th:each="dto : ${mainData}">
-		<div th:text="${dto.id}"></div>
-		<div th:text="${dto.totalPrice}"></div>
+<div class="basket_cate_wrapper">
+	<div th:text="상품명" class="basket_cate"></div>
+	<div th:text="가격" class="basket_cate"></div>
+	<div th:text="수량" class="basket_cate"></div>
+	<div th:text="색상" class="basket_cate"></div>
+	<div th:text="사이즈" class="basket_cate"></div>
+</div>
+	<hr/>
+	<div th:each="dto : ${mainData}" class="basket_cate_wrapper">
+		<div th:text="${dto.proName}" class="basket_cate"></div>
+		<div th:text="${dto.totalPrice}" class="basket_cate"></div>
+		<div th:text="${dto.cnt}" class="basket_cate"></div>
+		<div th:text="${dto.color}" class="basket_cate"></div>
+		<div th:text="${dto.size}" class="basket_cate"></div>
 	</div>
 </div>
 

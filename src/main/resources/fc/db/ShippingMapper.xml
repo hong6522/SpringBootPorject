@@ -37,11 +37,24 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		</where>
 	</select>
 	
+	<select id="myhistory" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+		<where>
+			 order_ID = #{order_ID}
+		</where>
+	</select>
+	
 	<update id="update" parameterType="shipDTO">
 		update shipping set order_shipping = #{shippingChk}
 		<where>
 			order_no = #{schNo}
 		</where>
 	</update>
+	
+	<insert id="Order_insert" parameterType="shipDTO">
+		insert into shipping (order_ID , order_name , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate ,order_place)
+		values
+		(#{order_ID} , #{order_name} , sysdate() , #{order_price} ,#{order_cnt}, #{order_num} , #{order_color} , #{order_size} , #{order_product} , #{order_cate} , #{order_place})
+	</insert>
 
 </mapper>

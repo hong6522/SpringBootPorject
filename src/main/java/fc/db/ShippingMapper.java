@@ -17,6 +17,10 @@ public interface ShippingMapper {
 	
 	ArrayList<ShippingDTO> afterList(ShippingDTO dto);
 	
+	void Order_insert(ShippingDTO dto);
+	
+	ArrayList<ShippingDTO> myhistory(ShippingDTO dto);
+	
 	int update(ShippingDTO dto);
 	
 }
