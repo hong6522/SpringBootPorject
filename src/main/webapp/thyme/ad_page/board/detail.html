@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상세 페이지</title>
+</head>
+<body>
+<h1>상세 페이지</h1>
+<table border="">
+	<tr>
+		<td>번호</td>	<td th:text=${mainData.no}>ㅇㅇ</td>
+	</tr>
+	<tr>
+		<td>제목</td>	<td th:text=${mainData.title}>ㅇㅇ</td>
+	</tr>
+	<tr>
+		<td>작성자</td>	<td th:text=${mainData.pid}>ㅇㅇ</td>
+	</tr>
+
+	<tr>
+		<td>조회수</td>	<td th:text=${mainData.cnt}>ㅇㅇ</td>
+	</tr>
+
+	<tr>
+		<td>내용</td>	<td th:text=${mainData.content}>ㅇㅇ</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">
+			<a th:text="목록으로" th:href="|/ad_page/integrate/|">ㅇㅇ</a>
+			<a th:text="수정" th:href="|/ad_page/integrate/modify/${mainData.no}|">ㅇㅇ</a>
+			<a th:text="삭제" th:href="|/ad_page/integrate/delete/${mainData.no}|">ㅇㅇ</a>
+			
+		</td>
+	</tr>
+	
+	
+	
+
+
+</table>
+
+
+</body>
+</html>

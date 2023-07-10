@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+
+<style>
+head{
+	margin-right: 50px;
+}
+.wrapperMain>div{
+	float:left;
+}
+</style>
+<div class="wrapperMain">
+
+	<div class="top">
+		<th:block layout:fragment="title">
+		
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>종합 관리</title>
+		</th:block>
+	</div>
+	
+	<h1>공지사항</h1>
+	<table border="">
+		<tr>
+			<td>번호</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>조회수</td>
+		</tr>
+		
+		<tr th:each="dto , dtoStat: ${mainData }">
+			<td th:text="${dtoStat.index}+1"/>
+			<td><a th:href="@{|detail/${dto.no}|}" th:text="${dto.title}"/></td>
+			<td th:text="${dto.pid}"/>
+			<td th:text="${dto.cnt}"/>
+		</tr>
+		
+		<tr>
+			<td colspan="5" align="right">
+				<a th:href="@{insert}" th:text="글쓰기"/>
+			</td>
+		</tr>
+	
+	
+
+	</table>
+</div>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+<style>
+head{
+	margin-right: 50px;
+}
+.wrapperMain>div{
+	float:left;
+}
+</style>
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+   var colorContainer = document.getElementById("colorContainer");
+   var registerButton = document.getElementById("registerButton");
+   
+   registerButton.addEventListener("click", function() {
+      var colorInput = document.getElementById("colorInput");
+      var color = colorInput.value.trim();
+      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
+   
+      if (color) {
+      var colorBox = document.createElement("div");
+      colorBox.style.backgroundColor = color;
+      colorBox.style.width = "10px";
+      colorBox.style.height = "10px";
+      colorBox.style.display = "inline-block";
+      colorBox.style.margin = "5px";
+   
+      var deleteButton = document.createElement("button");
+      deleteButton.innerText = "X";
+      deleteButton.addEventListener("click", function() {
+      $("#" + color.replaceAll('#','')).remove();
+         colorContainer.removeChild(colorBox);
+         colorContainer.removeChild(deleteButton);
+      });
+   
+      colorContainer.appendChild(colorBox);
+      colorContainer.appendChild(deleteButton);
+      } 
+   });
+});
+   
+   function fileDelete(file){
+	   if(confirm("파일을 삭제하시겠습니까?")){
+		   frm.action="../FileDelete/"+file
+		   frm.submit()
+	   }
+   }
+</script>
+<div class="wrapperMain">
+
+	<div class="top">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>상품 수정</title>
+		</th:block>
+	</div>
+	
+	<table border="">
+		<tr>
+			<td style="width:300px" align="center"><a href="/ad_page/product/list">상품목록</a></td>
+			<td style="width:300px" align="center"><a href="/ad_page/product/add">상품등록</a></td>
+			<td style="width:300px" align="center"><a href="/ad_page/product/inventory">재고관리</a></td>
+		</tr>
+	</table>
+	<h2>상품 수정</h2>
+	<form action="" name="frm" enctype="multipart/form-data" method="post" th:object="${productDTO}">
+	<table border="">
+		<tr>
+			<td>진열상태</td>
+			<td>
+				<select th:field="*{kind}">
+					<option th:value="진열함">진열함</option>
+					<option th:value="진열안함">진열안함</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>상품분류</td>
+			<td>
+				<select th:field="*{proKind}">
+					<option th:value="OUTWEAR">OUTWEAR</option>
+					<option th:value="TOP">TOP</option>
+					<option th:value="BOTTOM">BOTTOM</option>
+					<option th:value="SHOES">SHOES</option>
+				</select>
+			</td>
+		</tr>
+		<tr th:each="dto : ${mainData}">
+		<tr>
+			<td>상품명</td>
+			<td><input type="text" th:field="*{proName}"/></td>
+		</tr>
+		<tr>
+			<td>상품설명</td>
+			<td><textarea th:field="*{proDetail}" cols="30" rows="10"></textarea></td>
+		</tr>
+		<tr>
+			<td>상품 이미지</td>
+			<td>
+				<div th:if="${productDTO.pf1} != null and ${productDTO.pf1} != ''">
+				    <input type="text" id="pf1Value" th:field="${productDTO.pf1}" readonly/>
+				    <button onclick="fileDelete('pf1')">x</button>
+				</div>
+				<div th:unless="${productDTO.pf1} != null and ${productDTO.pf1} != ''">
+				    <input type="file" th:field="${productDTO.pf1Str}"/>
+				</div>
+				
+				<div th:if="${productDTO.pf2} != null and ${productDTO.pf2} != ''">
+				    <input type="text" id="pf2Value" th:field="${productDTO.pf2}" readonly/>
+				    <button onclick="fileDelete('pf2')">x</button>
+				</div>
+				<div th:unless="${productDTO.pf2} != null and ${productDTO.pf2} != ''">
+				    <input type="file" th:field="${productDTO.pf2Str}"/>
+				    
+				</div><div th:if="${productDTO.pf3} != null and ${productDTO.pf3} != ''">
+				    <input type="text" id="pf3Value" th:field="${productDTO.pf3}" readonly/>
+				    <button onclick="fileDelete('pf3')">x</button>
+				</div>
+				<div th:unless="${productDTO.pf3} != null and ${productDTO.pf3} != ''">
+				    <input type="file" th:field="${productDTO.pf3Str}"/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>사이즈</td>
+			<td>
+				<select th:field="*{proSize}">
+					<option value="s">S</option>
+					<option value="m">M</option>
+					<option value="l">L</option>
+					<option value="xl">XL</option>
+				</select>
+			</td>
+		</tr>
+		<div id="color_list_jquery">
+          
+        		</div>				 
+        		  <tr>
+	      <td>색상</td>
+	      <td>
+	         <div>
+			     <input type="color" id="colorInput">
+			     <button type="button" id="registerButton">색상 등록</button>
+			     <div id="colorContainer" th:filed="*{proColor}"></div>
+			 </div>
+	      </td>
+	    </tr>	
+		<tr>
+			<td>재고 수량</td>
+			<td><input type="text" th:field="*{proCnt}"/></td>
+		</tr>
+		<tr>
+			<td>공급 가격</td>
+			<td><input type="text" th:field="*{supplyPrice}"/> KRW</td>
+		</tr>
+		<tr>
+			<td>판매 가격</td>
+			<td><input type="text" th:field="*{sellPrice}"/> KRW</td>
+		</tr>
+		<tr>
+			<td>구매제한</td>
+			<td>
+				<div th:each="ss : *{select}">
+				<label><input type="radio" name="sel" th:value="${ss}" th:checked="${ss} == *{sel}" th:text="${ss}"/></label>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>적립금</td>
+			<td><input type="text" th:field="*{memPoint}"/></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" value="수정완료"/></td>
+		</tr>
+	</table>
+	</form>
+</div>
+</html>

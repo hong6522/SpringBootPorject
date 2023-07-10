@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+
+<style>
+head{
+	margin-right: 50px;
+}
+.wrapperMain>div{
+	float:left;
+}
+
+</style>
+<div class="wrapperMain">
+	<div class="top">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>상품관리</title>
+		</th:block>
+	</div>
+	<table border="">
+		<tr>
+			<td style="width:300px" align="center"><a href="list">상품목록</a></td>
+			<td style="width:300px" align="center"><a href="add">상품등록</a></td>
+			<td style="width:300px" align="center"><a href="inventory">재고관리</a></td>
+		</tr>
+	</table>
+	<h2>재고 관리</h2>
+	<table>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+</html>

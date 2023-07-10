@@ -11,4 +11,10 @@ public interface ProductMapper {
 	List<ProductDTO> pro(ProductDTO advcx);
 	
 	int insert(ProductDTO desgfd);
+	
+	ProductDTO detail(ProductDTO bsgfd);
+	
+	int modify(ProductDTO afsdfsdd);
+	
+	void delete(ProductDTO afsdfssfdfgf);
 }

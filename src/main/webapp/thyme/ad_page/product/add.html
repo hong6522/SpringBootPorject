@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="ad_fc_total/template">
+
+<style>
+head{
+	margin-right: 50px;
+}
+.wrapperMain>div{
+	float:left;
+}
+
+</style>  
+<!-- <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var colorContainer = document.getElementById("colorContainer");
+    var registerButton = document.getElementById("registerButton");
+
+    registerButton.addEventListener("click", function() {
+      var colorInput = document.getElementById("colorInput");
+      var colors = colorInput.value.split(',');
+
+      for (var i = 0; i < colors.length; i++) {
+        var color = colors[i].trim();
+
+        if (color) {
+          var colorBox = document.createElement("div");
+          colorBox.style.backgroundColor = color;
+          colorBox.style.width = "10px";
+          colorBox.style.height = "10px";
+          colorBox.style.display = "inline-block";
+          colorBox.style.margin = "5px";
+
+          var deleteButton = document.createElement("button");
+          deleteButton.innerText = "X";
+          deleteButton.addEventListener("click", function() {
+            colorContainer.removeChild(colorBox);
+            colorContainer.removeChild(deleteButton);
+          });
+
+          colorContainer.appendChild(colorBox);
+          colorContainer.appendChild(deleteButton);
+        }
+      }
+    });
+  });
+</script> -->
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+   var colorContainer = document.getElementById("colorContainer");
+   var registerButton = document.getElementById("registerButton");
+   
+   registerButton.addEventListener("click", function() {
+      var colorInput = document.getElementById("colorInput");
+      var color = colorInput.value.trim();
+      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
+   
+      if (color) {
+      var colorBox = document.createElement("div");
+      colorBox.style.backgroundColor = color;
+      colorBox.style.width = "10px";
+      colorBox.style.height = "10px";
+      colorBox.style.display = "inline-block";
+      colorBox.style.margin = "5px";
+   
+      var deleteButton = document.createElement("button");
+      deleteButton.innerText = "X";
+      deleteButton.addEventListener("click", function() {
+      $("#" + color.replaceAll('#','')).remove();
+         colorContainer.removeChild(colorBox);
+         colorContainer.removeChild(deleteButton);
+      });
+   
+      colorContainer.appendChild(colorBox);
+      colorContainer.appendChild(deleteButton);
+      } 
+   });
+});
+</script>
+<div class="wrapperMain">
+	<div class="top">
+		<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>상품관리</title>
+		</th:block>
+	</div>
+	<table border="">
+		<tr>
+			<td style="width:300px" align="center"><a href="list">상품목록</a></td>
+			<td style="width:300px" align="center"><a href="add">상품등록</a></td>
+			<td style="width:300px" align="center"><a href="inventory">재고관리</a></td>
+		</tr>
+	</table>
+	<div class="body">
+	<h2>상품 등록</h2>
+		<form action="" enctype="multipart/form-data" method="post" th:object="${productDTO}">
+			<table border="">
+				<tr>
+					<td>진열상태</td>
+					<td>
+						<select th:field="*{kind}">
+							<option th:value="진열함">진열함</option>
+							<option th:value="진열안함">진열안함</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>상품분류</td>
+					<td>
+						<select th:field="*{proKind}">
+							<option th:value="OUTWEAR">OUTWEAR</option>
+							<option th:value="TOP">TOP</option>
+							<option th:value="BOTTOM">BOTTOM</option>
+							<option th:value="SHOES">SHOES</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>상품명</td>
+					<td><input type="text" th:field="*{proName}"/></td>
+				</tr>
+				<tr>
+					<td>상품설명</td>
+					<td><textarea th:field="*{proDetail}" cols="30" rows="10"></textarea></td>
+				</tr>
+				<tr>
+					<td>상품 이미지</td>
+					<td>
+						<input type="file" th:field="*{pf1Str}"/>
+						<input type="file" th:field="*{pf2Str}"/>
+						<input type="file" th:field="*{pf3Str}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>사이즈</td>
+					<td>
+						<select th:field="*{proSize}">
+							<option value="s">S</option>
+							<option value="m">M</option>
+							<option value="l">L</option>
+							<option value="xl">XL</option>
+						</select>
+					</td>
+				</tr>
+				<div id="color_list_jquery">
+            
+          		</div>				 
+          		  <tr>
+			      <td>색상</td>
+			      <td>
+			         <div>
+					     <input type="color" id="colorInput">
+					     <button type="button" id="registerButton">색상 등록</button>
+					     <div id="colorContainer" th:filed="*{proColor}"></div>
+					 </div>
+			      </td>
+			    </tr>	
+				<tr>
+					<td>재고 수량</td>
+					<td><input type="text" th:field="*{proCnt}"/></td>
+				</tr>
+				<tr>
+					<td>공급 가격</td>
+					<td><input type="text" th:field="*{supplyPrice}"/> KRW</td>
+				</tr>
+				<tr>
+					<td>판매 가격</td>
+					<td><input type="text" th:field="*{sellPrice}"/> KRW</td>
+				</tr>
+				<tr>
+					<td>구매제한</td>
+					<td>
+						<div th:each="ss : *{select}">
+						<label><input type="radio" name="sel" th:value="${ss}" th:checked="${ss} == *{sel}" th:text="${ss}"/></label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>적립금</td>
+					<td><input type="text" th:field="*{memPoint}"/></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="상품등록"/></td>
+				</tr>
+			</table>	
+		</form>
+	</div>
+</div>
+
+</html>

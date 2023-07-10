@@ -5,13 +5,18 @@ spring :
         prefix : thyme/
         suffix : .html
         cache : false
-            
-              
+        
     datasource :
         driver-class-name : org.mariadb.jdbc.Driver
-        url : jdbc:mariadb://localhost:3306/green_db?allowMultiQueries=true
+        url : jdbc:mariadb://localhost:3306/fc_db?allowMultiQueries=true
         username : fassion
         password : 1234
-
-mybatis : 
+        
+        
+        
+mybatis :
     type-aliases-package : fc.db
+            
+            
+
+            

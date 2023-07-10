@@ -10,7 +10,16 @@ import lombok.Data;
 @Data
 public class MemberDTO {
 	Integer age;
-	String name,id,rank,gender,memo,address1,kind,pid,pname,sch;
+	String name,id,rank,memo,address1,kind,pid,pname,sch;
+	boolean gender;
 	Date joindate;
 	
+	public String getGenderStr() {
+		
+		if(gender) {
+			return "남자";
+		}else {
+			return "여자";
+		}
+	}
 }

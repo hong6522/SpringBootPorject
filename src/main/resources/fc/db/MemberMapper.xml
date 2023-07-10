@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 
 <mapper namespace="fc.db.MemberMapper">
 
-	<select id="mem" resultType="mDTO" parameterType="mDTO">
+<select id="mem" resultType="mDTO" parameterType="mDTO">
 	SELECT * FROM member
 	<where>
 		<trim prefix=" " suffixOverrides="AND | OR">
@@ -19,5 +19,16 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</where>
 </select>
 
-	
+<select id="addetail" resultType="mDTO" parameterType="mDTO">
+	SELECT * FROM member 
+	<where>
+		id = #{id}
+	</where>
+</select>
+
+<update id="changerank" parameterType="mDTO">
+	update member set rank = #{rank}
+	where id = #{id}
+</update>
+
 </mapper>

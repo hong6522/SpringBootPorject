@@ -11,8 +11,8 @@ import lombok.Data;
 @Alias("pDTO")
 @Data
 public class ProductDTO {
-	String kind,proKind,proName,proDetail,proSize,pf1,pf2,reg_dateStr;
-	MultipartFile pf1Str,pf2Str;
+	String kind,proKind,proName,proDetail,proSize,pf1,pf2,pf3,reg_dateStr;
+	MultipartFile pf1Str,pf2Str,pf3Str;
 	String color,proColor,sch,start,end;
 	String sel = "모두 구매가능";
 	String [] select= {"모두 구매가능","회원 구매가능"};
