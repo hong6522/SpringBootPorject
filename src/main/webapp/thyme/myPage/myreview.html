@@ -25,13 +25,19 @@ layout:decorate="fc_total/template">
 	</tr>
 	<tr th:each="dto , dtoStat: ${mainData}">
 		<td th:text="${dtoStat.index+1}"></td>	 
-		<td><a th:href="@{|/myPage/myreviewDetail/${dto.no}/${dto.order_Code}|}" th:text="${dto.title}"/></td>
-		<td th:text="${dto.fassion_name}"/>
+		<td><a th:href="@{|/myPage/myreviewDetail/${dto.no}|}" th:text="${dto.title}"/></td>
+		<td th:text="${dto.fashion_name}"/>
 		<td th:text="${dto.id}"/>
 		<td th:text="${dto.reg_dateStr}"/>
 		<td th:text="${dto.review_cnt}"/>
 	</tr>
 	
+	
+	<tr>
+		
+		<td colspan="7" align="center"><a th:href="@{|myreviewInsert|}" th:text="작성하기"></a></td>
+	
+	</tr>
 
 </table>
 	
@@ -40,15 +46,8 @@ layout:decorate="fc_total/template">
 
 
 
-
-
-
-
-
 <th:block layout:fragment="add-content">
-	<h4>이동</h4>
-	<a th:href="|/center/qna|" th:text="qna" />
-	<a th:href="|/center/review|" th:text="review" />
+	
 </th:block>
 <th:block layout:fragment="main-foot">
 <body th:replace="fc_parts/footer::main-foot"></body>

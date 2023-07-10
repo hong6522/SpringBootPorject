@@ -3,24 +3,27 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="fc_total/template">
 
 <th:block layout:fragment="title">
+<<<<<<<< HEAD:src/main/webapp/thyme/index.html
+<head th:replace="fc_parts/top"></head>
+	<title>FCProj</title>
+========
 <head th:replace="fc_parts/top">
 
 </head>
 <title>d</title>
+>>>>>>>> sangyeol:src/main/webapp/thyme/ad_qnainfo/memqnaDelete.html
 
 </th:block>
 
 <th:block layout:fragment="content">
+<<<<<<<< HEAD:src/main/webapp/thyme/index.html
+	<h2>메인 내용내용</h2>
+========
 <body>
 <h1>delete</h1>
 
 <form method="post" th:object="${mainData}">
 	<table border="">
-	
-	
-		<tr>
-		<td><input type="text" th:field="*{id}"/></td>
-	</tr>
 		
 		<tr>
 			<td colspan="2" align="center"> 
@@ -29,6 +32,7 @@ layout:decorate="fc_total/template">
 		</tr>
 	</table>
 </form>
+>>>>>>>> sangyeol:src/main/webapp/thyme/ad_qnainfo/memqnaDelete.html
 </th:block>
 
 
@@ -39,7 +43,11 @@ layout:decorate="fc_total/template">
 
 
 <th:block layout:fragment="add-content">
+<<<<<<<< HEAD:src/main/webapp/thyme/index.html
+	<h3>나는 추가내용</h3>
+========
 	<h3>내용</h3>
+>>>>>>>> sangyeol:src/main/webapp/thyme/ad_qnainfo/memqnaDelete.html
 </th:block>
 <th:block layout:fragment="main-foot">
 <body th:replace="fc_parts/footer::main-foot"></body>

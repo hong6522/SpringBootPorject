@@ -14,7 +14,7 @@ public class QnaDTO {
 
 	
 	public Integer no , qna_cnt;
-	boolean secret_chk;
+	boolean secret_chk , answer_chk;
 
 	
 	String title , type , content , id , getAnswer , sch , kind ,admin_Id , pw ;
@@ -40,5 +40,7 @@ public class QnaDTO {
 			e.printStackTrace();
 		}
 	}
+	
+	
 }
 

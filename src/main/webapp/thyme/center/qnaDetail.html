@@ -67,6 +67,17 @@ h2{
 }
 </style>
 
+<script th:inline="javascript">
+  function confirmDelete(postId) {
+    var confirmed = confirm("게시글을 삭제하시겠습니까?");
+    
+    return confirmed;
+    if (confirmed) {
+      window.location.href = '/qnaDelete/' + postId;
+    }
+  }
+</script>
+
 <h1>QNA</h1>
 <table width="90%">
  <tr class="center_notice">
@@ -90,16 +101,15 @@ h2{
  <span th:if ="${mainData.getAnswer} != null" >
  <tr>
  	<td>관리자 답변</td><td th:text="${mainData.getAnswer}" ></td>
+ </tr>
+ 
+ <tr>
  	<td>관리자 답변일시</td><td th:text="${mainData.answer_Date}"></td>
  
  </tr>
  
- <tr>
- <td>관리자 아이디</td>	<td th:text="${mainData.admin_Id}"></td>
- </tr>
+
  </span>
- 
- 
  
  <tr>
  
@@ -107,8 +117,8 @@ h2{
 		<td colspan="2" align="right">
 			
 			<span th:if="${id == mainData.id}">
-          	<a th:href="|/center/qnaModify/${mainData.no}|" th:text="수정"/>
-          	<a th:href="|/center/qnaDelete/${mainData.no}|" th:text="삭제"/>
+          	<a th:href="|/center/qnaModify/${mainData.no}/${pd.nowPage}|" th:text="수정"/>
+          	 <a th:href="@{/center/qnaDelete/{no}(no=${mainData.no})}" type="button" onclick="return confirmDelete('${mainData.no}')">삭제</a>
       		 </span>
         
         

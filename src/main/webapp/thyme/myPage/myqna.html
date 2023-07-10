@@ -26,14 +26,23 @@ layout:decorate="fc_total/template">
 		<td th:text="${dtoStat.index+1}"></td>
 		<td th:text="${dto.type}"/>	<td>
 				 
-				 
-		<a th:href="@{|../myPage/myqnaDetail/${dto.no}|}" th:text="${dto.title}"
-		 th:if="${dto.secret_chk} == false" >
-		 </a> 
+		
+		
+			 <span th:if="${dto.secret_chk} == true" > 
+			 <a th:href="@{|/myPage/myqnaDetail/${dto.no}|}" th:text="${dto.title}"></a>
 			 
-		 <a th:href="@{|../center/secretForm/${dto.no}|}"  th:if="${dto.secret_chk} == true" > 비밀글입니다.
-		<img th:src="@{/img/unlock.png}" width="25px" height="20px"/>
- 		</a>
+			<img th:src="@{/img/unlock.png}" width="25px" height="20px"/>
+	 		</span>
+	 		
+	 		 <span th:if="${dto.secret_chk} != true" > 
+			 <a th:href="@{|/myPage/myqnaDetail/${dto.no}|}" th:text="${dto.title}"></a>
+			 
+	 		</span>
+	 		
+	 	
+	
+			 
+		
 		
 		 </td>
 		
@@ -47,7 +56,7 @@ layout:decorate="fc_total/template">
 	
 	<tr>
 			
-		<td colspan="7" align="center"><a th:href="@{../center/qnaInsert}" th:text="작성하기"></a></td>
+		<td colspan="7" align="center"><a th:href="@{/myPage/myqnaInsert}" th:text="작성하기"></a></td>
 	
 	</tr>
 	

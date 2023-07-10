@@ -10,65 +10,57 @@ layout:decorate="fc_total/template">
 
 </th:block>
 
-
- 
- 
 <th:block layout:fragment="content">
-<body>
-<h1>insert</h1>
-<form method="post" th:object="${qnaDTO}">
-	<table border="" width="60%">
+<h1>modifyForm</h1>
+<form method="post" th:object="${mainData}">
+	<table border="">
+	
 		<tr>
 			<td>제목</td>
 			<td><input type="text" th:field="*{title}"/></td>
 		</tr>
-		<tr>
+			<tr>
 			<td>종류</td>
-			<td>
-		     <select name="type">
+		<td>
+		 <select name="type">
+		
 		     <option value="환불/교환">환불/교환</option>
 		     <option value="주문/결제">주문/결제</option>
 		     <option value="회원정보">회원정보</option>
 		     <option value="배송">배송</option>
 		     <option value="상품확인">상품확인</option>     
 		     </select>
-			
-			
-			</td>
-		</tr>
-		<tr>
-			<td>질문</td>
-			<td><input type="text" th:field="*{content}"/></td>
-		</tr>
+		     </td>
+		 </tr>
 		<tr>
 			<td>작성자</td>
-			<td><input type="text" name="id" th:value=${id}  readonly/></td>
+			<td><input type="text" th:field="*{id}" readonly/></td>
+		</tr>
+		<tr>
+			<td>내용</td>
+			<td><input type="text" th:field="*{content}"/></td>	
+				
 		</tr>
 		<tr>
 			<td>답변 비밀글 여부</td>
 			<td><input type="radio" name="secret_chk" th:checked="*{secret_chk}" th:value="1"  />설정
 			<input type="radio" name="secret_chk" th:checked="*{!secret_chk}" th:value="0"  />미설정</td>
 		</tr>
-		
-	
-		<tr> <td><a th:href="@{|/center/qna?nowPage=${pd.nowPage}|}" th:text="목록으로"></a> </td> </tr>
-	
+
 		<tr>
-			<td colspan="2" align="center"> 
-				<input type="submit" value="작성" />
-			</td>
+			<td><input type="submit" value="제출"/></td>
 		</tr>
+		
+		<tr>
+		
+		
+		<td><a th:href="@{|/myPage/myqna|}" th:text="목록으로"></a></td>
+		</tr>
+		
 	</table>
 </form>
 
-
 </th:block>
-
-
-
-
-
-
 
 
 <th:block layout:fragment="add-content">

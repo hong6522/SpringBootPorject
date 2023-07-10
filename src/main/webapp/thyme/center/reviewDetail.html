@@ -17,6 +17,8 @@ layout:decorate="fc_total/template">
 <th:block layout:fragment="content">
 <style>
 
+
+
 table{
 	border-top: 2px solid #000;
 	border-bottom: 2px solid #000;
@@ -28,7 +30,7 @@ td>a{
 	color: #000;
 	border: 1px solid #fff;
 	padding: 5px;
-	background: #fff;
+	background: #aff;
 	text-decoration:none;
 }
 .center_notice>td{
@@ -71,6 +73,17 @@ h2{
 }
 </style>
 
+<script th:inline="javascript">
+  function confirmDelete(postId) {
+    var confirmed = confirm("게시글을 삭제하시겠습니까?");
+    
+    return confirmed;
+    if (confirmed) {
+      window.location.href = '/reviewDelete/' + postId;
+    }
+  }
+</script>
+
 <h1>리뷰</h1>
 <table width="30%">
  <tr class="center_notice">
@@ -83,6 +96,9 @@ h2{
  	<td>작성일</td><td th:text="${mainData.reg_dateStr}"></td>
  </tr>
  <tr class="center_notice">
+ 	<td>상품명</td><td th:text="${mainData.fashion_name}"></td>
+ </tr>
+ <tr class="center_notice">
  	<td>조회수</td><td th:text="${mainData.review_cnt}"></td>
  </tr>
  
@@ -91,23 +107,38 @@ h2{
  <tr>
  	<td colspan="2">
  			
- 		 <span th:if="${mainData.upfile} != null">
- 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile}}"/>
- 		 </span>
- 		 <span th:if="${mainData.upfile2} != null">
- 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile2}}"/>
- 		 </span>
- 		 <span th:if="${mainData.upfile3} != null">
- 		 <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile3}}"/>
- 		 </span>
+ 		  <span th:if="${mainData.upfile != null and mainData.upfile != ''}">
+		  <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile}}"/>
+		</span>
+		
+ 		 
+ 		 <span th:if="${mainData.upfile1 != null and mainData.upfile1 != ''}">
+		  <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile1}}"/>
+		</span>
+ 		  <span th:if="${mainData.upfile2 != null and mainData.upfile2 != ''}">
+		  <img class="cen_mulfile" th:src="@{'/img/' + ${mainData.upfile2}}"/>
+		</span>
  		<div class="center_content" th:text="${mainData.contentBr}"></div>
  		 	 
  	</td>
- </tr><tr>
-		<td colspan="2" align="right">
+ </tr> <tr>
 			
+		</tr>
+ 
+ 
+ <tr>
+		<td colspan="2" align="right">
+			<span th:if="${id == mainData.id}">
 			 <a th:href="@{|/center/review?nowPage=${pd.nowPage}|}" th:text="목록으로"></a>
+			 <a  th:href="|/center/reviewModify/${mainData.no}/${pd.nowPage}|" th:text="수정"></a>
+			  <a th:href="@{/center/reviewDelete/{no}(no=${mainData.no})}" type="button" onclick="return confirmDelete('${mainData.no}')">삭제</a>
+			</span>
+			<span th:unless="${id == mainData.id}">
+		 <a th:href="@{|/center/review?nowPage=${pd.nowPage}|}" th:text="목록으로"></a>
+		 </span>
 		</td>
+		
+		
 	</tr>
 </table>
 		
