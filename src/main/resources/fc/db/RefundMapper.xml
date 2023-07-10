@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fc.db.RefundMapper">
+
+	<select id="waitList" resultType="reDTO" parameterType="reDTO">
+		select * from refund
+		<where>
+			re_answer = "답변대기중"
+		</where>
+	</select>
+	
+	<select id="possList" resultType="reDTO" parameterType="reDTO">
+		select * from refund
+		<where>
+			re_answer = "가능"
+		</where>
+	</select>
+	
+	<select id="impoList" resultType="reDTO" parameterType="reDTO">
+		select * from refund
+		<where>
+			re_answer = "불가능"
+		</where>
+	</select>
+	
+	<select id="detail" resultType="reDTO" parameterType="reDTO">
+		select * from refund
+		<where>
+			orderNo = #{orderNo}
+		</where>
+	</select>
+	
+	<update id="update" parameterType="reDTO">
+		update refund set re_answer = #{YN}, re_impossible = #{re_impossible}
+		where orderNo = #{orderNo}
+	</update>
+
+</mapper>

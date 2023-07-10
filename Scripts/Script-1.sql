@@ -1,16 +1,16 @@
 create table shipping(
-	order_no int auto_increment primary key,
-	order_ID varchar(100),
-	order_name varchar(100),
-	order_place varchar(999),
-	order_cate varchar(100),
-	order_product varchar(300),
-	order_cnt int,
-	order_price int,
-	order_date datetime,
-	order_shipping varchar(100),
-	order_state varchar(100),
-	order_cancleDate datetime
+	order_no int auto_increment primary key, -- 주문번호
+	order_ID varchar(100), -- 구매자ID
+	order_name varchar(100), -- 수령인
+	order_place varchar(999), -- 수령지
+	order_cate varchar(100), -- 상품카테고리
+	order_product varchar(300), -- 상품명
+	order_cnt int, -- 구매수량
+	order_price int, -- 구매가
+	order_date datetime, -- 구매날짜
+	order_shipping varchar(100), -- 배송상태
+	order_state varchar(100), -- 주문상태
+	order_cancleDate datetime -- 주문취소, 환불날짜
 );
 
 insert into shipping (order_ID, order_name, order_place, order_cate, order_product, order_cnt, order_price, order_date, order_shipping, order_state, order_cancleDate)
