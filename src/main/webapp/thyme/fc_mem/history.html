@@ -36,8 +36,8 @@
 	<hr/>
 	<div th:each="dto : ${mainData}">
 		<div th:text="${dto.order_no}" class="history_cate"></div>
-		<div th:text="${dto.order_price}" class="history_cate"></div>
 		<div th:text="${dto.order_cnt}" class="history_cate"></div>
+		<div th:text="${dto.order_price}" class="history_cate"></div>
 		<div th:text="${dto.order_date}" class="history_cate"></div>
 		<div th:text="${dto.order_shipping}" class="history_cate"></div>
 		<div th:text="${dto.order_size}" class="history_cate"></div>
@@ -46,6 +46,7 @@
 		<hr/>
 	</div>
 </div>
+
 </th:block>
 
 <th:block layout:frgment="main-foot">

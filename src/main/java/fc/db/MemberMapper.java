@@ -16,4 +16,6 @@ public interface MemberMapper {
 	int join(MemberDTO dto);
 	
 	MemberDTO myPage(MemberDTO dto);
+	
+	boolean idChk(MemberDTO dto);
 }
