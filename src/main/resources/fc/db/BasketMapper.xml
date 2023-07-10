@@ -14,9 +14,9 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 
 
 <insert id="add_basket" parameterType="bDTO">
-	insert into basket (id , num , price , cnt , totalPrice)
+	insert into basket (id , num , price , cnt , totalPrice , size , color , proName)
 	values
-	(#{id} , #{num} , #{price} , #{cnt} , #{price} * #{cnt})
+	(#{id} , #{num} , #{price} , #{cnt} , #{price} * #{cnt} , #{size} , #{color} , #{proName})
 </insert>
 
 <select id="myPage" resultType="mDTO" parameterType="mDTO">

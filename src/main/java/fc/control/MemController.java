@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import fc.db.BasketMapper;
 import fc.db.MemberDTO;
 import fc.db.MemberMapper;
+import fc.db.ShippingDTO;
+import fc.db.ShippingMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 
@@ -22,7 +24,8 @@ public class MemController {
 	@Resource
 	BasketMapper bm;
 	
-	
+	@Resource
+	ShippingMapper sm;
 	
 	@RequestMapping("logOut")
 	String session_Out(HttpSession session) {
@@ -102,18 +105,39 @@ public class MemController {
 	}
 	
 	@RequestMapping("goOrder")
-	String goOrder(Model mm,HttpSession session) {
+	String goOrder(Model mm,HttpSession session , ShippingDTO dto) {
+		System.out.println(dto);
+		MemberDTO mDTO;
+		if(session.getAttribute("type")!=null) {
+			System.out.println("들어옴?");
+			mDTO = new MemberDTO();
+			mDTO.setEmail((String)session.getAttribute("email"));
+			MemberDTO member = mp.myPage(mDTO);
+			dto.setOrder_ID(member.getId());
+			System.out.println(dto);
+			sm.Order_insert(dto);
+			mm.addAttribute("msg", "결제완료");
+			mm.addAttribute("goUrl", "/mainPage/best");
+		}
+		
+		
+		return "/alert";
+		
+	}
+	
+	@RequestMapping("history")
+	String myhistory(HttpSession session,Model mm , ShippingDTO dto) {
 		MemberDTO mDTO;
 		if(session.getAttribute("type")!=null) {
 			mDTO = new MemberDTO();
 			mDTO.setEmail((String)session.getAttribute("email"));
 			MemberDTO member = mp.myPage(mDTO);
-			mm.addAttribute("mainData", bm.basket_list(member));
-			
+		
+		dto.setOrder_ID(member.getId());
+		dto.setOrder_place(member.getAddress1());
+		mm.addAttribute("mainData", sm.myhistory(dto));
 		}
-		
-		return "/fc_mem/myBasket";
-		
+		return "/fc_mem/history";
 	}
 	
 }

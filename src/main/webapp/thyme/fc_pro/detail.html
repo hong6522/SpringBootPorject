@@ -74,10 +74,10 @@ function Pay() {
   IMP.request_pay({
     pg: "html5_inicis",
     pay_method: "card",
-    merchant_uid : 'merchant_',
+    merchant_uid : 'merchant_m'+new Date().getTime(),
     name : '결제테스트',
     amount : 10, //$("#hidden_price").val()*$("#sell_cnt").val(),
-    buyer_email : 'iamport@siot.do',
+    buyer_email : 'hgh4400@naver.com',
     buyer_name : '구매자',
     buyer_tel : '010-1234-5678',
     buyer_addr : '서울특별시 강남구 삼성동',
@@ -86,9 +86,6 @@ function Pay() {
   
   function (rsp) { // callback
 	  if (rsp.success) {
-	      var msg = '결제가 완료되었습니다.';
-	      alert(msg);
-	      location.href = "/fc_mem/goOrder"
 	      frm.submit()
 	    } else {
 	      var msg = '결제에 실패하였습니다.';
@@ -96,6 +93,7 @@ function Pay() {
 	      alert(msg);
 	    }
   });
+ 
 }
 
 
@@ -108,7 +106,10 @@ function Pay() {
     	  data: {
     	    cnt: $("#sell_cnt").val(),
     	    price: $("#hidden_price").val(),
-    	    num: $("#hidden_num").val()
+    	    num: $("#hidden_num").val(),
+    	    proName : $("#hidden_name").val(),
+    	    color : $("#pro_color").val(),
+    	    size : $("#pro_size").val()
     	  },
     	  success: function(ddd) { // 성공시
     	    alert("장바구니에 추가되었습니다.");
@@ -127,21 +128,33 @@ function Pay() {
 
 
 
-<form action="">
+<form action="/fc_mem/goOrder" name="frm">
 <div class="proDetail_wrapper">
 	<div class="pro_img_wrapper"><img th:src="|../../img/${mainData.proImg}|" alt="" id="pro_img"/></div>
 	<div class="detail_main_wrapper">
 		<div class="detail_menu" th:text="${mainData.proName}"></div>
 		<div class="detail_menu">
+		<select name="order_color" id="pro_color">
 			<div th:each="cc : ${mainData.colorStr}">
-				<div th:style="'background-color: ' + ${cc} + ' ;'" class="pro_color"></div>
+				<option th:value="${cc}">[[${cc}]]</option>
 			</div>
+		</select>
+		</div>
+		<div class="detail_menu">
+		<select name="order_size" id="pro_size">
+			<option value="s">s</option>
+			<option value="m">m</option>
+			<option value="L">L</option>
+			<option value="xl">xL</option>
+		</select>
 		</div>
 		<div class="detail_menu" th:text="${mainData.sellPrice}"></div>
-		<input type="hidden" th:value="${mainData.sellPrice}" id="hidden_price"/>
-		<input type="hidden" th:value="${mainData.num}" id="hidden_num"/>
+		<input type="hidden" th:value="${mainData.sellPrice}" id="hidden_price" name="order_price"/>
+		<input type="hidden" th:value="${mainData.proName}" id="hidden_name" name="order_product"/>
+		<input type="hidden" th:value="${mainData.num}" id="hidden_num" name="order_num"/>
+		<input type="hidden" th:value="${mainData.kind}" id="hidden_kind" name="order_cate"/>
 		<div class="detail_menu">
-			<input type="number" id="sell_cnt" />
+			<input type="number" id="sell_cnt" name="order_cnt"/>
 		</div>
 		<div class="detail_menu">
 			<input type="button" id="detai_baskit_button" onclick="basketGo()" value="장바구니"/>
