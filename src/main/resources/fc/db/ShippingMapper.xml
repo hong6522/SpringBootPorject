@@ -52,9 +52,15 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</update>
 	
 	<insert id="Order_insert" parameterType="shipDTO">
-		insert into shipping (order_ID , order_name , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate ,order_place)
+		insert into shipping (order_ID , order_name , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate ,order_place , bundle)
 		values
-		(#{order_ID} , #{order_name} , sysdate() , #{order_price} ,#{order_cnt}, #{order_num} , #{order_color} , #{order_size} , #{order_product} , #{order_cate} , #{order_place})
+		(#{order_ID} , #{order_name} , sysdate() , #{order_price} ,#{order_cnt}, #{order_num} , #{order_color} , #{order_size} , #{order_product} , #{order_cate} , #{order_place} , #{bundle})
+	</insert>
+	
+	<insert id="basOrder_insert" parameterType="bDTO">
+		insert into shipping (order_ID , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate , order_place , bundle)
+		values
+		(#{id} ,  sysdate() , #{totalPrice} ,#{cnt}, #{num} , #{color} , #{size} , #{proName} , #{cate} , #{address} , #{bundle})
 	</insert>
 
 </mapper>

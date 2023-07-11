@@ -13,10 +13,26 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 </select>
 
 
+<select id="order_move" resultType="bDTO" parameterType="bDTO">
+	SELECT * FROM basket
+	<where>
+		pno = #{pno}
+	</where>
+</select>
+
+	<delete id="basketDelete"  parameterType="bDTO">
+		delete from basket where id = #{id} and pno = #{pno}
+	</delete>
+	
+<update id="basket_modify" parameterType="bDTO">
+		update basket set cnt = #{cnt}, address = #{address}, size = #{size} , totalPrice = #{price} * #{cnt}
+		where id = #{id} and pno = #{pno}
+	</update>
+
 <insert id="add_basket" parameterType="bDTO">
-	insert into basket (id , num , price , cnt , totalPrice , size , color , proName)
+	insert into basket (id , num , price , cnt , totalPrice , size , color , proName ,address)
 	values
-	(#{id} , #{num} , #{price} , #{cnt} , #{price} * #{cnt} , #{size} , #{color} , #{proName})
+	(#{id} , #{num} , #{price} , #{cnt} , #{price} * #{cnt} , #{size} , #{color} , #{proName} , #{address})
 </insert>
 
 <select id="myPage" resultType="mDTO" parameterType="mDTO">

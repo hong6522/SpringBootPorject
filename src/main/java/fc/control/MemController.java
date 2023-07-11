@@ -1,6 +1,11 @@
 package fc.control;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fc.db.BasketDTO;
 import fc.db.BasketMapper;
 import fc.db.MemberDTO;
 import fc.db.MemberMapper;
@@ -52,6 +58,7 @@ public class MemController {
 		
 		if(mdto!=null) {
 			session.setAttribute("type", "nomal");
+			session.setAttribute("address", mdto.getAddress1());
 			session.setAttribute("id", mdto.getId());
 			
 			mm.addAttribute("msg", mdto.getName()+" 님 환영합니다.");
@@ -152,16 +159,83 @@ public class MemController {
 		}
 		
 		return "/fc_mem/myBasket";
+	}
+	
+	@RequestMapping("basketDelete")
+	String basketDelete(Model mm,HttpSession session , BasketDTO dto) {
+		dto.setId((String)session.getAttribute("id"));
+		System.out.println(dto);
+		int cnt = bm.basketDelete(dto);
+		System.out.println(cnt);
+		MemberDTO mDTO;
 		
+		if(session.getAttribute("id")!=null) {
+			mDTO = new MemberDTO();
+			mDTO.setId((String)session.getAttribute("id"));
+			MemberDTO member = mp.myPage(mDTO);
+			mm.addAttribute("mainData", bm.basket_list(member));
+			
+		}
+		if(cnt==1) {
+			mm.addAttribute("msg", "삭제 완료");
+			mm.addAttribute("goUrl", "/fc_mem/myBasket");
+		}
+		else {
+			mm.addAttribute("msg", "삭제 실패");
+			mm.addAttribute("goUrl", "/fc_mem/myBasket");
+		}
+		return "/alert";
+	}
+	
+	@RequestMapping("basketModify")
+	String basketModify(Model mm,HttpSession session , BasketDTO dto) {
+		dto.setId((String)session.getAttribute("id"));
+		System.out.println(dto);
+		int cnt = bm.basket_modify(dto);
+		System.out.println(cnt);
+		MemberDTO mDTO;
+//		
+		if(session.getAttribute("id")!=null) {
+			mDTO = new MemberDTO();
+			mDTO.setId((String)session.getAttribute("id"));
+			MemberDTO member = mp.myPage(mDTO);
+			mm.addAttribute("mainData", bm.basket_list(member));
+//			
+		}
+		if(cnt==1) {
+			mm.addAttribute("msg", "수정 완료");
+			mm.addAttribute("goUrl", "/fc_mem/myBasket");
+		}
+		else {
+			mm.addAttribute("msg", "수정 실패");
+			mm.addAttribute("goUrl", "/fc_mem/myBasket");
+		}
+//			mm.addAttribute("msg", "테스트");
+//			mm.addAttribute("goUrl", "/fc_mem/myBasket");
+		
+		return "/alert" ;
 	}
 	
 	@RequestMapping("goOrder")
 	String goOrder(Model mm,HttpSession session , ShippingDTO dto) {
-
+		
+		Calendar today = Calendar.getInstance();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM");
+		String todayStr = today.get(Calendar.YEAR)+
+				(today.get(Calendar.MONTH)+1)+
+				today.get(Calendar.DATE)+
+				today.get(Calendar.HOUR_OF_DAY)+
+				today.get(Calendar.MINUTE)+
+				today.get(Calendar.SECOND)+
+				Math.random()*100+"";
+		
+				
 		if(session.getAttribute("id")!=null) {
 			System.out.println("들어옴?");
-
+			dto.setOrder_place((String)session.getAttribute("address"));
 			dto.setOrder_ID((String)session.getAttribute("id"));
+			dto.setBundle(todayStr);
 			System.out.println(dto);
 			sm.Order_insert(dto);
 			mm.addAttribute("msg", "결제완료");
@@ -175,13 +249,28 @@ public class MemController {
 	
 	@RequestMapping("listGoOrder")
 	String listGoOrder(Model mm,HttpSession session , 
-			@RequestParam("selectedPro") List<Long> selectedPro) {
-
-			System.out.println(selectedPro);
+			@RequestParam("pno") List<Integer> pno) {
+		
+		Calendar today = Calendar.getInstance();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM");
+		String todayStr = today.get(Calendar.YEAR)+
+				(today.get(Calendar.MONTH)+1)+
+				today.get(Calendar.DATE)+
+				today.get(Calendar.HOUR_OF_DAY)+
+				today.get(Calendar.MINUTE)+
+				today.get(Calendar.SECOND)+
+				Math.random()*100+"";
+		
+		for (Integer no : pno) {
+			BasketDTO dto = bm.order_move(no);
+			dto.setAddress((String)session.getAttribute("address"));
+			dto.setBundle(todayStr);
+			sm.basOrder_insert(dto);
+		}
 		
 			mm.addAttribute("msg", "테스트임");
 			mm.addAttribute("goUrl", "/fc_mem/history");
-		
 		
 		
 		return "/alert";
@@ -197,7 +286,6 @@ public class MemController {
 			MemberDTO member = mp.myPage(mDTO);
 		
 		dto.setOrder_ID(member.getId());
-		dto.setOrder_place(member.getAddress1());
 		mm.addAttribute("mainData", sm.myhistory(dto));
 		}
 		return "/fc_mem/history";

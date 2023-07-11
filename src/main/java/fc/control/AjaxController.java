@@ -41,21 +41,23 @@ public class AjaxController {
 	@RequestMapping("/ajax/addBasket")
 	@ResponseBody
 	String add_baskit(HttpSession session,BasketDTO dto) {
-		System.out.println("시작?");
-		
-		MemberDTO mDTO;
-		if(session.getAttribute("type")!=null) {
-			mDTO = new MemberDTO();
-			mDTO.setEmail((String)session.getAttribute("email"));
-			MemberDTO member = mp.myPage(mDTO);
-		
-		dto.setId(member.getId());
-		
+//		System.out.println("시작?");
+//		
+//		MemberDTO mDTO;
+		if(session.getAttribute("id")!=null) {
+//			mDTO = new MemberDTO();
+//			mDTO.setEmail((String)session.getAttribute("id"));
+//			MemberDTO member = mp.myPage(mDTO);
+			
+		dto.setAddress((String)session.getAttribute("address"));
+		dto.setId((String)session.getAttribute("id"));
+		System.out.println(dto);
 		bm.add_basket(dto);
 		}
 		System.out.println(dto);
 		
 		return true+"";
 	}
+	
 	
 }
