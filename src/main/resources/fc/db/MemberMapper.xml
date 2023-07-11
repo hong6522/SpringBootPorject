@@ -26,6 +26,10 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</where>
 </select>
 
+<update id="mem_modify" parameterType="mDTO">
+		update member set address1 = #{address1}, address2 = #{address2}, address3 = #{address3}
+		where id = #{id} and pw = #{pw}
+	</update>
 
 <select id="idChk" resultType="boolean" parameterType="mDTO">
 	SELECT * FROM member

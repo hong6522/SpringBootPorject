@@ -87,6 +87,44 @@ public class MemController {
 		}
 	}
 	
+	@RequestMapping("modifyForm")
+	String modifyForm() {
+		
+		return "/fc_mem/modifyForm";
+	}
+	
+	@GetMapping("modifyGo")
+	String modifyGo_get(Model mm, MemberDTO dto , HttpSession session) {
+		System.out.println("go페이지 진입"+dto);
+		dto.setId((String)session.getAttribute("id"));
+		System.out.println("세션 id 값 삽입 후"+dto);
+		MemberDTO mdto = mp.login(dto);
+		if(mdto!=null) {
+		
+			mm.addAttribute("mainData", mdto);
+		}
+		
+		
+		return "/fc_mem/modifyGo";
+	}
+	
+	@PostMapping("modifyGo")
+	String modifyGo_post(Model mm, MemberDTO dto) {
+		
+		System.out.println("포스트dto"+dto);
+		
+		int cnt = mp.mem_modify(dto);
+		if(cnt==1) {
+			mm.addAttribute("msg","수정 완료");
+			mm.addAttribute("goUrl" , "/fc_mem/myPage");
+		}
+		else {
+			mm.addAttribute("msg","수정 실패");
+			mm.addAttribute("goUrl" , "/fc_mem/modifyGo");
+		}
+		return "/alert";
+	}
+	
 	@RequestMapping("myPage")
 	String myPage(Model mm,HttpSession session ,MemberDTO dto) {
 		if(session.getAttribute("id")!=null) {
