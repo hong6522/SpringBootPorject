@@ -24,8 +24,7 @@ layout:decorate="fc_total/template">
 	
 	</tr>
 	<tr th:each="dto , dtoStat: ${mainData}">
-		<td th:text="${dtoStat.index+1}"></td>
-		<td th:text="${dto.no}"></td>	 
+		<td th:text="${dtoStat.index+1}"></td>	 
 		<td><a th:href="@{|/myPage/myreviewDetail/${dto.no}|}" th:text="${dto.title}"/></td>
 		<td th:text="${dto.fashion_name}"/>
 		<td th:text="${dto.id}"/>
