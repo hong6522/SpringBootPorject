@@ -12,7 +12,6 @@ public interface ProductMapper {
 	
 	List<ProductDTO> pro_select(ProductDTO advcx);
 	
-	
 	ProductDTO pro_detail(ProductDTO advcx);
 	
 	int insert(ProductDTO desgfd);
