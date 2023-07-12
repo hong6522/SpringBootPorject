@@ -8,10 +8,38 @@
 </th:block>
 
 <th:block layout:fragment="content">
+
+<button >환불하기</button>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
+  function cancelPay(uid) {
+    jQuery.ajax({
+      // 예: http://www.myservice.com/payments/cancel
+      "url": imp35316716, 
+      "type": "POST",
+      "contentType": "application/json",
+      "data": JSON.stringify({
+        "merchant_uid": uid,
+        "cancel_request_amount": 10, // 환불금액
+        "reason": "테스트 결제 환불" // 환불사유
+      }),
+      "dataType": "json"
+    });
+  }
+  
+  function orderState(uid){
+// 	  alert("버튼클릭"+uid)
+	  location.href="/fc_mem/orderModify?uid="+uid+
+			  "&order_shipping="+$("#shipping"+uid).val()
+  }
+</script>
 <style>
 	.history_wrapper{
 		width:1200px;
-		height:500px;
+		height:auto;
 		margin:auto;
 		background:#ff0;
 	}
@@ -35,6 +63,7 @@
 	</div>
 	<hr/>
 	<div th:each="dto : ${mainData}">
+		<input type="hidden" th:value="${dto.order_shipping}" th:id="shipping+${dto.uid}"/>
 		<div th:text="${dto.order_no}" class="history_cate"></div>
 		<div th:text="${dto.order_price}" class="history_cate"></div>
 		<div th:text="${dto.order_cnt}" class="history_cate"></div>
@@ -43,7 +72,7 @@
 		<div th:text="${dto.order_size}" class="history_cate"></div>
 		<div th:text="${dto.order_color}" class="history_cate"></div>
 		<div th:text="${dto.order_place}" class="history_cate"></div>
-		<input type="button" value="주문취소"/>
+		<input type="button" value="주문취소(환불요청)" th:onclick="orderState([[${dto.uid}]])"/>
 		<hr/>
 	</div>
 </div>

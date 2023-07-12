@@ -34,31 +34,71 @@ function basketModify(pno){
 var IMP = window.IMP;
 IMP.init('imp35316716');
 
+
+
 function Pay() {
+  // iamport 대신 자신의 "가맹점 식별코드"를 사용
   IMP.request_pay({
     pg: "html5_inicis",
     pay_method: "card",
-    merchant_uid : 'merchant_m'+new Date().getTime(),
-    name : '결제테스트',
-    amount : 10,
-    buyer_email : 'hgh4400@naver.com',
-    buyer_name : '구매자',
-    buyer_tel : '010-1234-5678',
-    buyer_addr : '서울특별시 강남구 삼성동',
-    buyer_postcode : '123-456'
+    merchant_uid: new Date().getTime(),
+    name: '결제테스트',
+    amount: 10, // $("#hidden_price").val() * $("#sell_cnt").val(),
+    buyer_email: 'hgh4400@naver.com',
+    buyer_name: '구매자',
+    buyer_tel: '010-1234-5678',
+    buyer_addr: '서울특별시 강남구 삼성동',
+    buyer_postcode: '123-456'
   },
-  
-  function (rsp) { // callback
-	  if (rsp.success) {
-	      frm.submit()
-	    } else {
-	      var msg = '결제에 실패하였습니다.';
-	      msg += '에러내용 : ' + rsp.error_msg;
-	      alert(msg);
-	    }
-  });
- 
+
+    function (rsp) { 
+		 if (rsp.success) {
+        var merchantUid = rsp.merchant_uid; // 결제 성공 시 merchant_uid 값 가져오기
+
+        var form = document.forms['frm'];
+        
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', '/fc_mem/listGoOrder');
+        var inputMerchantUid = document.createElement('input');
+        inputMerchantUid.setAttribute('type', 'hidden');
+        inputMerchantUid.setAttribute('name', 'uid');
+        inputMerchantUid.setAttribute('value', merchantUid);
+
+        form.appendChild(inputMerchantUid);
+
+        form.submit();
+      }else {
+        var msg = '결제에 실패하였습니다.';
+        msg += '에러내용 : ' + rsp.error_msg;
+        alert(msg);
+      }
+    });
+
 }
+
+
+  function basketGo() {
+    //alert("시작?");
+
+    $.ajax({
+    	  url: "/ajax/addBasket",
+    	  method: "POST",
+    	  data: {
+    	    cnt: $("#sell_cnt").val(),
+    	    price: $("#hidden_price").val(),
+    	    num: $("#hidden_num").val(),
+    	    proName : $("#hidden_name").val(),
+    	    color : $("#pro_color").val(),
+    	    size : $("#pro_size").val()
+    	  },
+    	  success: function(ddd) { // 성공시
+    	    alert("장바구니에 추가되었습니다.");
+    	  },
+    	  error: function(ee) { // 실패시
+    	    alert("실패하였습니다.");
+    	  }
+    	});
+  }
 
 
 </script>
@@ -69,7 +109,6 @@ function Pay() {
 	}
 	.proBasket_wrapper{
 		width:1200px;
-		height:550px;
 		margin:auto;
 	}
 	.basket_cate{
