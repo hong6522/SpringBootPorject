@@ -6,7 +6,7 @@ import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
 
-@Alias("bDTO")
+@Alias("baskDTO")
 @Data
 public class BasketDTO {
 	

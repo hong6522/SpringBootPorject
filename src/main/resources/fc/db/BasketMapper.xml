@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 
 <mapper namespace="fc.db.BasketMapper">
 
-	<select id="basket_list" resultType="bDTO" parameterType="mDTO">
+	<select id="basket_list" resultType="baskDTO" parameterType="mDTO">
 	SELECT * FROM basket
 	<where>
 		id = #{id}
@@ -13,23 +13,23 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 </select>
 
 
-<select id="order_move" resultType="bDTO" parameterType="bDTO">
+<select id="order_move" resultType="baskDTO" parameterType="baskDTO">
 	SELECT * FROM basket
 	<where>
 		pno = #{pno}
 	</where>
 </select>
 
-	<delete id="basketDelete"  parameterType="bDTO">
+	<delete id="basketDelete"  parameterType="baskDTO">
 		delete from basket where id = #{id} and pno = #{pno}
 	</delete>
 	
-<update id="basket_modify" parameterType="bDTO">
+<update id="basket_modify" parameterType="baskDTO">
 		update basket set cnt = #{cnt}, address = #{address}, size = #{size} , totalPrice = #{price} * #{cnt}
 		where id = #{id} and pno = #{pno}
 	</update>
 
-<insert id="add_basket" parameterType="bDTO">
+<insert id="add_basket" parameterType="baskDTO">
 	insert into basket (id , num , price , cnt , totalPrice , size , color , proName ,address)
 	values
 	(#{id} , #{num} , #{price} , #{cnt} , #{price} * #{cnt} , #{size} , #{color} , #{proName} , #{address})
