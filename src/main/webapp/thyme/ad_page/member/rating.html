@@ -9,8 +9,10 @@ head{
 .wrapperMain>div{
 	float:left;
 }
-
 </style>
+
+
+
 <div class="wrapperMain">
 	<div class="top">
 		<th:block layout:fragment="title">
@@ -49,8 +51,8 @@ head{
 				<td>지역</td>
 				<td>메모</td>
 			</tr>
-			<tr th:each="dto, dtoStat : ${mainData}">
-				<td th:text="${dto.joindate}"></td>
+			<tr th:each="dto : ${mainData}">
+				<td th:text="${dto.joinDateStr}"></td>
 				<td th:text="${dto.name}"></td>
 				<td><a th:href="|/ad_page/member/ratingDetail/${dto.id}|" th:text="${dto.id}"></a></td>
 				<td th:text="${dto.rank}"></td>
@@ -63,4 +65,6 @@ head{
 		</table>
 	</div>
 </div>
+
+
 </html>

@@ -11,6 +11,8 @@ public interface QnaMapper {
 	
 	List<QnaDTO> adqlist(AdQnaPData pd);
 	
+	List<QnaDTO> adqlist2(QnaDTO qnadto);
+	
 	List<QnaDTO> myqnalist(String id);
 	
 	//QnaDTO myqnalist(QnaDTO bdedsde);

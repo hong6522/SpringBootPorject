@@ -8,23 +8,25 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	<select id="pro" resultType="pDTO" parameterType="pDTO">
 		SELECT * FROM product
 		<where>
-			 <trim suffix=" " suffixOverrides = "and | or">
-	            <if test="sch!=null">
-	               proKind = #{sch} and
+			 <trim suffix=" " suffixOverrides = " and | or">
+	            
+                <if test="sch!=null and sch!='' and sch!=('all')">
+                   proKind = #{sch} and 
+                </if>
+	            
+	            
+	         	<if test="start !='' and start!=null">
+	               <if test="end !='' and end!=null">
+	                  reg_date BETWEEN #{start} AND #{end} and
+	               </if>
 	            </if>
-	           
-	           <if test="start!=null">
-	               <if test="end!=null">
-	                  reg_date >= #{start} and <![CDATA[reg_date <= #{end}]]> and
+	         	
+	         	<if test="startPrice !='' and startPrice != null">
+                <if test="endPrice !='' and endPrice!=null">
+	                  sellPrice BETWEEN #{startPrice} AND #{endPrice}
 	               </if>
 	            </if>
 	            
-	            <if test="startPrice!=null">
-	               <if test="endPrice!=null">
-	                  sellPrice >= #{startPrice} and <![CDATA[sellPrice <= #{endPrice}]]>
-	               </if>
-	            </if>
-	           
 	         </trim>
 		</where>
 	</select>
@@ -49,8 +51,20 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		<selectKey keyProperty="num" resultType="Integer" order="BEFORE">
 			select max(num)+1 from product
 		</selectKey>
-		insert into product (num,kind,proKind,proName,proDetail,pf1,pf2,pf3,proSize,color,sel,memPoint,supplyPrice,sellPrice,proCnt,reg_date)
+		insert into product (num,kind,proKind,proName,proDetail,pf1,pf2,pf3,proSize,color,colorName,sel,memPoint,supplyPrice,sellPrice,proCnt,reg_date)
 		values
-		(#{num}, #{kind}, #{proKind}, #{proName}, #{proDetail},#{pf1},#{pf2},#{pf3},#{proSize},#{color},#{sel},#{memPoint},#{supplyPrice},#{sellPrice},#{proCnt},sysdate())
+		(#{num}, #{kind}, #{proKind}, #{proName}, #{proDetail},#{pf1},#{pf2},#{pf3},#{proSize},#{color},#{colorName},#{sel},#{memPoint},#{supplyPrice},#{sellPrice},#{proCnt},sysdate())
 	</insert>
+
+<select id="detail" parameterType="pDTO" resultType="pDTO">
+		select * from product where proName = #{proName}
+	</select>
+	
+	<update id="modify" parameterType="pDTO">
+		update product set kind = #{kind} , proKind = #{proKind} , proName = #{proName} , 
+		proDetail = #{proDetail} , proSize = #{proSize} , pf1 = #{pf1} , pf2 = #{pf2} , pf3 = #{pf3} ,
+		color = #{color} , sel = #{sel} , memPoint = #{memPoint} , supplyPrice = #{supplyPrice}, colorName=#{colorName}
+		sellPrice = #{sellPrice}
+		where proName = #{proName}
+	</update>
 </mapper>

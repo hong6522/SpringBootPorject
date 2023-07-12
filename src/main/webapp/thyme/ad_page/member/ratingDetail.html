@@ -18,19 +18,11 @@ head{
 			<title>회원관리</title>
 		</th:block>
 	</div>
-	<table border="">
-		<tr th:each="dto : ${mainData}">
-			<td style="width:300px" align="center"><a th:href="|${dto.id}|" th:text="등급수정"></a></td>
-			<td style="width:300px" align="center"><a th:href="|/ad_page/member/qnainfo/${dto.id}|" th:text="${'Q&A 정보'}"></a></td>
-			<td style="width:300px" align="center"><a th:href="|/ad_page/member/orderlist/${dto.id}|" th:text="${'주문 내역'}"></a></td>
-			<td style="width:300px" align="center"><a th:href="|/ad_page/member/shoppingbasket/${dto.id}|" th:text="${'장바구니'}"></a></td>
-		</tr>
-	</table>
-<!-- th:object="memberDTO" -->
+<h2>등급수정</h2>
 <form action="/ad_page/member/changerank" >
 	<table border="">
 		<tr>
-			<td>등록일</td>
+			<td>가입일</td>
 			<td>이름</td>
 			<td>아이디</td>
 			<td>등급</td>
@@ -41,7 +33,7 @@ head{
 		</tr>
 		<tr th:each="dto : ${mainData}">
 		<input type="hidden" th:value="${dto.id}" name="id"/>
-			<td th:text="${dto.joindate}"></td>
+			<td th:text="${dto.joinDateStr}"></td>
 			<td th:text="${dto.name}"></td>
 			<td th:text="${dto.id}"></td>			
 			<td>
@@ -52,7 +44,7 @@ head{
 					<option value="블랙리스트">블랙리스트</option>
 				</select>
 			</td>
-			<td th:text="${dto.gender}"></td>
+			<td th:text="${dto.genderStr}"></td>
 			<td th:text="${dto.age}"></td>
 			<td th:text="${dto.address1}"></td>
 			<td th:text="${dto.memo}"><textarea name="" id="" cols="30" rows="1" placeholder="메모 내용을 입력해주세요."></textarea></td>
@@ -64,5 +56,51 @@ head{
 		</tr>
 	</table>
 </form>
+<h2>Q&A 정보</h2>
+<table border="">
+    <tr>
+        <td>제목</td>
+        <td>내용</td>
+        <td>답변</td>
+        <td>삭제</td>
+    </tr>
+
+    <tr th:each="dto : ${qnaData}">
+            <td th:text="${dto.title}"></td>
+            <td th:text="${dto.content}"></td>
+            <td th:text="${dto.getAnswer}"></td>
+            <td></td>
+    </tr>
+
+</table>
+<h2>주문내역</h2>
+<table border="">
+	<tr>
+		<td>주문번호</td>
+		<td>제품명</td>
+		<td>사이즈</td>
+		<td>가격</td>
+		
+	</tr>
+	<tr th:each="dto : ${orderlist}">
+		<td th:text="${dto.order_no}"></td>
+		<td th:text="${dto.order_product}"></td>
+		<td th:text="${dto.order_size}"></td>
+		<td th:text="${dto.order_price}"></td>
+	</tr>
+</table>
+<h2>장바구니</h2>
+<table border="">
+	<tr>
+		<td>제품명</td>
+		<td>수량</td>
+		<td>가격</td>
+	</tr>
+	<tr th:each="dto : ${basket}">
+		<td th:text="${dto.proName}"></td>
+		<td th:text="${dto.cnt}"></td>
+		<td th:text="${dto.totalPrice}"></td>
+	</tr>
+</table>
 </div>
 </html>

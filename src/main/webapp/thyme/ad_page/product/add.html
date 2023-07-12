@@ -12,42 +12,8 @@ head{
 }
 
 </style>  
-<!-- <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var colorContainer = document.getElementById("colorContainer");
-    var registerButton = document.getElementById("registerButton");
-
-    registerButton.addEventListener("click", function() {
-      var colorInput = document.getElementById("colorInput");
-      var colors = colorInput.value.split(',');
-
-      for (var i = 0; i < colors.length; i++) {
-        var color = colors[i].trim();
-
-        if (color) {
-          var colorBox = document.createElement("div");
-          colorBox.style.backgroundColor = color;
-          colorBox.style.width = "10px";
-          colorBox.style.height = "10px";
-          colorBox.style.display = "inline-block";
-          colorBox.style.margin = "5px";
-
-          var deleteButton = document.createElement("button");
-          deleteButton.innerText = "X";
-          deleteButton.addEventListener("click", function() {
-            colorContainer.removeChild(colorBox);
-            colorContainer.removeChild(deleteButton);
-          });
-
-          colorContainer.appendChild(colorBox);
-          colorContainer.appendChild(deleteButton);
-        }
-      }
-    });
-  });
-</script> -->
 <script>
-   document.addEventListener("DOMContentLoaded", function() {
+/*    document.addEventListener("DOMContentLoaded", function() {
    var colorContainer = document.getElementById("colorContainer");
    var registerButton = document.getElementById("registerButton");
    
@@ -77,6 +43,53 @@ head{
       } 
    });
 });
+ */
+ document.addEventListener("DOMContentLoaded", function() {
+	    var colorContainer = document.getElementById("colorContainer");
+	    var registerButton = document.getElementById("registerButton");
+
+	    registerButton.addEventListener("click", function() {
+	      var colorInput = document.getElementById("colorInput");
+	      var colorNameInput = document.getElementById("colorNameInput");
+
+	      var color = colorInput.value.trim();
+	      var colorNames = colorNameInput.value.trim().split(",");
+
+	      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
+	      for (var i = 0; i < colorNames.length; i++) {
+	        $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '_' + i + '" name="colorName[]" value="' + colorNames[i] + '">');
+	      }
+
+	      if (color) {
+	        var colorBox = document.createElement("div");
+	        colorBox.style.backgroundColor = color;
+	        colorBox.style.width = "10px";
+	        colorBox.style.height = "10px";
+	        colorBox.style.display = "inline-block";
+	        colorBox.style.margin = "5px";
+
+	        for (var i = 0; i < colorNames.length; i++) {
+	          var colorText = document.createElement("span");
+	          colorText.innerText = colorNames[i];
+	          colorText.style.marginLeft = "5px";
+
+	          var deleteButton = document.createElement("button");
+	          deleteButton.innerText = "X";
+	          deleteButton.addEventListener("click", function() {
+	            $("#" + color.replaceAll('#','')).remove();
+	            colorContainer.removeChild(colorBox);
+	            colorContainer.removeChild(colorText);
+	            colorContainer.removeChild(deleteButton);
+	          });
+
+	          colorContainer.appendChild(colorText);
+	          colorContainer.appendChild(deleteButton);
+	        }
+	        
+	        colorContainer.appendChild(colorBox);
+	      }
+	    });
+	  });
 </script>
 <div class="wrapperMain">
 	<div class="top">
@@ -149,13 +162,15 @@ head{
           		  <tr>
 			      <td>색상</td>
 			      <td>
-			         <div>
-					     <input type="color" id="colorInput">
-					     <button type="button" id="registerButton">색상 등록</button>
-					     <div id="colorContainer" th:filed="*{proColor}"></div>
-					 </div>
+			        <div>
+					  <input type="color" id="colorInput">
+					  <input type="text" id="colorNameInput" />
+					  <button type="button" id="registerButton">색상 등록</button>
+					  <div id="colorContainer" th:filed="*{proColor}"></div>
+					</div>
 			      </td>
-			    </tr>	
+			    </tr>
+			    
 				<tr>
 					<td>재고 수량</td>
 					<td><input type="text" th:field="*{proCnt}"/></td>

@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="ad_fc_total/template">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <style>
 head{
 	margin-right: 50px;
@@ -11,43 +13,91 @@ head{
 }
 </style>
 <script>
-   document.addEventListener("DOMContentLoaded", function() {
-   var colorContainer = document.getElementById("colorContainer");
-   var registerButton = document.getElementById("registerButton");
-   
-   registerButton.addEventListener("click", function() {
-      var colorInput = document.getElementById("colorInput");
-      var color = colorInput.value.trim();
-      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
-   
-      if (color) {
-      var colorBox = document.createElement("div");
-      colorBox.style.backgroundColor = color;
-      colorBox.style.width = "10px";
-      colorBox.style.height = "10px";
-      colorBox.style.display = "inline-block";
-      colorBox.style.margin = "5px";
-   
-      var deleteButton = document.createElement("button");
-      deleteButton.innerText = "X";
-      deleteButton.addEventListener("click", function() {
-      $("#" + color.replaceAll('#','')).remove();
-         colorContainer.removeChild(colorBox);
-         colorContainer.removeChild(deleteButton);
-      });
-   
-      colorContainer.appendChild(colorBox);
-      colorContainer.appendChild(deleteButton);
-      } 
-   });
-});
-   
-   function fileDelete(file){
-	   if(confirm("파일을 삭제하시겠습니까?")){
-		   frm.action="../FileDelete/"+file
-		   frm.submit()
-	   }
-   }
+/* document.addEventListener("DOMContentLoaded", function() {
+	   var colorContainer = document.getElementById("colorContainer");
+	   var registerButton = document.getElementById("registerButton");
+	   
+	   registerButton.addEventListener("click", function() {
+	      var colorInput = document.getElementById("colorInput");
+	      var color = colorInput.value.trim();
+	      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
+	   
+	      if (color) {
+	      var colorBox = document.createElement("div");
+	      colorBox.style.backgroundColor = color;
+	      colorBox.style.width = "10px";
+	      colorBox.style.height = "10px";
+	      colorBox.style.display = "inline-block";
+	      colorBox.style.margin = "5px";
+	   
+	      var deleteButton = document.createElement("button");
+	      deleteButton.innerText = "X";
+	      deleteButton.addEventListener("click", function() {
+	      $("#" + color.replaceAll('#','')).remove();
+	         colorContainer.removeChild(colorBox);
+	         colorContainer.removeChild(deleteButton);
+	      });
+	   
+	      colorContainer.appendChild(colorBox);
+	      colorContainer.appendChild(deleteButton);
+	      } 
+	   });
+	}); */
+
+	 document.addEventListener("DOMContentLoaded", function() {
+		    var colorContainer = document.getElementById("colorContainer");
+		    var registerButton = document.getElementById("registerButton");
+
+		    registerButton.addEventListener("click", function() {
+		      var colorInput = document.getElementById("colorInput");
+		      var colorNameInput = document.getElementById("colorNameInput");
+
+		      var color = colorInput.value.trim();
+		      var colorNames = colorNameInput.value.trim().split(",");
+
+		      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
+		      for (var i = 0; i < colorNames.length; i++) {
+		        $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '_' + i + '" name="colorName[]" value="' + colorNames[i] + '">');
+		      }
+
+		      if (color) {
+		        var colorBox = document.createElement("div");
+		        colorBox.style.backgroundColor = color;
+		        colorBox.style.width = "10px";
+		        colorBox.style.height = "10px";
+		        colorBox.style.display = "inline-block";
+		        colorBox.style.margin = "5px";
+
+		        for (var i = 0; i < colorNames.length; i++) {
+		          var colorText = document.createElement("span");
+		          colorText.innerText = colorNames[i];
+		          colorText.style.marginLeft = "5px";
+
+		          var deleteButton = document.createElement("button");
+		          deleteButton.innerText = "X";
+		          deleteButton.addEventListener("click", function() {
+		            $("#" + color.replaceAll('#','')).remove();
+		            colorContainer.removeChild(colorBox);
+		            colorContainer.removeChild(colorText);
+		            colorContainer.removeChild(deleteButton);
+		          });
+
+		          colorContainer.appendChild(colorText);
+		          colorContainer.appendChild(deleteButton);
+		        }
+		        
+		        colorContainer.appendChild(colorBox);
+		      }
+		    });
+		  });
+	
+	
+function fileDelete(file){
+ if(confirm("파일을 삭제하시겠습니까?")){
+  frm.action="../FileDelete/"+file
+  frm.submit()
+ }
+}
 </script>
 <div class="wrapperMain">
 
@@ -134,17 +184,21 @@ head{
 					<option value="xl">XL</option>
 				</select>
 			</td>
-		</tr>
 		<div id="color_list_jquery">
-          
-        		</div>				 
-        		  <tr>
+            
+          		</div>				 
+          		  <tr>
 	      <td>색상</td>
 	      <td>
 	         <div>
 			     <input type="color" id="colorInput">
+			     <input type="text" id="colorNameInput" />
 			     <button type="button" id="registerButton">색상 등록</button>
-			     <div id="colorContainer" th:filed="*{proColor}"></div>
+			     <div id="colorContainer">
+			     	  <div th:each="c : ${color}">
+			     	   <span th:text="${c}"></span>
+			    </div>
+			     </div>
 			 </div>
 	      </td>
 	    </tr>	

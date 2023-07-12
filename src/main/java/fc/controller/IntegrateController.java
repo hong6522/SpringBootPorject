@@ -60,7 +60,7 @@ public class IntegrateController {
 		System.out.println("insertRes");
 		bm.insert(dto);
 		mm.addAttribute("msg", "입력되었습니다.");
-		mm.addAttribute("goUrl","detail/"+dto.getNo());
+		mm.addAttribute("goUrl","/ad_page/integrate/detail/"+dto.getNo());
 		System.out.println("InsertComplete:"+dto);
 		return "ad_page/product/alert";
 	}

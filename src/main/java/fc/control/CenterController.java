@@ -138,14 +138,10 @@ public class CenterController {
 		
 		mm.addAttribute("pdata", pd);
 		mm.addAttribute("mainData", qm.qdetail(dto));
-	
-		MemberDTO mDTO;
-		
+
 		if(session.getAttribute("type")!=null) {
-			mDTO = new MemberDTO();
-			mDTO.setEmail((String)session.getAttribute("email"));
-			MemberDTO myPage = mp.myPage(mDTO);
-			mm.addAttribute("id", myPage.getId());
+		
+			mm.addAttribute("id", (String)session.getAttribute("id"));
 			mm.addAttribute("mainData", qm.qdetail(dto));
 			mm.addAttribute("pdata", pd);
 			
@@ -166,15 +162,10 @@ public class CenterController {
 		new CenterPData(request);
 		CenterPData pd = (CenterPData)request.getAttribute("pd");
 		pd.setNowPage(nowpage);
-		
-		
-		MemberDTO mDTO;
-		
+
 		if(session.getAttribute("type")!=null) {
-			mDTO = new MemberDTO();
-			mDTO.setEmail((String)session.getAttribute("email"));
-			MemberDTO myPage = mp.myPage(mDTO);
-			mm.addAttribute("id", myPage.getId());
+
+			mm.addAttribute("id", (String)session.getAttribute("id"));
 			mm.addAttribute("mainData", qm.qdetail(dto));
 			
 			
@@ -185,7 +176,7 @@ public class CenterController {
 		
 		mm.addAttribute("pdata", pd);
 		mm.addAttribute("msg", "로그인이 필요한 서비스입니다. 회원으로 로그인 후 글 작성이 가능합니다.");
-		mm.addAttribute("goUrl", "/center/qna");
+		mm.addAttribute("goUrl", "/fc_mem/login");
 		
 		
 		return "center/alert";
@@ -362,7 +353,7 @@ public class CenterController {
 	@RequestMapping("/reviewDetail/{no}/{nowpage}")
 	String reviewDetail(Model mm , ReviewDTO dto ,@PathVariable int nowpage ,HttpServletRequest request , HttpSession session  ) {
 		//String id = (String)session.getAttribute("type");
-		MemberDTO mDTO;
+
 		new CenterPData(request);
 		CenterPData pd = (CenterPData)request.getAttribute("pd");
 		rm.rcnt(dto.getNo());	
@@ -371,10 +362,8 @@ public class CenterController {
 		pd.setNowPage(nowpage);
 		pd.setNowPage(nowpage);
 		if(session.getAttribute("type")!=null) {
-			mDTO = new MemberDTO();
-			mDTO.setEmail((String)session.getAttribute("email"));
-			MemberDTO myPage = mp.myPage(mDTO);
-			mm.addAttribute("id", myPage.getId());
+
+			mm.addAttribute("id", (String)session.getAttribute("id"));
 			mm.addAttribute("mainData", rm.rdetail(dto));
 			mm.addAttribute("pdata", pd);
 			

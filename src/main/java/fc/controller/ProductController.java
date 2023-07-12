@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import fc.db.BoardDTO;
 import fc.db.ProductDTO;
 import fc.db.ProductMapper;
@@ -45,8 +50,32 @@ public class ProductController {
 	
 	@GetMapping("/modify/{proName}")
 	String detail(Model mm, ProductDTO dto) {
-		mm.addAttribute("productDTO",pm.detail(dto));
+		ProductDTO pd = pm.detail(dto);
+		String[] colorArr = pd.getColor().split(",");
+		String [] colorName = pd.getColorName().split(",");
+		
+		 ObjectMapper objectMapper = new ObjectMapper();
+	        String json = null;
+	        try {
+	            // JSON 객체 생성
+	            ObjectNode jsonNode = objectMapper.createObjectNode();
+
+	            ArrayNode colorArrayNode = objectMapper.valueToTree(colorArr);
+	            for (int i = 0; i < colorArr.length; i++) {
+	                jsonNode.put(colorName[i], colorArrayNode.get(i));
+	            }
+
+	            // JSON 형식의 문자열로 변환
+	            json = objectMapper.writeValueAsString(jsonNode);
+	        } catch (JsonProcessingException e) {
+	            e.printStackTrace();
+	        }
+
+	        System.out.println(json);
+	    mm.addAttribute("color",json);
+		mm.addAttribute("productDTO",pd);
 //		System.out.println(pm.detail(dto)+"-----------------"+dto);
+		
 		return "ad_page/product/modify";
 	}
 	

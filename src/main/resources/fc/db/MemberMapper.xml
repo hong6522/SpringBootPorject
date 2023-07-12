@@ -19,6 +19,32 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</where>
 </select>
 
+<select id="addetail" resultType="mDTO" parameterType="mDTO">
+	SELECT * FROM member 
+	<where>
+		id = #{id}
+	</where>
+</select>
+
+<select id="orderlist" resultType="shipDTO" parameterType="mDTO">
+	SELECT * FROM shipping
+	<where>
+		order_ID = #{id}
+	</where>
+</select>
+
+<select id="basket" resultType="baskDTO" parameterType="mDTO">
+	SELECT * FROM basket
+	<where>
+		id = #{id}
+	</where>
+</select>
+
+<update id="changerank" parameterType="mDTO">
+	update member set rank = #{rank}
+	where id = #{id}
+</update>
+
 <select id="login" resultType="mDTO" parameterType="mDTO">
 	SELECT * FROM member
 	<where>

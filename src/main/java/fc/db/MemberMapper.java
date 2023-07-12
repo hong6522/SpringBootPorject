@@ -14,7 +14,9 @@ public interface MemberMapper {
 	MemberDTO addetail(MemberDTO djsafsnj);
 	
 	int changerank(MemberDTO gfsbf);
-
+	
+	MemberDTO login(MemberDTO dto);
+	
 	int join(MemberDTO dto);
 	
 	int mem_modify(MemberDTO dto);
@@ -22,5 +24,8 @@ public interface MemberMapper {
 	MemberDTO myPage(MemberDTO dto);
 	
 	boolean idChk(MemberDTO dto);
-
+	
+	List<ShippingDTO> orderlist(MemberDTO dsfsdgvfd);
+	
+	List<BasketDTO> basket(MemberDTO cfcgvhds);
 }
