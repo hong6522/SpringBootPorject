@@ -35,6 +35,7 @@ public class ShippingController {
 		System.out.println(dto.getToday());
 		
 		ArrayList<ShippingDTO> todayData = shim.todayList(dto);
+		
 		ArrayList<ShippingDTO> mainData = shim.MainList(dto);
 		for (ShippingDTO td : todayData) {
 			td.setOrder_dateStr(sdf2.format(td.getOrder_date()));

@@ -29,6 +29,15 @@ public class AjaxController {
 		return ""+true;
 	}
 	
+	@RequestMapping("/ajax/idChk")
+	@ResponseBody
+	String idChk(MemberDTO dto) {
+		
+		System.out.println(mp.idChk(dto));
+		
+		return "";
+	}
+	
 	@RequestMapping("/ajax/addBasket")
 	@ResponseBody
 	String add_baskit(HttpSession session,BasketDTO dto) {
