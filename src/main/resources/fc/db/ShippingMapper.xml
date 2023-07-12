@@ -51,16 +51,23 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		</where>
 	</update>
 	
+	<update id="orderRefund" parameterType="shipDTO">
+		update shipping set order_shipping = #{order_shipping}
+		<where>
+			uid = #{uid}
+		</where>
+	</update>
+	
 	<insert id="Order_insert" parameterType="shipDTO">
-		insert into shipping (order_ID , order_name , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate ,order_place , bundle)
+		insert into shipping (order_ID , order_name , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate ,order_place , uid)
 		values
-		(#{order_ID} , #{order_name} , sysdate() , #{order_price} ,#{order_cnt}, #{order_num} , #{order_color} , #{order_size} , #{order_product} , #{order_cate} , #{order_place} , #{bundle})
+		(#{order_ID} , #{order_name} , sysdate() , #{order_price} ,#{order_cnt}, #{order_num} , #{order_color} , #{order_size} , #{order_product} , #{order_cate} , #{order_place}  ,#{uid})
 	</insert>
 	
 	<insert id="basOrder_insert" parameterType="bDTO">
-		insert into shipping (order_ID , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate , order_place , bundle)
+		insert into shipping (order_ID , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate , order_place ,uid)
 		values
-		(#{id} ,  sysdate() , #{totalPrice} ,#{cnt}, #{num} , #{color} , #{size} , #{proName} , #{cate} , #{address} , #{bundle})
+		(#{id} ,  sysdate() , #{totalPrice} ,#{cnt}, #{num} , #{color} , #{size} , #{proName} , #{cate} , #{address} ,#{uid})
 	</insert>
 
 </mapper>

@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class BasketDTO {
 	
-	String id ,proName , color , size , cate , address , bundle;
+	String id ,proName , color , size , cate , address , bundle ,uid;
 	int price , totalPrice , cnt ,pno;
 	Integer num;
 }

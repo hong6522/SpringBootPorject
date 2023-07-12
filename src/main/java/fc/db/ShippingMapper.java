@@ -25,4 +25,6 @@ public interface ShippingMapper {
 	
 	int update(ShippingDTO dto);
 	
+	int orderRefund(ShippingDTO dto);
+	
 }

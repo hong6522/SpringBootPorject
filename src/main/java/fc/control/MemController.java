@@ -218,28 +218,17 @@ public class MemController {
 	
 	@RequestMapping("goOrder")
 	String goOrder(Model mm,HttpSession session , ShippingDTO dto) {
+		String str = dto.getUid();
 		
-		Calendar today = Calendar.getInstance();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM");
-		String todayStr = today.get(Calendar.YEAR)+
-				(today.get(Calendar.MONTH)+1)+
-				today.get(Calendar.DATE)+
-				today.get(Calendar.HOUR_OF_DAY)+
-				today.get(Calendar.MINUTE)+
-				today.get(Calendar.SECOND)+
-				Math.random()*100+"";
-		
-				
 		if(session.getAttribute("id")!=null) {
 			System.out.println("들어옴?");
 			dto.setOrder_place((String)session.getAttribute("address"));
 			dto.setOrder_ID((String)session.getAttribute("id"));
-			dto.setBundle(todayStr);
+			dto.setUid(str+Math.random()*100);
 			System.out.println(dto);
 			sm.Order_insert(dto);
 			mm.addAttribute("msg", "결제완료");
-			mm.addAttribute("goUrl", "/mainPage/best");
+			mm.addAttribute("goUrl", "/fc_mem/history");
 		}
 		
 		
@@ -249,28 +238,45 @@ public class MemController {
 	
 	@RequestMapping("listGoOrder")
 	String listGoOrder(Model mm,HttpSession session , 
-			@RequestParam("pno") List<Integer> pno) {
-		
-		Calendar today = Calendar.getInstance();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM");
-		String todayStr = today.get(Calendar.YEAR)+
-				(today.get(Calendar.MONTH)+1)+
-				today.get(Calendar.DATE)+
-				today.get(Calendar.HOUR_OF_DAY)+
-				today.get(Calendar.MINUTE)+
-				today.get(Calendar.SECOND)+
-				Math.random()*100+"";
+			@RequestParam("pno") List<Integer> pno,
+			@RequestParam("uid") String uid) {
+		System.out.println("listOrder:"+uid);
 		
 		for (Integer no : pno) {
 			BasketDTO dto = bm.order_move(no);
 			dto.setAddress((String)session.getAttribute("address"));
-			dto.setBundle(todayStr);
+			dto.setUid(uid);
 			sm.basOrder_insert(dto);
+			dto.setId((String)session.getAttribute("id"));
+			bm.basketDelete(dto);
 		}
 		
-			mm.addAttribute("msg", "테스트임");
+			mm.addAttribute("msg", "결제성공");
 			mm.addAttribute("goUrl", "/fc_mem/history");
+		
+		
+		return "/alert";
+		
+	}
+	
+	@RequestMapping("orderModify")
+	String orderModify(Model mm,HttpSession session ,ShippingDTO dto ) {
+		System.out.println("환불완료로 수정전:"+dto);
+		
+		if(dto.getOrder_shipping().equals("배송준비중") || dto.getOrder_shipping().equals("결제완료")) {
+			dto.setOrder_shipping("환불완료");
+			int cnt = sm.orderRefund(dto);
+			
+			System.out.println(cnt+"환불완료로 수정후:"+dto);
+			mm.addAttribute("msg", "결제 취소 되었습니다 (상태가 환불로 변경됩니다)");
+			mm.addAttribute("goUrl", "/fc_mem/history");
+
+		}
+		else {
+			mm.addAttribute("msg", "배송상태가 배송준비중 이거나 결제완료 에서만 가능합니다 (관리자에게 문의 부탁드립니다)");
+			mm.addAttribute("goUrl", "/fc_mem/history");
+		}
+		
 		
 		
 		return "/alert";
