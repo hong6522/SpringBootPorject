@@ -14,4 +14,13 @@ public interface MemberMapper {
 	MemberDTO addetail(MemberDTO djsafsnj);
 	
 	int changerank(MemberDTO gfsbf);
+
+	int join(MemberDTO dto);
+	
+	int mem_modify(MemberDTO dto);
+	
+	MemberDTO myPage(MemberDTO dto);
+	
+	boolean idChk(MemberDTO dto);
+
 }

@@ -14,4 +14,10 @@ public interface BasketMapper {
 	
 	void add_basket(BasketDTO dto);
 	
+	BasketDTO order_move(int pno);
+	
+	int basketDelete(BasketDTO dto);
+	
+	int basket_modify(BasketDTO dto);
+	
 }

@@ -19,6 +19,8 @@ public interface ShippingMapper {
 	
 	void Order_insert(ShippingDTO dto);
 	
+	void basOrder_insert(BasketDTO dto);
+	
 	ArrayList<ShippingDTO> myhistory(ShippingDTO dto);
 	
 	int update(ShippingDTO dto);

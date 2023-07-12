@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+
 <body>
 <th:block layout:fragment="title">
 <head th:replace="fc_parts/top"></head>
@@ -20,16 +17,40 @@
 		width:1200px;
 		margin:auto;
 	}
+	.myPage_cate{
+	width:150px;
+		float:left;
+	}
+	.myPage_cate_wrapper{
+		width:1200px;
+		height:50px;
+	}
 </style>
+<form action="">
+
 <div class="myPage_wrapper">
+<div class="myPage_cate_wrapper">
+	<div th:text="이름" class="myPage_cate"></div>
+	<div th:text="기본주소" class="myPage_cate"></div>
+	<div th:text="추가주소" class="myPage_cate"></div>
+	<div th:text="추가주소" class="myPage_cate"></div>
+</div>
+
+<div class="myPage_cate_wrapper">
 	<div th:each="dto : ${mainData}">
-		<div th:text="${dto.name}"></div>
-		<div th:text="${dto.email}"></div>
-		<div th:text="${dto.rank}"></div>
-		<a th:href="|/myPage/myqna|">내가 작성한 qna</a>
-		<a th:href="|/myPage/myreview|">내가 작성한 리뷰</a>
+		<div th:text="${dto.name}" class="myPage_cate"></div>
+		<div th:text="${dto.address1}" class="myPage_cate"></div>
+		<div th:text="${dto.address2}" class="myPage_cate"></div>
+		<div th:text="${dto.address3}" class="myPage_cate"></div>
+		<a th:href="|/fc_mem/modifyForm|">수정하기</a>
 	</div>
 </div>
+<div class="myPage_cate_wrapper">
+		<a th:href="|/myPage/myqna|">내가 작성한 qna</a>
+		<a th:href="|/myPage/myreview|">내가 작성한 리뷰</a>
+</div>
+</div>
+</form>
 </th:block>
 
 <th:block layout:fragment="main-foot">

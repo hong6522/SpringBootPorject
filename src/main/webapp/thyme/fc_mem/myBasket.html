@@ -9,7 +9,59 @@
 </th:block>
 
 <th:block layout:fragment="content">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+<script>
+
+function basketDelete(ppp){
+	location.href="/fc_mem/basketDelete?pno="+ppp
+}
+
+function basketModify(pno){
+	
+	//alert(pno+$("#address_"+pno).val()+$("#cnt_"+pno).val()+$("#size_"+pno).val()+$("#address_"+pno).val())
+ 	location.href="/fc_mem/basketModify?"+
+			"pno="+pno+
+			"&cnt="+$("#cnt_"+pno).val()+
+			"&size="+$("#size_"+pno).val()+
+			"&address="+$("#address_"+pno).val()+
+			"&price="+$("#price_"+pno).val()
+}
+
+var IMP = window.IMP;
+IMP.init('imp35316716');
+
+function Pay() {
+  IMP.request_pay({
+    pg: "html5_inicis",
+    pay_method: "card",
+    merchant_uid : 'merchant_m'+new Date().getTime(),
+    name : '결제테스트',
+    amount : 10,
+    buyer_email : 'hgh4400@naver.com',
+    buyer_name : '구매자',
+    buyer_tel : '010-1234-5678',
+    buyer_addr : '서울특별시 강남구 삼성동',
+    buyer_postcode : '123-456'
+  },
+  
+  function (rsp) { // callback
+	  if (rsp.success) {
+	      frm.submit()
+	    } else {
+	      var msg = '결제에 실패하였습니다.';
+	      msg += '에러내용 : ' + rsp.error_msg;
+	      alert(msg);
+	    }
+  });
+ 
+}
+
+
+</script>
 <style>
 	*{
 		margin: 0;
@@ -19,11 +71,15 @@
 		width:1200px;
 		height:550px;
 		margin:auto;
-		background:#f0f;
 	}
 	.basket_cate{
 		width:150px;
 		height:50px;
+		float:left;
+	}
+	.basket_cate > input{
+		width:100px;
+		height:20px;
 		float:left;
 	}
 	.basket_cate_wrapper{
@@ -33,25 +89,71 @@
 	}
 	
 </style>
-
+<form action="/fc_mem/listGoOrder" name="frm">
 <div class="proBasket_wrapper">
+
 <div class="basket_cate_wrapper">
 	<div th:text="상품명" class="basket_cate"></div>
-	<div th:text="가격" class="basket_cate"></div>
 	<div th:text="수량" class="basket_cate"></div>
 	<div th:text="색상" class="basket_cate"></div>
 	<div th:text="사이즈" class="basket_cate"></div>
+	<div th:text="수령주소" class="basket_cate"></div>
+	<div th:text="가격" class="basket_cate"></div>
 </div>
 	<hr/>
 	<div th:each="dto : ${mainData}" class="basket_cate_wrapper">
+		<input type="hidden" th:value="${dto.price}" th:id="${'price_'+dto.pno}"/>
+		<input type="checkbox" name="pno" th:value="${dto.pno}"/>
 		<div th:text="${dto.proName}" class="basket_cate"></div>
+		<div  class="basket_cate">
+			<input type="number" th:value="${dto.cnt}" th:id="${'cnt_'+dto.pno}"/>
+		</div>
+		
+		<div class="basket_cate" th:text="${dto.color}">
+		<input type="text" th:value="${dto.color}" th:id="${'color_'+dto.pno}" readonly/></div>
+		
+			<div class="basket_cate">
+				<select th:id="${'size_'+dto.pno}" >
+				<span th:if="${dto.size}==S">
+					<option value="S">S</option>
+					<option value="M">M</option>
+					<option value="L">L</option>
+					<option value="XL">XL</option>
+				</span>
+				
+				<span th:if="${dto.size}==M">
+					<option value="M">M</option>
+					<option value="S">S</option>
+					<option value="L">L</option>
+					<option value="XL">XL</option>
+				</span>
+				
+				<span th:if="${dto.size}==L">
+					<option value="S">L</option>
+					<option value="S">S</option>
+					<option value="M">M</option>
+					<option value="XL">XL</option>
+				</span>
+				
+				<span th:if="${dto.size}==XL">
+					<option value="XL">XL</option>
+					<option value="S">S</option>
+					<option value="M">M</option>
+					<option value="L">L</option>
+				</span>
+				</select>
+			</div>
+		
+		
+		<div class="basket_cate">
+		<input type="text" th:value="${dto.address}" th:id="${'address_'+dto.pno}"/></div>
 		<div th:text="${dto.totalPrice}" class="basket_cate"></div>
-		<div th:text="${dto.cnt}" class="basket_cate"></div>
-		<div th:text="${dto.color}" class="basket_cate"></div>
-		<div th:text="${dto.size}" class="basket_cate"></div>
+		<input type="button" th:value="수정" th:onclick="basketModify([[${dto.pno}]])"/>
+		<input type="button" th:value="삭제" th:onclick="basketDelete([[${dto.pno}]])"/>
 	</div>
+	<input type="button" value="결제하기" onclick="Pay()"/>
 </div>
-
+</form>
 </th:block>
 
 

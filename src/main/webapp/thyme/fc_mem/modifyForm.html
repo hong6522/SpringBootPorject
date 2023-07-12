@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top"></head>
+	<title>비밀번호확인</title>
+</th:block>
+
+<th:block layout:fragment="content">
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	.myPage_wrapper{
+		width:1200px;
+		margin:auto;
+	}
+	.myPage_cate{
+	width:150px;
+		float:left;
+	}
+	.myPage_cate_wrapper{
+		width:1200px;
+		height:50px;
+	}
+</style>
+<form action="/fc_mem/modifyGo">
+<div th:text="비밀번호"></div>
+	<input type="text" name="pw"/>
+	<input type="submit" value="비밀번호확인"/>
+</form>
+</th:block>
+
+
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>

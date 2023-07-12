@@ -40,14 +40,8 @@ MemberMapper mp;
 	
 @RequestMapping("/myqna")
 String myqna(QnaDTO dto, Model mm, HttpSession session) {
-	//String id = (String)session.getAttribute("id");
-	MemberDTO mDTO;
-	
-	if(session.getAttribute("type")!=null) {
-		mDTO = new MemberDTO();
-		mDTO.setEmail((String)session.getAttribute("email"));
-		MemberDTO myPage = mp.myPage(mDTO);
-		mm.addAttribute("mainData", qm.myqnalist(myPage.getId()));
+	if(session.getAttribute("id")!=null) {
+		mm.addAttribute("mainData", qm.myqnalist((String)session.getAttribute("id")));
 		return "myPage/myqna";
 	}
 	else {
@@ -64,10 +58,10 @@ String myqnaDetail(Model mm, QnaDTO dto , HttpServletRequest request , HttpSessi
 	
 	qm.qcnt(dto.getNo());
 
-	if(session.getAttribute("type")!=null) {
+	if(session.getAttribute("id")!=null) {
 
 	mDTO = new MemberDTO();
-	mDTO.setEmail((String)session.getAttribute("email"));
+	mDTO.setId((String)session.getAttribute("id"));
 	MemberDTO myPage = mp.myPage(mDTO);
 	mm.addAttribute("mainData", qm.qdetail(dto));
 	mm.addAttribute("id", myPage.getId());
@@ -88,9 +82,9 @@ String myreview(ReviewDTO dto ,Model mm, HttpSession session) {
 	MemberDTO mDTO;
 	
 	
-	if(session.getAttribute("type")!=null) {
+	if(session.getAttribute("id")!=null) {
 		mDTO = new MemberDTO();
-		mDTO.setEmail((String)session.getAttribute("email"));
+		mDTO.setId((String)session.getAttribute("id"));
 		MemberDTO myPage = mp.myPage(mDTO);
 		mm.addAttribute("mainData", rm.myreviewlist(myPage.getId()));
 	
@@ -106,14 +100,13 @@ String myreview(ReviewDTO dto ,Model mm, HttpSession session) {
 @RequestMapping("/myreviewDetail/{no}")
 String myreviewDetail(Model mm , ReviewDTO dto , MultipartFile ff ,  HttpSession session ) {
 	//String id = (String)session.getAttribute("id");
-	String id = "qqq"	;		
 	MemberDTO mDTO;
 	rm.rcnt(dto.getNo());
 	
-	if(session.getAttribute("type")!=null) {
+	if(session.getAttribute("id")!=null) {
 
 		mDTO = new MemberDTO();
-		mDTO.setEmail((String)session.getAttribute("email"));
+		mDTO.setId((String)session.getAttribute("id"));
 		MemberDTO myPage = mp.myPage(mDTO);
 		mm.addAttribute("mainData", rm.rdetail(dto));
 		mm.addAttribute("id", myPage.getId());
@@ -162,17 +155,11 @@ String myreviewDetail(Model mm , ReviewDTO dto , MultipartFile ff ,  HttpSession
 
 @GetMapping("/myqnaInsert")
 String myqnaInsert(QnaDTO dto , Model mm,  HttpSession session  , HttpServletRequest request ) {
-	//String id = (String)session.getAttribute("id");
-	//String id = "qqq";	
-	MemberDTO mDTO;
-	
-	
-	if(session.getAttribute("type")!=null) {
 
-		mDTO = new MemberDTO();
-		mDTO.setEmail((String)session.getAttribute("email"));
-		MemberDTO myPage = mp.myPage(mDTO);
-		mm.addAttribute("id", myPage.getId());
+	
+	if(session.getAttribute("id")!=null) {
+
+		mm.addAttribute("id", (String)session.getAttribute("id"));
 	
 		return "myPage/myqnaInsert";
 	    }
