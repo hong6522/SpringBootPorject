@@ -2,7 +2,11 @@ package fc.controller;
 
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,17 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import fc.db.BoardDTO;
 import fc.db.ProductDTO;
 import fc.db.ProductMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 @Controller
 @RequestMapping("/ad_page/product/")
 public class ProductController {
@@ -49,35 +51,33 @@ public class ProductController {
 	}
 	
 	@GetMapping("/modify/{proName}")
-	String detail(Model mm, ProductDTO dto) {
-		ProductDTO pd = pm.detail(dto);
-		String[] colorArr = pd.getColor().split(",");
-		String [] colorName = pd.getColorName().split(",");
-		
-		 ObjectMapper objectMapper = new ObjectMapper();
-	        String json = null;
-	        try {
-	            // JSON 객체 생성
-	            ObjectNode jsonNode = objectMapper.createObjectNode();
+    String detail(Model mm, ProductDTO dto) {
+        ProductDTO pd = pm.detail(dto);
+        String[] colorArr = pd.getColor().split(",");
+        String [] colorName = pd.getColorName().split(",");
 
-	            ArrayNode colorArrayNode = objectMapper.valueToTree(colorArr);
-	            for (int i = 0; i < colorArr.length; i++) {
-	                jsonNode.put(colorName[i], colorArrayNode.get(i));
-	            }
+        System.out.println(Arrays.toString(colorArr));
+        System.out.println(Arrays.toString(colorName));
 
-	            // JSON 형식의 문자열로 변환
-	            json = objectMapper.writeValueAsString(jsonNode);
-	        } catch (JsonProcessingException e) {
-	            e.printStackTrace();
-	        }
 
-	        System.out.println(json);
-	    mm.addAttribute("color",json);
-		mm.addAttribute("productDTO",pd);
-//		System.out.println(pm.detail(dto)+"-----------------"+dto);
-		
-		return "ad_page/product/modify";
-	}
+        Map<String,String> colors = new LinkedHashMap<>();
+
+        for(int i = 0; i < colorArr.length; i++ ) {
+            colors.put(colorArr[i], colorName[i]);
+        }
+
+
+        System.out.println(colors);
+
+
+
+        mm.addAttribute("colors",colors);
+        mm.addAttribute("productDTO",pd);
+//        System.out.println(pm.detail(dto)+"-----------------"+dto);
+
+        return "ad_page/product/modify";
+    }
+
 	
 	@PostMapping("/modify/{proName}")
 	String modify(Model mm,ProductDTO dto,HttpServletRequest request,MultipartFile pf1Str,MultipartFile pf2Str,MultipartFile pf3Str) {
@@ -130,7 +130,6 @@ public class ProductController {
 	@PostMapping("add")
 	String addComplete(Model mm,ProductDTO dto,HttpServletRequest request,MultipartFile pf1Str,MultipartFile pf2Str,MultipartFile pf3Str) {
 		System.out.println(dto);
-		
 	
 		dto.setPf1(dto.getPf1Str().getOriginalFilename());
 		dto.setPf2(dto.getPf2Str().getOriginalFilename());

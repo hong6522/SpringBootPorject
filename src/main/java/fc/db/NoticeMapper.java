@@ -9,6 +9,16 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface NoticeMapper {
 	
+	List<NoticeDTO> adNoticeList(NoticeDTO board);
+	
+	int adNoticeDelete(NoticeDTO board);
+	
+	NoticeDTO adNoticeDetail(NoticeDTO board);
+	
+	int adNoticeInsert(NoticeDTO board);
+	
+	int adNoticeModify(NoticeDTO board);
+	
 	List<NoticeDTO> nlist(CenterPData pd);
 		
 	NoticeDTO ndetail(NoticeDTO bdedsde);

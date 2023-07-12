@@ -21,7 +21,7 @@ public class FCController {
 		return "mainPage";
 	}
 	
-	@RequestMapping("/mainPage/{kind}")
+	@RequestMapping("/mainPage/{proKind}")
 	String index(Model mm, ProductDTO dto) {
 		
 		mm.addAttribute("mainData", pm.pro_select(dto));

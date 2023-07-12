@@ -10,7 +10,7 @@ import lombok.Data;
 @Alias("pDTO")
 @Data
 public class ProductDTO {
-    String kind,proKind,proName,proDetail,proSize,pf1,pf2,pf3,reg_dateStr,proImg,colorName;
+    String kind,proKind,proName,proDetail,proSize,pf1,pf2,pf3,reg_dateStr,colorName;
     MultipartFile pf1Str,pf2Str,pf3Str;
     String color,proColor,sch,start,end;
     String sel = "모두 구매가능";

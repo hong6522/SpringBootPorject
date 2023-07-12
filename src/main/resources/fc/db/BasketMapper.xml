@@ -35,13 +35,5 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	(#{id} , #{num} , #{price} , #{cnt} , #{price} * #{cnt} , #{size} , #{color} , #{proName} , #{address})
 </insert>
 
-
-
-<select id="myPage" resultType="mDTO" parameterType="mDTO">
-	SELECT * FROM member
-	<where>
-		email = #{email}
-	</where>
-</select>
 	
 </mapper>

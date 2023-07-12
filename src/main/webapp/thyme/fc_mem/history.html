@@ -31,7 +31,7 @@
   }
   
   function orderState(uid){
-// 	  alert("버튼클릭"+uid)
+ 	  alert("버튼클릭: "+uid+' 배송상태: '+$("#shipping"+uid).val())
 	  location.href="/fc_mem/orderModify?uid="+uid+
 			  "&order_shipping="+$("#shipping"+uid).val()
   }
@@ -41,7 +41,6 @@
 		width:1200px;
 		height:auto;
 		margin:auto;
-		background:#ff0;
 	}
 	.history_cate{
 		float:left;
@@ -65,17 +64,20 @@
 	<div th:each="dto : ${mainData}">
 		<input type="hidden" th:value="${dto.order_shipping}" th:id="shipping+${dto.uid}"/>
 		<div th:text="${dto.order_no}" class="history_cate"></div>
-		<div th:text="${dto.order_price}" class="history_cate"></div>
 		<div th:text="${dto.order_cnt}" class="history_cate"></div>
+		<div th:text="${dto.order_price}" class="history_cate"></div>
 		<div th:text="${dto.order_date}" class="history_cate"></div>
 		<div th:text="${dto.order_shipping}" class="history_cate"></div>
 		<div th:text="${dto.order_size}" class="history_cate"></div>
 		<div th:text="${dto.order_color}" class="history_cate"></div>
 		<div th:text="${dto.order_place}" class="history_cate"></div>
+		<span th:if="${dto.order_shipping}==결제완료 or ${dto.order_shipping}==배송준비중">
 		<input type="button" value="주문취소(환불요청)" th:onclick="orderState([[${dto.uid}]])"/>
+		</span>
 		<hr/>
 	</div>
 </div>
+
 </th:block>
 
 <th:block layout:frgment="main-foot">

@@ -215,13 +215,11 @@ public class MemController {
 	
 	@RequestMapping("goOrder")
 	String goOrder(Model mm,HttpSession session , ShippingDTO dto) {
-		String str = dto.getUid();
 		
 		if(session.getAttribute("id")!=null) {
 			System.out.println("들어옴?");
 			dto.setOrder_place((String)session.getAttribute("address"));
 			dto.setOrder_ID((String)session.getAttribute("id"));
-			dto.setUid(str+Math.random()*100);
 			System.out.println(dto);
 			sm.Order_insert(dto);
 			mm.addAttribute("msg", "결제완료");

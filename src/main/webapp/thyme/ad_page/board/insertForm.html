@@ -22,15 +22,15 @@ head{
 	</div>
 	
 	<h1>공지사항 작성</h1>
-	<form action="" th:object="${boardDTO}" method="post">
+	<form action="" th:object="${noticeDTO}" method="post">
 		<table border="">
 			<tr>
 				<td>제목</td>
-				<td><input type="text" th:field="*{title}"/></td>
+				<td><input type="text" name="title"/></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td><textarea th:field="*{content}" rows="10" cols="30"/> </td>
+				<td><textarea name="content" rows="10" cols="30" ></textarea></td>
 			</tr>
 
 			<tr>

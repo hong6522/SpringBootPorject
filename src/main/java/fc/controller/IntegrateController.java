@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import fc.db.BoardDTO;
-import fc.db.BoardMapper;
+
 import fc.db.IntegrateMapper;
 import fc.db.MemberDTO;
+import fc.db.NoticeDTO;
+import fc.db.NoticeMapper;
 import fc.db.ProductDTO;
 import jakarta.annotation.Resource;
 
@@ -23,13 +24,13 @@ public class IntegrateController {
 	IntegrateMapper im;
 	
 	@Resource
-	BoardMapper bm;
+	NoticeMapper nm;
 	
 	@RequestMapping("")
-	String list(Model mm,BoardDTO dto) {
+	String list(Model mm,NoticeDTO dto) {
 		System.out.println("integrate------------");
 		
-		List<BoardDTO> mainData =  bm.boardlist(dto);
+		List<NoticeDTO> mainData =  nm.adNoticeList(dto);
 		
 		System.out.println(mainData);
 		
@@ -40,25 +41,25 @@ public class IntegrateController {
 	}
 	
 	@RequestMapping(value = {"/detail/{no}"})
-	String detail(Model mm, BoardDTO dto) {
+	String detail(Model mm, NoticeDTO dto) {
 		
 		
-		mm.addAttribute("mainData", bm.detail(dto));
+		mm.addAttribute("mainData", nm.adNoticeDetail(dto));
 
 		
 		return "ad_page/board/detail";
 	}
 	
 	@GetMapping("/insert")
-	String insert(BoardDTO dto) {
+	String insert(NoticeDTO dto) {
 		System.out.println("insert");
 		return "ad_page/board/insertForm";
 	}
 	
 	@PostMapping("/insert")
-	String  insertRes(Model mm, BoardDTO dto) {
+	String  insertRes(Model mm, NoticeDTO dto) {
 		System.out.println("insertRes");
-		bm.insert(dto);
+		nm.adNoticeInsert(dto);
 		mm.addAttribute("msg", "입력되었습니다.");
 		mm.addAttribute("goUrl","/ad_page/integrate/detail/"+dto.getNo());
 		System.out.println("InsertComplete:"+dto);
@@ -66,17 +67,18 @@ public class IntegrateController {
 	}
 	
 	@GetMapping("/modify/{no}")
-	String modify(Model mm, BoardDTO dto) {
+	String modify(Model mm, NoticeDTO dto) {
 		System.out.println("수정폼");
 		
 		System.out.println(dto);
-		mm.addAttribute("mainData", bm.detail(dto));
+		mm.addAttribute("mainData", nm.adNoticeDetail(dto));
 		return "ad_page/board/modifyForm";
 	}
 	
 	@PostMapping("/modify/{no}")
-	String modifyRes(Model mm,BoardDTO dto) {
-		int cnt = bm.modify(dto);
+	String modifyRes(Model mm,NoticeDTO dto) {
+		System.out.println("수정dto"+dto);
+		int cnt = nm.adNoticeModify(dto);
 		
 		String goUrl = "/modify/"+dto.getNo();
 		String msg = "";
@@ -94,9 +96,9 @@ public class IntegrateController {
 	}
 	
 	@GetMapping("/delete/{no}")
-	String delete(Model mm, BoardDTO dto) {
+	String delete(Model mm, NoticeDTO dto) {
 		
-		int cnt = bm.delete(dto);
+		int cnt = nm.adNoticeDelete(dto);
 		String msg = "";
 		String goUrl = "/delete/"+dto.getNo();
 		if(cnt>0) {

@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	<select id="pro_select" resultType="pDTO" parameterType="pDTO">
 		SELECT * FROM product
 		<where>
-			kind = #{kind}
+			proKind = #{proKind}
 		</where>
 	</select>
 	
@@ -61,10 +61,10 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</select>
 	
 	<update id="modify" parameterType="pDTO">
-		update product set kind = #{kind} , proKind = #{proKind} , proName = #{proName} , 
-		proDetail = #{proDetail} , proSize = #{proSize} , pf1 = #{pf1} , pf2 = #{pf2} , pf3 = #{pf3} ,
-		color = #{color} , sel = #{sel} , memPoint = #{memPoint} , supplyPrice = #{supplyPrice}, colorName=#{colorName}
-		sellPrice = #{sellPrice}
-		where proName = #{proName}
-	</update>
+        update product set kind = #{kind} , proKind = #{proKind} , proName = #{proName} , 
+        proDetail = #{proDetail} , proSize = #{proSize} , pf1 = #{pf1} , pf2 = #{pf2} , pf3 = #{pf3} ,
+        color = #{color} ,colorName = #{colorName}, sel = #{sel} , memPoint = #{memPoint} , supplyPrice = #{supplyPrice}, 
+        sellPrice = #{sellPrice}
+        where proName = #{proName}
+    </update>
 </mapper>

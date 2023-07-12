@@ -26,15 +26,13 @@ head{
 		<tr>
 			<td>번호</td>
 			<td>제목</td>
-			<td>작성자</td>
 			<td>조회수</td>
 		</tr>
 		
 		<tr th:each="dto , dtoStat: ${mainData }">
 			<td th:text="${dtoStat.index}+1"/>
 			<td><a th:href="@{|detail/${dto.no}|}" th:text="${dto.title}"/></td>
-			<td th:text="${dto.pid}"/>
-			<td th:text="${dto.cnt}"/>
+			<td th:text="${dto.notice_cnt}"/>
 		</tr>
 		
 		<tr>

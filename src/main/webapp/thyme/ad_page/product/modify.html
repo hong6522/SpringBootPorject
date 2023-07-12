@@ -3,6 +3,7 @@
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="ad_fc_total/template">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"></script>
 
 <style>
 head{
@@ -10,88 +11,120 @@ head{
 }
 .wrapperMain>div{
 	float:left;
+	
 }
+
+
+
+.color-box {
+     background-color: rgb(0, 0, 0);
+     width: 10px;
+     height: 10px;
+     display: inline-block;
+     margin: 5px;
+}
+
+.moditextbox {
+     margin-left: 5px;
+}
+
+
 </style>
 <script>
-/* document.addEventListener("DOMContentLoaded", function() {
-	   var colorContainer = document.getElementById("colorContainer");
-	   var registerButton = document.getElementById("registerButton");
-	   
-	   registerButton.addEventListener("click", function() {
-	      var colorInput = document.getElementById("colorInput");
-	      var color = colorInput.value.trim();
-	      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
-	   
-	      if (color) {
-	      var colorBox = document.createElement("div");
-	      colorBox.style.backgroundColor = color;
-	      colorBox.style.width = "10px";
-	      colorBox.style.height = "10px";
-	      colorBox.style.display = "inline-block";
-	      colorBox.style.margin = "5px";
-	   
-	      var deleteButton = document.createElement("button");
-	      deleteButton.innerText = "X";
-	      deleteButton.addEventListener("click", function() {
-	      $("#" + color.replaceAll('#','')).remove();
-	         colorContainer.removeChild(colorBox);
-	         colorContainer.removeChild(deleteButton);
-	      });
-	   
-	      colorContainer.appendChild(colorBox);
-	      colorContainer.appendChild(deleteButton);
-	      } 
-	   });
-	}); */
+document.addEventListener('DOMContentLoaded', () => {
+    const colorInput = document.querySelector('#colorNameInput');
+    const registerButton = document.querySelector('#registerButton');
+    const colorsWrapper = document.querySelector('#colors');
+    
+    function addButtonClickListener(button) {
+        button.addEventListener("click", function () {
+            var colorBox = button.nextElementSibling;
+            var colorText = button.previousElementSibling;
+    
+            button.remove();
+            colorBox.remove();
+            colorText.remove();
+        });
+    }
 
-	 document.addEventListener("DOMContentLoaded", function() {
-		    var colorContainer = document.getElementById("colorContainer");
-		    var registerButton = document.getElementById("registerButton");
+    var existingDeleteButtons = document.querySelectorAll(".delete-btn");
+    existingDeleteButtons.forEach(addButtonClickListener);
 
-		    registerButton.addEventListener("click", function() {
-		      var colorInput = document.getElementById("colorInput");
-		      var colorNameInput = document.getElementById("colorNameInput");
+    registerButton.addEventListener('click', () => {
+        const colorName = colorInput.value.trim();
+        if (colorName) {
+            const color = tinycolor(colorName);
+            
+            if (color.isValid()) {
+                const colorText = document.createElement('span');
+                colorText.textContent = colorName;
+                colorText.className = 'color-text';
 
-		      var color = colorInput.value.trim();
-		      var colorNames = colorNameInput.value.trim().split(",");
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'X';
+                deleteButton.className = 'delete-btn';
+                addButtonClickListener(deleteButton);
 
-		      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
-		      for (var i = 0; i < colorNames.length; i++) {
-		        $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '_' + i + '" name="colorName[]" value="' + colorNames[i] + '">');
-		      }
+                const colorBox = document.createElement('div');
+                colorBox.className = 'color-box';
+                colorBox.style.backgroundColor = color.toHexString();
 
-		      if (color) {
-		        var colorBox = document.createElement("div");
-		        colorBox.style.backgroundColor = color;
-		        colorBox.style.width = "10px";
-		        colorBox.style.height = "10px";
-		        colorBox.style.display = "inline-block";
-		        colorBox.style.margin = "5px";
+                colorsWrapper.appendChild(colorText);
+                colorsWrapper.appendChild(deleteButton);
+                colorsWrapper.appendChild(colorBox);
+            }
+        }
+    });
+});
 
-		        for (var i = 0; i < colorNames.length; i++) {
-		          var colorText = document.createElement("span");
-		          colorText.innerText = colorNames[i];
-		          colorText.style.marginLeft = "5px";
+document.addEventListener("DOMContentLoaded", function() {
+    var colorContainer = document.getElementById("colorContainer");
+    var registerButton = document.getElementById("registerButton");
 
-		          var deleteButton = document.createElement("button");
-		          deleteButton.innerText = "X";
-		          deleteButton.addEventListener("click", function() {
-		            $("#" + color.replaceAll('#','')).remove();
-		            colorContainer.removeChild(colorBox);
-		            colorContainer.removeChild(colorText);
-		            colorContainer.removeChild(deleteButton);
-		          });
+    registerButton.addEventListener("click", function() {
+      var colorInput = document.getElementById("colorInput");
+      var colorNameInput = document.getElementById("colorNameInput");
 
-		          colorContainer.appendChild(colorText);
-		          colorContainer.appendChild(deleteButton);
-		        }
-		        
-		        colorContainer.appendChild(colorBox);
-		      }
-		    });
-		  });
-	
-	
+      var color = colorInput.value.trim();
+      var colorNames = colorNameInput.value.trim().split(",");
+
+      $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '" name="color[]" value="' + color + '">');
+      for (var i = 0; i < colorNames.length; i++) {
+        $("#color_list_jquery").append('<input type="hidden" id="' + color.replaceAll('#','') + '_' + i + '" name="colorName[]" value="' + colorNames[i] + '">');
+      }
+
+      if (color) {
+        var colorBox = document.createElement("div");
+        colorBox.style.backgroundColor = color;
+        colorBox.style.width = "10px";
+        colorBox.style.height = "10px";
+        colorBox.style.display = "inline-block";
+        colorBox.style.margin = "5px";
+
+        for (var i = 0; i < colorNames.length; i++) {
+          var colorText = document.createElement("span");
+          colorText.innerText = colorNames[i];
+          colorText.style.marginLeft = "5px";
+
+          var deleteButton = document.createElement("button");
+          deleteButton.innerText = "X";
+          deleteButton.addEventListener("click", function() {
+            $("#" + color.replaceAll('#','')).remove();
+            colorContainer.removeChild(colorBox);
+            colorContainer.removeChild(colorText);
+            colorContainer.removeChild(deleteButton);
+          });
+          colorContainer.appendChild(colorBox);
+          colorContainer.appendChild(colorText);
+          colorContainer.appendChild(deleteButton);
+        }
+        
+        colorContainer.appendChild(colorBox);
+      }
+    });
+  });
+
+
 function fileDelete(file){
  if(confirm("파일을 삭제하시겠습니까?")){
   frm.action="../FileDelete/"+file
@@ -191,13 +224,22 @@ function fileDelete(file){
 	      <td>색상</td>
 	      <td>
 	         <div>
+	         <div id="colors"> </div>
+	         
 			     <input type="color" id="colorInput">
 			     <input type="text" id="colorNameInput" />
+			     
 			     <button type="button" id="registerButton">색상 등록</button>
 			     <div id="colorContainer">
-			     	  <div th:each="c : ${color}">
-			     	   <span th:text="${c}"></span>
-			    </div>
+			     	  
+			     	  <th:block th:each="color : ${colors}">
+						    <span class="color-text" th:text="${color.value}" ></span>
+						    <button class="delete-btn">X</button>
+						    <div class="color-box" th:style="'background-color:' + ${color.key}" ></div>
+						</th:block>
+
+			     	  
+			     	  
 			     </div>
 			 </div>
 	      </td>
