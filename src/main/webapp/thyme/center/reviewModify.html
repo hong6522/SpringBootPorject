@@ -1,55 +1,201 @@
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="fc_total/template">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <th:block layout:fragment="title">
-<head th:replace="fc_parts/top">
+<head th:replace="fc_parts/btstop">
 
 </head>
-<title>d</title>
+<title>reviewModify</title>
 
 </th:block>
 
+
+
 <th:block layout:fragment="content">
-<h1>modifyForm</h1>
-<form method="post" enctype="multipart/form-data" th:object="${mainData}" >
-	<table border="">
+<style>
+.center{
+   margin: 55px;
+}
+
+.title {
+  font-weight: bold;
+  margin:45px;
+}
+
+.title > td {
+  margin-top: 25px;
+}
+
+table {
+  margin: 0 auto;
+  text-align: center;
+  align-items: center; /* 왼쪽과 오른쪽을 자동으로 맞춤 */
+  margin-top: 25px;
+}
+
+#btnb{
+width:40px;
+height:40px;
+}
+
+
+.btn{
+    border-style: none;
+	margin:5px;
+}
+</style>
+
+<script type="text/javascript"></script>
+
+<script>
+function fileDelete(file , pd){
+ if(confirm("파일을 삭제하시겠습니까?")){
+  frm.action="../../FileDelete/"+file +"/"+pd;
+  frm.submit()
+ }
+}
+
+
+
+function reviewChk(){
 	
-		<tr>
-			<td>제목</td>
-			<td><input type="text" th:field="*{title}"/></td>
+// 	alert(document.getElementById("ff1").files.length+","+document.getElementById("ff2").value+","+document.getElementById("ff3").value+",");
+	
+// 	alert(document.getElementById("upfileValue")+","+document.getElementById("upfile1Value")+","+document.getElementById("upfile2Value")+",");
+
+	
+	// DB에서 가져온 이미지 이름 = upfileValue
+	// 파일 업로드로 가져온 이미지 이름 = ff1
+	// 둘 다 null 이면 사진 무조건 업로드
+	// DB에서 이미지를 가져올 경우, ff1,ff2,ff3가 생성되지 않기때문에 비교를 할 수 없다.
+	
+	var upfileValue = document.getElementById("upfileValue") ? document.getElementById("upfileValue").value : "";
+	var upfile1Value = document.getElementById("upfile1Value") ? document.getElementById("upfile1Value").value : "";
+	var upfile2Value = document.getElementById("upfile2Value") ? document.getElementById("upfile2Value").value : "";
+
+	var ff1 = document.getElementById("ff1") ? document.getElementById("ff1").files.length : 0;
+	var ff2 = document.getElementById("ff2") ? document.getElementById("ff2").files.length : 0;
+	var ff3 = document.getElementById("ff3") ? document.getElementById("ff3").files.length : 0;
+
+	if (ff1 == 0 && ff2 == 0 && ff3 == 0 && upfileValue == "" && upfile1Value == "" && upfile2Value == "") {	
+		alert("사진은 한 장 이상 업로드해주세요.");
+		return;
+	}
+	
+	
+	var imageTypeRegex = /\.(png|jpg|jpeg|gif)$/;
+
+	if (ff1 > 0 && !imageTypeRegex.test(document.getElementById("ff1").value) ||
+	    ff2 > 0 && !imageTypeRegex.test(document.getElementById("ff2").value) ||
+	    ff3 > 0 && !imageTypeRegex.test(document.getElementById("ff3").value)) {
+	    alert("이미지 파일만 가능합니다.");
+	    return;
+	}
+
+	
+// 	var ff1 = document.getElementById("ff1").value;
+// 	var ff2 = document.getElementById("ff2").value;
+// 	var ff3 = document.getElementById("ff3").value;
+
+	if(frm.title.value.trim() == "" || frm.title.value == null){		
+		alert("제목을 입력해 주세요.")
+		return
+	}
+	if(frm.content.value.trim() == "" || frm.content.value == null){
+		alert("내용을 입력해 주세요.")
+		return
+	}
+	
+
+// 	if (ff1 != "" && !/.(png|jpg|jpeg|gif)$/.test(ff1)) {
+// 	    alert("사진은 한 장 이상 업로드해주세요.\n파일은 이미지 확장자 파일만 업로드 가능합니다.");
+// 	    return;
+// 	  }
+	
+// 	if (ff2 != "" && !/.(png|jpg|jpeg|gif)$/.test(ff2)) {
+// 	    alert("파일은 이미지 확장자 파일만 업로드 가능합니다.");
+// 	    return;
+// 	  }
+	
+// 	if (ff3 != "" && !/.(png|jpg|jpeg|gif)$/.test(ff3)) {
+// 	    alert("파일은 이미지 확장자 파일만 업로드 가능합니다.");
+// 	    return;
+// 	  }
+	
+	frm.submit()
+}
+</script>
+
+
+<h2 align="center" class="title">리뷰 수정하기</h2>
+<form action="" method="post" th:object="${reviewDTO}" name="frm" enctype="multipart/form-data">
+	
+		<table style="width:60%" class="table">
+	
+			<tr>
+			<th class="table-secondary"  style="vertical-align: middle; width:20%">제목</th>
+			<td colspan="3" ><input type="text" th:field="*{title}" required class="form-control" placeholder="제목을 입력해주세요" /></td>
 		</tr>
+				
+			<td><input type="hidden" th:field="*{id}"/></td>
+			<td><input type="hidden" th:field="*{no}"/></td>
+					
 		
 		<tr>
-			<td>작성자</td>
-			<td><input type="text" th:field="*{id}" readonly/></td>
+			<th class="table-secondary" style="vertical-align: middle;">리뷰</th>
+			<td colspan="3" ><textarea th:field="*{content}"class="form-control" rows="10" required placeholder="리뷰를 입력해주세요"></textarea></td>
 		</tr>
-		<tr>
-			<td>내용</td>
-			<td><input type="text" th:field="*{content}"/></td>				
-		</tr>
-		
-		<tr>
-			<td>파일1</td>
-			<td><input type="file"  multiple="multiple" th:value="*{ff1}"   th:field="*{ff1}" /></td>				
-		</tr>
-		<tr>
-			<td>파일2</td>
-			<td><input type="file"  multiple="multiple" th:field="*{ff2}"/></td>				
-		</tr>
-		<tr>
-			<td>파일3</td>
-			<td><input type="file"  multiple="multiple" th:field="*{ff3}"/></td>				
-		</tr>
+						
+		  
+		   <tr>
+				<th rowspan="3" class="table-secondary" style="vertical-align: middle;">상품 이미지</th>
+			
+				<td th:if="${reviewDTO.upfile} != null and ${reviewDTO.upfile} != ''">
+			    <input class="input-group-text btn"  type="text" id="upfileValue" th:field="${reviewDTO.upfile}" readonly/>
+			    <button  th:onclick="|fileDelete('upfile', ${pd.nowPage})|"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+</svg></button>
+			</td>
+				<td th:unless="${reviewDTO.upfile} != null and ${reviewDTO.upfile} != ''">
+				    <input class="form-control" type="file" th:field="${reviewDTO.ff1}"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<td th:if="${reviewDTO.upfile1} != null and ${reviewDTO.upfile1} != ''">
+				    <input class="input-group-text btn" type="text" id="upfile1Value" th:field="${reviewDTO.upfile1}" readonly/>
+				    <button  th:onclick="|fileDelete('upfile1', ${pd.nowPage})|"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+</svg></button>
+				</td>
+				<td th:unless="${reviewDTO.upfile1} != null and ${reviewDTO.upfile1} != ''">
+				    <input class="form-control" type="file" th:field="${reviewDTO.ff2}"/>
+				    
+			 </tr>
+			 
+			 
+				<tr>
+				
+				<td th:if="${reviewDTO.upfile2} != null and ${reviewDTO.upfile2} != ''">
+				    <input class="input-group-text btn" type="text" id="upfile2Value" th:field="${reviewDTO.upfile2}" readonly/>
+				   <button  th:onclick="|fileDelete('upfile2', ${pd.nowPage})|"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+</svg></button>
+				</td>
+				<td th:unless="${reviewDTO.upfile2} != null and ${reviewDTO.upfile2} != ''">
+				    <input class="form-control" type="file" th:field="${reviewDTO.ff3}"/>
+				</td>			
+		      </tr>
 		
 
 		<tr>
-			<td colspan="2"><input type="submit" value="제출"/></td>
+			<td colspan="2"><input type="button" class="btn btn-dark" onclick="reviewChk()" value="제출"/><a class="btn btn-dark" th:href="@{|/center/reviewDetail/*{no}/${pd.nowPage}|}" th:text="뒤로"></a></td>
 		</tr>
 		
-		<tr>
-		<td colspan="2"><a th:href="@{|/center/reviewDetail/*{no}/${pd.nowPage}|}" th:text="뒤로"></a></td>
-		</tr>
+	
+		
 		
 	</table>
 </form>
@@ -57,10 +203,7 @@ layout:decorate="fc_total/template">
 </th:block>
 
 
-<th:block layout:fragment="add-content">
-	<h3>내용</h3>
-</th:block>
-<th:block layout:fragment="main-foot">
-<body th:replace="fc_parts/footer::main-foot"></body>
+<th:block layout:fragment="bts-foot">
+<body th:replace="fc_parts/btsfoot::bts-foot"></body>
 </th:block>
 </html>

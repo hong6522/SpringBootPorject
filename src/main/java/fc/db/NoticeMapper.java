@@ -13,6 +13,8 @@ public interface NoticeMapper {
 	
 	int adNoticeDelete(NoticeDTO board);
 	
+	int maxNo();
+	
 	NoticeDTO adNoticeDetail(NoticeDTO board);
 	
 	int adNoticeInsert(NoticeDTO board);

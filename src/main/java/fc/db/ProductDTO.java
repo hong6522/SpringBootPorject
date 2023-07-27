@@ -22,4 +22,8 @@ public class ProductDTO {
     	
     	return this.color.split(",");
     }
+  public String[] getColorNameStr() {
+    	
+    	return this.colorName.split(",");
+    }
 }

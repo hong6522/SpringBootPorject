@@ -11,23 +11,18 @@
 		margin:0;
 		padding:0;
 	}
-	.myPage_wrapper{
+	.pw_wrapper{
 		width:1200px;
 		margin:auto;
-	}
-	.myPage_cate{
-	width:150px;
-		float:left;
-	}
-	.myPage_cate_wrapper{
-		width:1200px;
-		height:50px;
+		padding-left:500px;
 	}
 </style>
 <form action="/fc_mem/modifyGo">
-<div th:text="비밀번호"></div>
-	<input type="text" name="pw"/>
-	<input type="submit" value="비밀번호확인"/>
+<div class="pw_wrapper"><br/><br/><br/><br/>
+	<input type="password" name="pw" placeholder="비밀번호" style="width:245px; height:40px;"/><br/><br/>
+	<input type="submit" value="비밀번호확인" style="width:250px; height:50px; color:#fff; background:#424242; border:0px;"/>
+</div>
+<br/><br/><br/><br/>
 </form>
 </th:block>
 

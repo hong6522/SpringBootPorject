@@ -3,6 +3,10 @@
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="ad_fc_total/template">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+
 <style>
 head{
 	margin-right: 50px;
@@ -14,6 +18,38 @@ head{
 	width: 1600px;
 	float: left;
 }
+
+.sidebar{
+	height: 110vh;
+    background: #ccc;
+    overflow-y: auto;
+    float: left;
+
+}
+
+ul{
+	padding-left: 0;
+
+
+}
+
+td{
+	text-align:center;
+	width:1200px;
+}
+
+.context{
+
+    max-width: 1200px;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
 </style>
 <div>
 	<div class="context">
@@ -23,53 +59,59 @@ head{
 		</th:block>
 	</div>
 	
+	
+	
 	<div class="context">
 		<th:block layout:fragment="content">
-			<table border="">
-				<tr>
-					<td>주문목록</td>
-					<td><a href="shippingList">배송관리</a></td>
-					<td><a href="refundList">취소·환불관리</a></td>
-				</tr>
-			</table>
-			<h1>주문목록</h1>
+		
+		<table border="" class="table table-striped">
+			<tr>
+				<td><a href="orderList">주문목록</a>
+				</td>
+				<td><a href="shippingList">배송관리</a>
+				
+				</td>
+			</tr>
+		</table>
+
+
+<!-- 			<h1>주문목록</h1> -->
 			<h3>금일 주문 목록</h3>
-			<table border="">
+			<table border="" class="table table-striped">
 					<tr>
 						<td>주문번호</td>
 						<td>구매자ID</td>
-						<td>수령인</td>
+<!-- 						<td>수령인</td> -->
 						<td>수령지</td>
 						<td>상품카테고리</td>
 						<td>상품명</td>
 						<td>상품수량</td>
 						<td>상품가격</td>
 						<td>구매날짜</td>
-						<td>베송여부</td>
-						<td>주문상태</td>
-						<td>환불날짜</td>
+						<td>배송여부</td>
 					</tr>
 					<tr th:each="dto:${todayData}">
 						<td th:text="${dto.order_no}"></td>
 						<td th:text="${dto.order_ID}"></td>
-						<td th:text="${dto.order_name}"></td>
+<!-- 						<td th:text="${dto.order_name}"></td> -->
 						<td th:text="${dto.order_place}"></td>
 						<td th:text="${dto.order_cate}"></td>
 						<td th:text="${dto.order_product}"></td>
 						<td th:text="${dto.order_cnt}"></td>
 						<td th:text="${dto.order_price}"></td>
+						
 						<td th:text="${dto.order_dateStr}"></td>
 						<td th:text="${dto.order_shipping}"></td>
-						<td th:text="${dto.order_state}"></td>
-						<td th:text="${dto.cancleStr}"></td>
+<!-- 						<td th:text="${dto.order_state}"></td> -->
+<!-- 						<td th:text="${dto.cancleStr}"></td> -->
 					</tr>
 				</table>
 				<h3>전체 주문 목록</h3>
-				<table border="">
+				<table border="" class="table table-striped">
 					<tr>
 						<td>주문번호</td>
 						<td>구매자ID</td>
-						<td>수령인</td>
+<!-- 						<td>수령인</td> -->
 						<td>수령지</td>
 						<td>상품카테고리</td>
 						<td>상품명</td>
@@ -77,22 +119,23 @@ head{
 						<td>상품가격</td>
 						<td>구매날짜</td>
 						<td>베송여부</td>
-						<td>주문상태</td>
-						<td>환불날짜</td>
+<!-- 						<td>주문상태</td> -->
+<!-- 						<td>환불날짜</td> -->
 					</tr>
 					<tr th:each="dto:${mainData}">
 						<td th:text="${dto.order_no}"></td>
 						<td th:text="${dto.order_ID}"></td>
-						<td th:text="${dto.order_name}"></td>
+<!-- 						<td th:text="${dto.order_name}"></td> -->
 						<td th:text="${dto.order_place}"></td>
 						<td th:text="${dto.order_cate}"></td>
 						<td th:text="${dto.order_product}"></td>
 						<td th:text="${dto.order_cnt}"></td>
 						<td th:text="${dto.order_price}"></td>
+						
 						<td th:text="${dto.order_dateStr}"></td>
 						<td th:text="${dto.order_shipping}"></td>
-						<td th:text="${dto.order_state}"></td>
-						<td th:text="${dto.cancleStr}"></td>
+<!-- 						<td th:text="${dto.order_state}"></td> -->
+<!-- 						<td th:text="${dto.cancleStr}"></td> -->
 					</tr>
 				</table>
 		</th:block>

@@ -32,4 +32,10 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		</where>
 	</select>
 	
+	<insert id="saleAdd" parameterType="shipDTO">
+	insert into calculate (cal_kind , cal_cate , cal_name , cal_size , cal_color ,cal_oripri, cal_celPri ,cal_cnt , cal_date)
+	values
+	('수입' ,#{order_cate} , #{order_product}, #{order_size}, #{order_color}, 0 , #{order_price},#{order_cnt} , sysdate())
+	</insert>
+	
 </mapper>

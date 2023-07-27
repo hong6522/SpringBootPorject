@@ -1,4 +1,4 @@
-package fc.control;
+package fc.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("ad_qnainfo")
+@RequestMapping("/ad_page/integrate/")
 public class AdqnaController {
 
 	@Resource	
@@ -31,9 +31,9 @@ public class AdqnaController {
 	@Resource	
 	MemberMapper mp;
 	
-	@RequestMapping("/memqna")
+	@RequestMapping("memqna")
 	String ad_qnalist(Model mm , QnaDTO dto , HttpServletRequest request) {
-		
+		System.out.print("전유택 진입");
 		String msg="";
 		
 		
@@ -66,7 +66,7 @@ public class AdqnaController {
 		mm.addAttribute("pdata", pd);
 		
 						
-		return "ad_qnainfo/memqna";
+		return "ad_page/integrate/memqna";
 	}
 	
 	
@@ -82,7 +82,7 @@ public class AdqnaController {
 		mm.addAttribute("pdata", pd);
 		mm.addAttribute("mainData", qm.qdetail(dto));
 	
-			return "ad_qnainfo/memqnaDetail";
+			return "ad_page/integrate/memqnaDetail";
 		}
 	
 	
@@ -104,7 +104,7 @@ public class AdqnaController {
 		mm.addAttribute("pdata", pd);
 	//	mm.addAttribute("id",id );
 
-		return "ad_qnainfo/memqnaModify";
+		return "ad_page/integrate/memqnaModify";
 	}
 	
 	
@@ -116,12 +116,12 @@ public class AdqnaController {
 	    int cnt = qm.admodify(dto);
 	    pd.setNowPage(nowpage);
 	    String msg = "수정 불가";   
-		String goUrl = "/ad_qnainfo/memqnaModify/"+dto.getNo()+"/"+nowpage;
+		String goUrl = "/ad_page/integrate/memqnaModify/"+dto.getNo()+"/"+nowpage;
 	   
 	    
 	    if (cnt > 0) {
 	        msg = "수정되었습니다.";
-	        goUrl = "/ad_qnainfo/memqnaDetail/"+dto.getNo()+"/"+nowpage;
+	        goUrl = "/ad_page/integrate/memqnaDetail/"+dto.getNo()+"/"+nowpage;
 	        mm.addAttribute("msg", msg);
 	        mm.addAttribute("goUrl", goUrl);
 	    }
@@ -129,7 +129,7 @@ public class AdqnaController {
         mm.addAttribute("goUrl", goUrl);
 	   
 	    
-	    return "ad_qnainfo/alert";
+	    return "ad_page/integrate/alert";
 	}
 	
 
@@ -143,7 +143,7 @@ public class AdqnaController {
 		  
 		    if (cnt > 0) {
 		        msg = "삭제되었습니다.";
-		        goUrl = "/ad_qnainfo/memqna";
+		        goUrl = "/ad_page/integrate/memqna";
 		        mm.addAttribute("msg", msg);
 		        mm.addAttribute("goUrl", goUrl);
 		    }
@@ -151,7 +151,7 @@ public class AdqnaController {
 	        mm.addAttribute("goUrl", goUrl);
 		   
 		    
-		    return "ad_qnainfo/alert";
+		    return "ad_page/integrate/alert";
 	}
 	
 	@GetMapping("/memqnaReply/{no}/{nowpage}")
@@ -169,14 +169,14 @@ public class AdqnaController {
 		mm.addAttribute("pdata" , pd);
 
 						
-			return "ad_qnainfo/memqnaReply";
+			return "/ad_page/integrate/memqnaReply";
 		}
 	
 	
 	@PostMapping("/memqnaReply/{no}/{nowpage}")
 	String memreplyCom(QnaDTO dto , Model mm , @PathVariable int nowpage , HttpServletRequest request) {
 		String msg="";
-		String goUrl="/ad_qnainfo/memqnaReply/"+dto.getNo()+"/"+nowpage;
+		String goUrl="/ad_page/integrate/memqnaReply/"+dto.getNo()+"/"+nowpage;
 		new AdQnaPData(request);
 		AdQnaPData pd = (AdQnaPData)request.getAttribute("pd");
 
@@ -184,12 +184,13 @@ public class AdqnaController {
 		pd.setTotal(qtotal);	
 		pd.setNowPage(nowpage);
 		
+		System.out.println("관리자답변: " + dto);
 		int cnt = qm.adreply(dto);
 			
 		  if (cnt > 0) {
-			 
+			  	
 		        msg = "답글작성완료.";
-		        goUrl = "/ad_qnainfo/memqnaDetail/"+dto.getNo()+"/"+nowpage;
+		        goUrl = "/ad_page/integrate/memqnaDetail/"+dto.getNo()+"/"+nowpage;
 		        mm.addAttribute("msg", msg);
 		        mm.addAttribute("goUrl", goUrl);
 		    	mm.addAttribute("pdata" , pd);
@@ -197,7 +198,7 @@ public class AdqnaController {
 	
 		
 		
-		return "ad_qnainfo/alert";
+		return "ad_page/integrate/alert";
 	}
 }
 

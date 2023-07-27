@@ -9,4 +9,5 @@ public interface CalculateMapper {
 
 	List<CalculateDTO> list(CalculateDTO dto);
 	
+	int saleAdd(ShippingDTO dto);
 }

@@ -12,6 +12,13 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</where>
 </select>
 
+<select id="myPageBasket" resultType="baskDTO" parameterType="mDTO">
+	SELECT * FROM basket
+	<where>
+		id = #{id} order by addDate desc limit 0,5
+	</where>
+</select>
+
 
 <select id="order_move" resultType="baskDTO" parameterType="baskDTO">
 	SELECT * FROM basket
@@ -30,9 +37,9 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</update>
 
 <insert id="add_basket" parameterType="baskDTO">
-	insert into basket (id , num , price , cnt , totalPrice , size , color , proName ,address)
+	insert into basket (cate,id , num , price , cnt , totalPrice , size , color , proName ,address ,pf1 ,pf2 ,pf3 ,addDate)
 	values
-	(#{id} , #{num} , #{price} , #{cnt} , #{price} * #{cnt} , #{size} , #{color} , #{proName} , #{address})
+	(#{cate} , #{id} , #{num} , #{price} , #{cnt} , #{price} * #{cnt} , #{size} , #{color} , #{proName} , #{address} , #{pf1}, #{pf2}, #{pf3} , sysdate())
 </insert>
 
 	

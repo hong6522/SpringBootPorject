@@ -19,10 +19,24 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	</where>
 </select>
 
+	<update id="mem_pwModify" parameterType="mDTO">
+		update member set pw = #{newPw}
+		where id = #{id}
+	</update>
 
-<update id="mem_modify" parameterType="mDTO">
-		update member set address1 = #{address1}, address2 = #{address2}, address3 = #{address3}
-		where id = #{id} and pw = #{pw}
+	<update id="memDelete"  parameterType="mDTO">
+		update member set rank = "회원탈퇴"
+		where id = #{id} and pw = #{pw}  
+	</update>
+
+	<update id="mem_modify_addr" parameterType="mDTO">
+			update member set address1 = #{address1}, addr_detail = #{addr_detail}
+			where id = #{id} and pw = #{pw}
+	</update>
+	
+	<update id="mem_modify_pw" parameterType="mDTO">
+			update member set address1 = #{address1}, addr_detail = #{addr_detail} , pw = #{newPw}
+			where id = #{id} and pw = #{pw}
 	</update>
 
 <select id="addetail" resultType="mDTO" parameterType="mDTO">
@@ -67,9 +81,9 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 </select>
 
 <insert id="join" parameterType="mDTO">
-	insert into member (id , pw , name , address1 , address2 , address3 ,address4 ,address5 ,tell ,birth ,joindate)
+	insert into member (id , pw , name , address1 , addr_detail , tell ,birth ,joindate , compulsory_chk , tell_chk , email_chk , nomal_chk)
 	values
-	(#{id} , #{pw} , #{name} , #{address1} , #{address2} , #{address3} ,#{address4} ,#{address5} ,#{tell} ,#{birth} ,sysdate())
+	(#{id} , #{pw} , #{name} , #{address1}, #{addr_detail},#{tell} ,#{birth} ,sysdate() , #{compulsory_chk} , #{tell_chk} , #{email_chk} , #{nomal_chk})
 </insert>
 
 <select id="myPage" resultType="mDTO" parameterType="mDTO">

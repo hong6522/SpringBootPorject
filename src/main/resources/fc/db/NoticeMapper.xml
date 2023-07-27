@@ -5,14 +5,18 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 
 <mapper namespace="fc.db.NoticeMapper">
 
+<select id="maxNo" resultType="Integer">
+	select max(no) from notice
+</select>
+
 <insert id="adNoticeInsert" parameterType="noticeDTO" >
 		<selectKey keyProperty="no" resultType="Integer" order="BEFORE">
 			select max(no)+1 from notice
 		</selectKey>
 	
-		insert into notice (title, content, notice_cnt)
+		insert into notice (title, content, notice_cnt , reg_date)
 		values
-		(#{title}, #{content}, 0)
+		(#{title}, #{content}, 0 , sysdate())
 	</insert>
 
 
@@ -53,7 +57,7 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
             </trim>
         </if>
     </where>
-    ORDER BY reg_date DESC
+    ORDER BY no DESC
     <if test="sch == null or sch == ''">
         <if test="start != null and limit != null">
             LIMIT #{start}, #{limit}

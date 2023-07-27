@@ -37,6 +37,24 @@ IMP.init('imp35316716');
 
 
 function Pay() {
+	
+	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let isChecked = false;
+
+    // 체크박스가 하나라도 선택되어 있는지 확인
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            isChecked = true;
+            break;
+        }
+    }
+
+    // 체크가 되어 있지 않으면 폼 제출 방지
+    if (!isChecked) {
+        event.preventDefault();
+        alert("선택된 상품이 없습니다. 상품을 선택해주세요.");
+    }else{
+	
   // iamport 대신 자신의 "가맹점 식별코드"를 사용
   IMP.request_pay({
     pg: "html5_inicis",
@@ -73,7 +91,7 @@ function Pay() {
         alert(msg);
       }
     });
-
+    }
 }
 
 
@@ -115,37 +133,66 @@ function Pay() {
 		width:150px;
 		height:50px;
 		float:left;
+		margin-left:20px;
 	}
-	.basket_cate > input{
-		width:100px;
-		height:20px;
-		float:left;
+	.addr{
+		width:200px;
 	}
-	.basket_cate_wrapper{
+	.basket_cate_wrapper1{
 		display: block;
 		width:1200px;
 		height:50px;
+		background:#404040;
+		color:#fff;
+		line-height:50px;
+		text-align: center;
 	}
-	
+	.basket_cate_wrapper2{
+		display: block;
+		width:1200px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+	}
+	.basket_cate_wrapper2:nth-child(even){
+		background:#f2f2f2;
+	}
+	.cnt{
+		width:50px;
+	}
+	.myPageBasketNull{
+		width:1200px;
+		height:200px;
+		line-height: 200px;
+		text-align: center;
+		font-size:20px;
+		color:#888;
+		border-bottom:1px solid #888;
+	}
 </style>
 <form action="/fc_mem/listGoOrder" name="frm">
 <div class="proBasket_wrapper">
+</br></br>
 
-<div class="basket_cate_wrapper">
+<h1><b>장바구니</b></h1></br></br>
+<div class="basket_cate_wrapper1">
 	<div th:text="상품명" class="basket_cate"></div>
 	<div th:text="수량" class="basket_cate"></div>
 	<div th:text="색상" class="basket_cate"></div>
 	<div th:text="사이즈" class="basket_cate"></div>
-	<div th:text="수령주소" class="basket_cate"></div>
-	<div th:text="가격" class="basket_cate"></div>
+	<div th:text="수령주소" class="basket_cate" style="width:200px;"></div>
+	<div th:text="가격" class="basket_cate" style="width:100px;"></div>
+	<div th:text="비고" class="basket_cate"></div>
 </div>
 	<hr/>
-	<div th:each="dto : ${mainData}" class="basket_cate_wrapper">
+	<span th:if="${mainData.size()} == 0"><div class="myPageBasketNull"><b>장바구니에 담긴 상품이 없습니다.</b></div></span>
+	<span th:if="${mainData.size()} > 0">
+	<div th:each="dto : ${mainData}" class="basket_cate_wrapper2">
 		<input type="hidden" th:value="${dto.price}" th:id="${'price_'+dto.pno}"/>
 		<input type="checkbox" name="pno" th:value="${dto.pno}"/>
 		<div th:text="${dto.proName}" class="basket_cate"></div>
 		<div  class="basket_cate">
-			<input type="number" th:value="${dto.cnt}" th:id="${'cnt_'+dto.pno}"/>
+			<input type="number" th:value="${dto.cnt}" th:id="${'cnt_'+dto.pno}" class="cnt"/>
 		</div>
 		
 		<div class="basket_cate" th:text="${dto.color}">
@@ -185,12 +232,13 @@ function Pay() {
 		
 		
 		<div class="basket_cate">
-		<input type="text" th:value="${dto.address}" th:id="${'address_'+dto.pno}"/></div>
-		<div th:text="${dto.totalPrice}" class="basket_cate"></div>
-		<input type="button" th:value="수정" th:onclick="basketModify([[${dto.pno}]])"/>
-		<input type="button" th:value="삭제" th:onclick="basketDelete([[${dto.pno}]])"/>
+		<input type="text" th:value="${dto.address}" th:id="${'address_'+dto.pno}" class="addr"/></div>
+		<div th:text="${dto.totalPrice}" class="basket_cate" style="margin-left:45px;"></div>
+		<input type="button" th:value="수정" th:onclick="basketModify([[${dto.pno}]])" style="background:#424242; color:#fff; border:0px; width:40px;  height:25px;"/>
+		<input type="button" th:value="삭제" th:onclick="basketDelete([[${dto.pno}]])" style="background:#424242; color:#fff; border:0px; width:40px;  height:25px;"/>
 	</div>
-	<input type="button" value="결제하기" onclick="Pay()"/>
+	<input type="button" value="선택항목 결제하기" onclick="Pay()" style="background:#424242; color:#fff; border:0px; width:300px;  height:50px; margin-left:450px; margin-top:50px;"/>
+</span>
 </div>
 </form>
 </th:block>

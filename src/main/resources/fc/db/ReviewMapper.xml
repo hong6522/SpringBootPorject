@@ -38,6 +38,9 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
         </where>
     </select>
     
+   <select id="rproduct" resultType="shipDTO">
+    select * from shipping  where order_no = #{order_no}
+	</select>
     
     
  <!--review 디테일 -->   

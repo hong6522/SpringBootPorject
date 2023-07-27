@@ -6,14 +6,63 @@
 </th:block>
 
 <th:block layout:fragment="content">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function memDelete(mdto){
+	//alert(mdto.id + mdto.pw)
+	location.href="/fc_mem/memDelete?id="+mdto.id+"&pw="+mdto.pw
+}
+
+function findAddr(){
+	new daum.Postcode({
+        oncomplete: function(data) {
+        	
+        	console.log(data);
+
+            var roadAddr = data.roadAddress;
+            var jibunAddr = data.jibunAddress; 
+            document.getElementById('join_addr').value = data.zonecode;
+            if(roadAddr !== ''){
+                document.getElementById("join_addr").value = roadAddr;
+            } 
+            else if(jibunAddr !== ''){
+                document.getElementById("join_addr").value = jibunAddr;
+            }
+        }
+    }).open();
+}
+</script>
+<script>
+
+function pwChk(){
+	alert('눌림?')
+	if(frm.addr_detail.value == ''){
+		alert("상세주소를 입력해주세요.")
+		return
+	}
+	if(frm.newPw.value != frm.newPwChk.value){
+		alert("비밀번호가 일치하지 않습니다.")
+		return
+	}
+	
+	frm.submit()
+}
+
+</script>
 <style>
 	*{
 		margin:0;
 		padding:0;
 	}
-	.myPage_wrapper{
+	.modify_wrapper{
 		width:1200px;
 		margin:auto;
+		padding-left:500px;
+	}
+	input{
+		width:250px;
+		height:50px;
 	}
 	.myPage_cate{
 	width:150px;
@@ -21,15 +70,37 @@
 	}
 	.myPage_cate_wrapper{
 		width:1200px;
-		height:50px;
+		height:30px;
+	}
+	#id_chk{
+		margin-left:10px;
+		width:80px;
+		height:30px;
+		background:#000;
+		color:#fff;
+		border: 0px;
 	}
 </style>
-<form method="post">
-<input type="text" th:value="${mainData.id}" readonly name="id"/>
-<input type="text" th:value="${mainData.address1}" name="address1"/>
-<input type="text" th:value="${mainData.address2}" name="address2"/>
-<input type="text" th:value="${mainData.address3}" name="address3"/>
-<input type="submit" value="수정하기"/>
+<form method="post" name="frm">
+<div class="modify_wrapper"></br></br></br></br>
+<h2><b>ID</b></h2></br>
+<input type="text" th:value="${mainData.id}" readonly name="id"/><br/></br></br>
+<h2><b>현재 비밀번호</b></h2></br>
+<input type="password" placeholder="새로운 비밀번호" readonly th:value="${mainData.pw}"/><br/></br></br>
+<h2><b>새로운 비밀번호</b></h2></br>
+<input type="password" placeholder="새로운 비밀번호" name="newPw"/><br/>
+</br></br>
+<h2><b>비밀번호 확인</b></h2></br>
+<input type="password" placeholder="비밀번호 확인" name="newPwChk"/><br/>
+</br></br><h2><b>기본주소</b></h2></br>
+<input type="text" th:value="${mainData.address1}" name="address1" id="join_addr" readonly/>
+<input type="button" value="주소찾기" onclick="findAddr()" id="id_chk" style="margin-left:5px;" readonly/></br>
+</br></br><h2><b>상세주소</b></h2></br>
+<input type="text" th:value="${mainData.addr_detail}" name="addr_detail" placeholder="상세주소"/><br/><br/><br/>
+<input type="button" value="수정하기" id="id_chk" onclick="pwChk()"/>
+<input type="button" value="회원탈퇴" th:onclick="memDelete([[${mainData}]])" id="id_chk"/>
+</br></br></br></br>
+</div>
 </form>
 </th:block>
 

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import fc.db.NoticeDTO;
 import fc.db.NoticeMapper;
+import fc.db.ProductDTO;
 import fc.db.CenterPData;
 import fc.db.MemberDTO;
 import fc.db.MemberMapper;
@@ -380,7 +381,7 @@ public class CenterController {
 	}
 	
 	@GetMapping("/reviewModify/{no}/{nowpage}")
-	String qnaModify(ReviewDTO dto , Model mm , @PathVariable int nowpage ,HttpServletRequest request  ) {
+	String reviewModify(ReviewDTO dto , Model mm , @PathVariable int nowpage ,HttpServletRequest request  ) {
 		
 		
 		new CenterPData(request);
@@ -389,46 +390,55 @@ public class CenterController {
 		pd.setTotal(rtotal);
 		pd.setNowPage(nowpage);
 		
-		mm.addAttribute("mainData", rm.rdetail(dto));
-
+		mm.addAttribute("reviewDTO", rm.rdetail(dto));
+		System.out.println(mm.getAttribute("reviewDTO"));
 //		mm.addAttribute("id",id );
 
 		return "center/reviewModify";
 	}
 
 
-	@RequestMapping("/reviewModify/{no}/{nowpage}")
-	String  reviewModifyComplete(Model mm, ReviewDTO dto , MultipartHttpServletRequest mulRR , HttpServletRequest request , @PathVariable int nowpage ) {
-	    	
+	@PostMapping("/reviewModify/{no}/{nowpage}")
+	String  reviewModifyComplete(Model mm, ReviewDTO dto ,  MultipartFile ff1,MultipartFile ff2,MultipartFile ff3 , HttpServletRequest request , @PathVariable int nowpage ) {
+	    	System.out.println("redto"+dto);
 			new CenterPData(request);
 			CenterPData pd = (CenterPData)request.getAttribute("pd");	
 			int rtotal = rm.rtotalcount();
 			pd.setTotal(rtotal);
 			pd.setNowPage(nowpage);
-			System.out.println(dto.getFf1().getName());
-		
-			fileSave(dto.getFf1(), request);
-			fileSave(dto.getFf2(), request);
-			fileSave(dto.getFf3(), request);
-			//System.out.println(dto.getFf1());
-					
+			
+			
+			if(dto.getFf1()!=null) {
 			dto.setUpfile(dto.getFf1().getOriginalFilename());
-			dto.setUpfile1(dto.getFf2().getOriginalFilename());
-			dto.setUpfile2(dto.getFf3().getOriginalFilename());
-		
-		
-	    int cnt = rm.rmodify(dto);
-	    String msg = "수정 불가";   
-		String goUrl = "/center/reviewModify/"+dto.getNo();
+			}
+			if(dto.getFf2()!=null) {
+				dto.setUpfile1(dto.getFf2().getOriginalFilename());
+			}
+			if(dto.getFf3()!=null) {
+				dto.setUpfile2(dto.getFf3().getOriginalFilename());
+			}
+			
+			 int cnt = rm.rmodify(dto);
+		    String msg = "수정 불가";   
+			String goUrl = "/center/reviewModify/"+dto.getNo();
+			
+			if(cnt > 0) {		
+				
+			if(dto.getFf1()!=null) {
+				fileSave(ff1,request);
+				}
+				if(dto.getFf2()!=null) {
+				fileSave(ff2,request);
+				}
+				if(dto.getFf3()!=null) {
+				fileSave(ff3,request);
+				}
+			  msg = "수정되었습니다.";
+		      goUrl = "/center/reviewDetail/"+dto.getNo()+"/"+nowpage;
+				
+			}			      
 	   
-		  
-	    
-	    if (cnt > 0) {
-	        msg = "수정되었습니다.";
-	        goUrl = "/center/reviewDetail/"+dto.getNo()+"/"+nowpage;
-	        mm.addAttribute("msg", msg);
-	        mm.addAttribute("goUrl", goUrl);
-	    }
+			
 	    mm.addAttribute("msg", msg);
 	    mm.addAttribute("goUrl", goUrl);
 	   
@@ -448,7 +458,7 @@ public class CenterController {
 	        String fileName1 = dto.getUpfile1();
 	        String fileName2 = dto.getUpfile2();
 	        if (fileName != null && !fileName.isEmpty()) {
-	            boolean deleted = fileDelete(fileName, request);
+	            boolean deleted = allFileDelete(fileName, request);
 	            dto.setUpfile(""); // 파일명 초기화
 	            if (deleted) {
 	                msg = "삭제되었습니다.";
@@ -460,7 +470,7 @@ public class CenterController {
 	        }
 	        
 	        if (fileName1 != null && !fileName1.isEmpty()) {
-	        	boolean    deleted = fileDelete(fileName1, request);
+	        	boolean    deleted = allFileDelete(fileName1, request);
 	            dto.setUpfile1(""); // 파일명 초기화
 	            if (deleted) {
 	                msg = "삭제되었습니다.";
@@ -471,7 +481,7 @@ public class CenterController {
 	            }
 	            
 	            if (fileName2 != null && !fileName2.isEmpty()) {
-	                 deleted = fileDelete(fileName2, request);
+	                 deleted = allFileDelete(fileName2, request);
 	                dto.setUpfile2(""); // 파일명 초기화
 	                if (deleted) {
 	                    msg = "삭제되었습니다.";
@@ -512,12 +522,8 @@ public class CenterController {
 			e.printStackTrace();
 		}
 		
-		
 	}
-
-
-		
-	private boolean fileDelete(String fileName, HttpServletRequest request) {
+	private boolean allFileDelete(String fileName, HttpServletRequest request) {
 	    String path = request.getServletContext().getRealPath("img");
 	    String filePath = path + "/" + fileName;
 	    File file = new File(filePath);
@@ -536,6 +542,37 @@ public class CenterController {
 	    }
 	}
 
+
+		
+	@PostMapping("FileDelete/{fileName}/{nowpage}")
+	String FileDelete(Model mm,ReviewDTO dto, @PathVariable String fileName , @PathVariable int nowpage , HttpServletRequest request) {
+//		System.out.println("---************---"+fileName+"-----######------"+dto);\
+		
+		new CenterPData(request);
+		CenterPData pd = (CenterPData)request.getAttribute("pd");
 	
+		int rtotal = rm.rtotalcount();
+		  pd.setTotal(rtotal);
+		  pd.setNowPage(nowpage);
+		System.out.println("test");
+		if(fileName.equals("upfile")) {
+			dto.setUpfile(null);
+			dto.setFf1(null);
+		}
+		if(fileName.equals("upfile1")) {
+			dto.setUpfile1(null);
+			dto.setFf2(null);
+		}
+		if(fileName.equals("upfile2")) {
+			dto.setUpfile2(null);
+			dto.setFf3(null);
+		}
+//		System.out.println(dto);
+		int cnt = rm.rmodify(dto);
+		mm.addAttribute("msg", "삭제완료");
+		mm.addAttribute("goUrl", "../../reviewModify/"+dto.getNo()+"/"+pd.getNowPage());
+		
+		return "center/alert";			
+	}
 	
 }

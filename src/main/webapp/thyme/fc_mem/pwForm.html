@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top"></head>
+	<title>비밀번호찾기</title>
+</th:block>
+
+<th:block layout:fragment="content">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+// 이메일 인증번호
+var code ;
+
+function goEmail(){
+	//alert("실행?")
+	$.ajax({
+		url : "/ajax/mailConfirm",
+      	type : "POST",
+      data : {
+         email : $("#meid").val()
+      },
+      success : function(data){
+         alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+         code = data
+//          console.log("data : "+data +"코드는?"+code);
+//          chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt);
+      },
+      error:function(ee){		// 실패시
+			console.log(ee)
+      }
+   })
+}
+
+function emailChk(){
+// 	var Ecode = $("#Ecode").val()
+// 	alert("실행?" + code +"코드?"+Ecode)
+	
+	if($("#Ecode").val() == code){
+		alert("확인되었습니다.")
+		frm.submit()
+	}
+	else{
+		alert("인증번호가 일치하지 않습니다.")
+	}
+}
+
+
+	// 이메일 인증번호 체크 함수
+// 	function chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt){
+// 		$memailconfirm.on("keyup", function(){
+// 			if (data != $memailconfirm.val()) { //
+// 				emconfirmchk = false;
+// 				$memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
+// 				$("#emconfirmchk").css({
+// 					"color" : "#FA3E3E",
+// 					"font-weight" : "bold",
+// 					"font-size" : "10px"
+
+// 				})
+// 				//console.log("중복아이디");
+// 			} else { // 아니면 중복아님
+// 				emconfirmchk = true;
+// 				$memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+
+// 				$("#emconfirmchk").css({
+// 					"color" : "#0D6EFD",
+// 					"font-weight" : "bold",
+// 					"font-size" : "10px"
+
+// 				})
+// 			}
+// 		})
+// 	}
+</script>
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	.pw_wrapper{
+		width:1200px;
+		margin:auto;
+		padding-left:500px;
+	}
+</style>
+<form action="/fc_mem/pwModify" name="frm">
+<div class="pw_wrapper"><br/><br/><br/><br/>
+	<input type="text" id="meid" name="id" placeholder="ID(이메일)" style="width:245px; height:40px;"/>
+	<input type="button" onclick="goEmail()" value="인증번호발송"/><br/><br/>
+	<input type="text" id="Ecode" placeholder="인증번호" style="width:245px; height:40px;"/><br/><br/>
+	<input type="button" onclick="emailChk()" value="인증번호확인" style="width:250px; height:50px; color:#fff; background:#424242; border:0px;"/>
+</div>
+<br/><br/><br/><br/>
+</form>
+
+</th:block>
+
+
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>

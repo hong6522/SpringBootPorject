@@ -4,7 +4,7 @@
 <body>
 <th:block layout:fragment="title">
 <head th:replace="fc_parts/top"></head>
-	<title>회원가입</title>
+	<title>마이페이지</title>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -15,40 +15,335 @@
 	}
 	.myPage_wrapper{
 		width:1200px;
+		height:1400px;
 		margin:auto;
+		padding-left:150px;
 	}
 	.myPage_cate{
-	width:150px;
+		width:150px;
+		float:left;
+	}
+	.myPage_cate_name1{
+		width:50px;
+		height:30px;
+		float:left;
+		line-height: 40px;
+	}
+	.myPage_cate_name3{
+		width:120px;
+		height:30px;
+		float:left;
+		line-height: 40px;
+	}
+	.myPage_cate_name2{
+		width:100px;
+		height:30px;
+		font-size:25px;
 		float:left;
 	}
 	.myPage_cate_wrapper{
-		width:1200px;
+		width:500px;
+		height:50px;
+		float: left;
+		background:#f0f;
+	}
+	.myPage_name_wrapper{
+		margin-top:50px;
+		width:500px;
+		height:50px;
+		float:left;
+		margin-left:20px;
+	}
+	.memModify {
+		font-size:9px;
+		color:#000;
+		width:100px;
+		height:30px;
+		float:left;
+		line-height:40px; 
+		margin-left:5px;
+	}
+	.cemi_title{
+		width:200px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		font-size:20px;
+	}
+	.myPage_history_title{
+		width:200px;
+		height:50px;
+		margin-top:150px;
+		font-size:25px;
+		color:#000;
+	}
+	.myPage_history_cate_wrapper{
+		width:950px;
 		height:50px;
 	}
+	.myPage_history_cate{
+		width:100px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		color:#888;
+		float:left;
+	}
+	.myPage_history_semiCate_warpper{
+		width:950px;
+		height:50px;
+		background:#404040;
+	}
+	.myPage_history_semiCate1{
+		width:150px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:60px;
+		color:#fff;
+	}
+	 .history_list5{
+		width:250px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+	}
+	.myPage_history_semiCate2{
+		width:100px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:90px;
+		color:#fff;
+	}
+	.history_list6{
+		width:100px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:0px;
+	}
+	.myPage_history_semiCate3{
+		width:130px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:20px;
+		color:#fff;
+	}
+	.history_list3{
+		width:130px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:20px;
+	}
+	.myPage_history_semiCate4{
+		width:110px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:30px;
+		color:#fff;
+	}
+	 .history_list4{
+		width:110px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:30px;
+	}
+	.myPage_history_semiCate7{
+		width:110px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:50px;
+		color:#fff;
+	}
+	 .history_list7{
+		width:110px;
+		height:50px;
+		line-height:50px;
+		text-align: center;
+		float:left;
+		margin-left:50px;
+	}
+	.myPage_history_list{
+		width:950px;
+		height:50px;
+	}
+	.myPage_history_list:nth-child(even){
+		background:#f2f2f2;
+	}
+	#order_pf{
+		width:50px;
+		height:50px;
+	}
+	.history_img{
+		float:left;
+		width:50px;
+		height:50px;
+	}
+	.myPageBasketNull{
+		width:950px;
+		height:200px;
+		line-height: 200px;
+		text-align: center;
+		font-size:20px;
+		color:#888;
+		border-bottom:1px solid #888;
+	}
+	a{
+		text-decoration: none;
+	}
+	.myBoard_wrapper{
+		width:950px;
+		height:200px;
+		margin-top:50px;
+		display: block;
+	}
+	.name_wrapper{
+		width:950px;
+		height:50px;
+	}
+	.myPage_myqna_wrapper , .myPage_myreview_wrapper{
+		width:400px;
+		height:200px;
+		margin-left:50px;
+		border:1px solid #888;
+		float:left;
+	}
+	.myPage_board_title{
+		width:400px;
+		height:50px;
+		border-bottom: 1px solid #888;
+		line-height: 50px;
+	}
+	.myPage_board_main{
+		width:400px;
+		height:50px;
+		line-height: 50px;
+	}
+	
 </style>
 <form action="">
 
 <div class="myPage_wrapper">
-<div class="myPage_cate_wrapper">
-	<div th:text="이름" class="myPage_cate"></div>
-	<div th:text="기본주소" class="myPage_cate"></div>
-	<div th:text="추가주소" class="myPage_cate"></div>
-	<div th:text="추가주소" class="myPage_cate"></div>
+
+		<div class="myPage_name_wrapper">
+		<div class="name_wrapper">
+		<div class="myPage_cate_name1">귀하신</div>
+		<div class="myPage_cate_name2"><b>[[${mainData.name}]]</b></div>
+		<div class="myPage_cate_name3">님 반갑습니다.</div>
+<!-- 		<div th:text="${mainData.address1 + mainData.addr_detail}" class="myPage_cate"></div> -->
+		<a th:href="|/fc_mem/modifyForm|" id="memModify"><div class="memModify" ><b>회원정보변경</b></div></a>
+		</div>
+		<div class="myBoard_wrapper">
+			<div class="myPage_myqna_wrapper">
+				<div class="myPage_board_title" style="background:#404040; color:#fff;">
+					<div style="margin-left:20px;"><b>1:1 문의</b>
+					<a th:href="|/myPage/myqna|"><div style="float:right; margin-right: 20px; color:#fff;"><b>전체</b></div></a>
+					</div>
+				</div>
+				<div class="myPage_board_main">
+					<div style="margin-left:15px; width:100px; float:left;"><b>답변대기</b></div>
+					<div style="float:right; margin-right:15px;"><b>[[${QmyPageBefore}]] 건</b></div>
+				</div>
+				<div class="myPage_board_main">
+					<div style="margin-left:15px; width:100px; float:left;"><b>답변완료</b></div>
+					<div style="float:right; margin-right:15px;"><b>[[${QmyPageAfter}]] 건</b></div>
+				</div>
+				<div class="myPage_board_main">
+					<a th:href="|/myPage/myqnaInsert|"><div style="color:#000; text-align: center; width:100px; margin-left:160px; height:30px; border:1px solid #000; line-height: 30px; margin-top:10px;"><b>문의하기</b></div></a>
+				</div>
+			</div>
+			
+			<div class="myPage_myreview_wrapper">
+				<div class="myPage_board_title" style="background:#404040; color:#fff;">
+					<div style="margin-left:20px;"><b>상품 후기</b>
+					<a th:href="|/myPage/myreview|"><div style="float:right; margin-right: 20px; color:#fff;"><b>전체</b></div></a>
+					</div>
+				</div>
+				<div class="myPage_board_main">
+					<div style="margin-left:15px; width:120px; float:left;"><b>작성가능 후기</b></div>
+					<div style="float:right; margin-right:15px;"><b>[[${RmyPageBefore}]] 건</b></div>
+				</div>
+				<div class="myPage_board_main">
+					<div style="margin-left:15px; width:120px; float:left;"><b>작성완료 후기</b></div>
+					<div style="float:right; margin-right:15px;"><b>[[${RmyPageAfter}]] 건</b></div>
+				</div>
+				<div class="myPage_board_main">
+					<div style="text-align: center; color:#f00;"><b>*후기 작성은 주문내역에서 가능합니다.</b></div>
+				</div>
+			</div>
+			
+		</div>
+		<a th:href="|/fc_mem/history|"><div class="myPage_history_title"><b>주문내역 조회</b></div></a>
+		<div class="myPage_history_cate_wrapper">
+			<div class="myPage_history_cate">결제완료 [[${myPageCalList.count}]]</div>
+			<div class="myPage_history_cate">배송중 [[${myPageIngList.count}]]</div>
+			<div class="myPage_history_cate">배송완료 [[${myPageCompleteList.count}]]</div>
+			<div class="myPage_history_cate">구매확정 [[${myPageDecideList.count}]]</div>
+			<div class="myPage_history_cate">교환요청 [[${myPageExchangeRequestList.count}]]</div>
+			<div class="myPage_history_cate">교환완료 [[${myPageExchangeComList.count}]]</div>
+			<div class="myPage_history_cate">환불요청 [[${myPageRefundRequestList.count}]]</div>
+			<div class="myPage_history_cate">환불완료 [[${myPageRefundComList.count}]]</div>
+		</div>
+		<div class="myPage_history_semiCate_warpper">
+			<div class="myPage_history_semiCate1">상품정보</div>
+			<div class="myPage_history_semiCate2">주문일자</div>
+			<div class="myPage_history_semiCate3">주문번호</div>
+			<div class="myPage_history_semiCate4">주문금액(수량)</div>
+			<div class="myPage_history_semiCate7">주문상태</div>
+		</div>
+		<div>
+		<span th:if="${myPageMainList.size()} == 0">
+			<div class="myPageBasketNull"><b>최근 구매하신 상품이 없습니다.</b></div>
+		</span>
+			<div th:each="hdto : ${myPageMainList}" class="myPage_history_list">
+			
+				<div class="history_img"><img th:src="|../../productImg/${hdto.order_pf1}|" alt="" id="order_pf"/></div>
+				<div th:text="${hdto.order_product}" class="history_list5"></div>
+				<div th:text="${hdto.order_dateStr}" class="history_list6"></div>
+				<div th:text="${hdto.order_no}" class="history_list3"></div>
+				<div class="history_list4">[[${hdto.order_price}]] ([[${hdto.order_cnt}]])</div>
+				<div th:text="${hdto.order_shipping}" class="history_list7"></div>
+			</div>
+		</div>
+		<a th:href="|/fc_mem/myBasket|"><div class="myPage_history_title"><b>장바구니</b></div></a>
+		<div class="myPage_history_semiCate_warpper">
+			<div class="myPage_history_semiCate1">상품정보</div>
+			<div class="myPage_history_semiCate2">담은일자</div>
+			<div class="myPage_history_semiCate3">주문금액</div>
+			<div class="myPage_history_semiCate4">주문수량</div>
+			<div class="myPage_history_semiCate7">상품번호</div>
+		</div>
+		<span th:if="${myPageBasket.size()} == 0">
+			<div class="myPageBasketNull"><b>장바구니에 담긴 상품이 없습니다.</b></div>
+		</span>
+		<div>
+			<div th:each="bdto : ${myPageBasket}" class="myPage_history_list">
+			
+				<div class="history_img"><img th:src="|../../productImg/${bdto.pf1}|" alt="" id="order_pf"/></div>
+				<div th:text="${bdto.proName}" class="history_list5"></div>
+				<div th:text="${bdto.addDateStr}" class="history_list6"></div>
+				<div th:text="${bdto.totalPrice}" class="history_list3"></div>
+				<div th:text="${bdto.cnt}" class="history_list4"></div>
+				<div th:text="${bdto.num}" class="history_list7"></div>
+			</div>
+		</div>
 </div>
 
-<div class="myPage_cate_wrapper">
-	<div th:each="dto : ${mainData}">
-		<div th:text="${dto.name}" class="myPage_cate"></div>
-		<div th:text="${dto.address1}" class="myPage_cate"></div>
-		<div th:text="${dto.address2}" class="myPage_cate"></div>
-		<div th:text="${dto.address3}" class="myPage_cate"></div>
-		<a th:href="|/fc_mem/modifyForm|">수정하기</a>
-	</div>
-</div>
-<div class="myPage_cate_wrapper">
-		<a th:href="|/myPage/myqna|">내가 작성한 qna</a>
-		<a th:href="|/myPage/myreview|">내가 작성한 리뷰</a>
-</div>
 </div>
 </form>
 </th:block>

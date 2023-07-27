@@ -5,6 +5,18 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 
 <mapper namespace="fc.db.ShippingMapper">
 
+	<select id="myPageMainList" resultType="shipDTO" parameterType="mDTO">
+		select * from shipping where order_id = #{id} order by order_date desc limit 0,5
+	</select>
+	
+	<select id="RmyPageBefore" resultType="int">
+		select count(*) from shipping where order_id = #{id} and reviewChk = 0 and order_shipping = "구매확정"
+	</select>
+	
+	<select id="RmyPageAfter" resultType="int">
+		select count(*) from shipping where order_id = #{id} and reviewChk = 1
+	</select>
+
 	<select id="todayList" resultType="shipDTO" parameterType="shipDTO">
 		select * from shipping
 		<where>
@@ -12,8 +24,78 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		</where>
 	</select>
 	
+	<select id="shDTO" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+		<where>
+			 uid = #{uid}
+		</where>
+	</select>
+	
+	<select id="myPageCalList" resultType="shipDTO" parameterType="mDTO">
+		select count(*) as count from shipping
+		<where>
+			order_ID = #{id} and order_shipping = "결제완료"
+		</where>
+	</select>
+	
+	<select id="myPageExchangeRequestList" resultType="shipDTO" parameterType="mDTO">
+		select count(*) as count from shipping
+		<where>
+			order_ID = #{id} and order_shipping = "교환요청"
+		</where>
+	</select>
+	
+	<select id="myPageRefundRequestList" resultType="shipDTO" parameterType="mDTO">
+		select count(*) as count from shipping
+		<where>
+			order_ID = #{id} and order_shipping = "환불요청"
+		</where>
+	</select>
+	
+	<select id="myPageExchangeComList" resultType="shipDTO" parameterType="mDTO">
+		select count(*) as count from shipping
+		<where>
+			order_ID = #{id} and order_shipping = "교환완료"
+		</where>
+	</select>
+	
+	<select id="myPageRefundComList" resultType="shipDTO" parameterType="mDTO">
+		select count(*) as count from shipping
+		<where>
+			order_ID = #{id} and order_shipping = "환불완료"
+		</where>
+	</select>
+	
+	<select id="myPageDecideList" resultType="shipDTO" parameterType="mDTO">
+		select count(*) as count from shipping
+		<where>
+			order_ID = #{id} and order_shipping = "구매확정"
+		</where>
+	</select>
+	
+	<select id="myPageCompleteList" resultType="shipDTO" parameterType="mDTO">
+		select count(*) as count from shipping
+		<where>
+			order_ID = #{id} and order_shipping = "배송완료"
+		</where>
+	</select>
+	
+	<select id="myPageIngList" resultType="shipDTO" parameterType="mDTO">
+		select count(*) as count from shipping
+		<where>
+			order_ID = #{id} and order_shipping = "배송중"
+		</where>
+	</select>
+	
 	<select id="MainList" resultType="shipDTO" parameterType="shipDTO">
 		select * from shipping
+	</select>
+	
+	<select id="completeList" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+		<where>
+			 order_shipping = "결제완료"
+		</where>
 	</select>
 	
 	<select id="beforeList" resultType="shipDTO" parameterType="shipDTO">
@@ -44,30 +126,58 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		</where>
 	</select>
 	
+	<select id="reviewSel" resultType="shipDTO" parameterType="shipDTO">
+		select * from shipping
+		<where>
+			 order_ID = #{order_ID}
+		</where>
+	</select>
+	
+	<update id="BasUpdate" parameterType="shipDTO">
+		update shipping set order_name = #{order_name}
+		<where>
+			uid = #{uid} and order_ID = #{order_ID}
+		</where>
+	</update>
+	
 	<update id="update" parameterType="shipDTO">
 		update shipping set order_shipping = #{shippingChk}
 		<where>
-			order_no = #{schNo}
+			uid = #{uid}
+		</where>
+	</update>
+	
+	<update id="reviewModify" parameterType="shipDTO">
+		update shipping set reviewChk = 1
+		<where>
+			order_no = #{order_no}
 		</where>
 	</update>
 	
 	<update id="orderRefund" parameterType="shipDTO">
-		update shipping set order_shipping = #{order_shipping}
+		update shipping set order_shipping = "환불완료"
+		<where>
+			uid = #{uid}
+		</where>
+	</update>
+	
+	<update id="sellDecide" parameterType="shipDTO">
+		update shipping set order_shipping = "구매확정"
 		<where>
 			uid = #{uid}
 		</where>
 	</update>
 	
 	<insert id="Order_insert" parameterType="shipDTO">
-		insert into shipping (order_ID , order_name , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate ,order_place , uid)
+		insert into shipping (order_ID , order_name , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate ,order_place , uid ,order_pf1,order_pf2,order_pf3)
 		values
-		(#{order_ID} , #{order_name} , sysdate() , #{order_price} ,#{order_cnt}, #{order_num} , #{order_color} , #{order_size} , #{order_product} , #{order_cate} , #{order_place}  ,#{uid})
+		(#{order_ID} , #{order_name} , sysdate() , #{order_price}*#{order_cnt} ,#{order_cnt}, #{order_num} , #{order_color} , #{order_size} , #{order_product} , #{order_cate} , #{order_place}  ,#{uid} ,#{order_pf1},#{order_pf2},#{order_pf3})
 	</insert>
 	
 	<insert id="basOrder_insert" parameterType="baskDTO">
-		insert into shipping (order_ID , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate , order_place ,uid)
+		insert into shipping (order_ID , order_date , order_price ,order_cnt , order_num ,order_color , order_size , order_product , order_cate , order_place ,uid ,order_pf1,order_pf2,order_pf3)
 		values
-		(#{id} ,  sysdate() , #{totalPrice} ,#{cnt}, #{num} , #{color} , #{size} , #{proName} , #{cate} , #{address} ,#{uid})
+		(#{id} ,  sysdate() , #{totalPrice} ,#{cnt}, #{num} , #{color} , #{size} , #{proName} , #{cate} , #{address} ,#{uid} ,#{pf1},#{pf2},#{pf3})
 	</insert>
 
 </mapper>

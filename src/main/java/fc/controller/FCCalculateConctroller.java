@@ -2,8 +2,10 @@ package fc.controller;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,21 +27,16 @@ public class FCCalculateConctroller {
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		NumberFormat nf = NumberFormat.getNumberInstance();
+		nf.setCurrency(Currency.getInstance(Locale.KOREA));
 		List<CalculateDTO> mainData = cm.list(dto);
 		for (CalculateDTO cd : mainData) {
-			celTot+=cd.getCal_celPri()*cd.getCal_cnt();
-			oriTot+=cd.getCal_oriPri()*cd.getCal_cnt();
-			if(cd.getCal_refund()) {
-				cd.setRefundStr("O");
-			}else {
-				cd.setRefundStr("X");
-			}
+			celTot+=cd.getCal_celPri();
+			
+			cd.setPriStr(nf.format(cd.getCal_celPri()));
 		}
 		mm.addAttribute("mainData",mainData);
-		mm.addAttribute("oriTot", oriTot);
-		mm.addAttribute("celTot", celTot);
+		mm.addAttribute("celTot", nf.format(celTot));
 		mm.addAttribute("today", sdf.format(today));
-		
 		System.out.println("오늘날짜: "+sdf.format(today));
 		return "ad_page/calculate";
 	}

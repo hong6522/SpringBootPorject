@@ -22,6 +22,10 @@ public interface QnaMapper {
 	
 	int qinsert(QnaDTO bdedsde);
 	
+	int myPageBefore(MemberDTO mem);
+	
+	int myPageAfter(MemberDTO mem);
+	
 	int qtotalcount(); //리스트 갯수
 
 	void qcnt(int no);

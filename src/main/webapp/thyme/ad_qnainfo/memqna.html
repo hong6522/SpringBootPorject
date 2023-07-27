@@ -3,13 +3,10 @@
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="fc_total/template">
 
-
-	<title>Admin_QNAlist</title>
-
-
-
-	<h2>Admin_QNAlist</h2>
-	 
+<th:block layout:fragment="title">
+		<head th:replace="ad_fc_parts/top"></head>
+			<title>qna답변</title>
+		</th:block>
 	<table border="" width=80%>
 	<form action=""  th:object="${qnaDTO}">
 	

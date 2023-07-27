@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<th:block layout:fragment="title">
+<head th:replace="fc_parts/top"></head>
+	<title>회원정보수정</title>
+</th:block>
+
+<th:block layout:fragment="content">
+<script>
+
+function pwChk(){
+	if(frm.newPw.value==''){
+		alert("새로운 비밀번호를 입력하세요.")
+		return
+	}
+	if(frm.newPw.value != frm.newPwChk.value){
+		alert("비밀번호가 일치하지 않습니다.")
+		return
+	}
+	frm.submit()
+}
+
+</script>
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	.modify_wrapper{
+		width:700px;
+		margin:auto;
+		padding-left:500px;
+	}
+	input{
+		width:250px;
+		height:50px;
+	}
+	.myPage_cate{
+	width:150px;
+		float:left;
+	}
+	.myPage_cate_wrapper{
+		width:1200px;
+		height:30px;
+	}
+	#id_chk{
+		margin-left:50px;
+		width:150px;
+		height:30px;
+		background:#000;
+		color:#fff;
+		border: 0px;
+	}
+</style>
+</br></br></br></br>
+<form method="post" name="frm">
+<div class="modify_wrapper">
+	<input type="password" placeholder="새로운 비밀번호" name="newPw"/></br></br>
+	<input type="password" placeholder="비밀번호 확인" name="newPwChk"/></br></br>
+	<input type="button" id="id_chk" value="비밀번호수정" onclick="pwChk()"/>
+</div>
+</form>
+</th:block>
+
+
+<th:block layout:fragment="main-foot">
+<body th:replace="fc_parts/footer::main-foot"></body>
+</th:block>
+</html>

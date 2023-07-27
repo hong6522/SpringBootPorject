@@ -22,11 +22,11 @@ public interface ReviewMapper {
 
 	int rmodify(ReviewDTO dto);
 	
-	int rdelete(int no);
-	
-	
+	int rdelete(int no);	
 
 	ReviewDTO getreview(int no);
+	
+	ShippingDTO rproduct (ShippingDTO dto);
 
 	
 

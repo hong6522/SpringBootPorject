@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import fc.db.AdQnaPData;
+import fc.db.CenterPData;
 import fc.db.IntegrateMapper;
 import fc.db.MemberDTO;
 import fc.db.NoticeDTO;
 import fc.db.NoticeMapper;
 import fc.db.ProductDTO;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/ad_page/integrate/")
@@ -27,17 +29,26 @@ public class IntegrateController {
 	NoticeMapper nm;
 	
 	@RequestMapping("")
-	String list(Model mm,NoticeDTO dto) {
-		System.out.println("integrate------------");
+	String list(Model mm,NoticeDTO dto, HttpServletRequest request) {
+		System.out.println("integrate텥텥-----------");
+		String msg="";
+
+		new CenterPData(request);
+		CenterPData pd = (CenterPData)request.getAttribute("pd");
+		int qtotal = nm.ntotalcount();
+		System.out.println(qtotal);
+		pd.setTotal(qtotal);
+
 		
-		List<NoticeDTO> mainData =  nm.adNoticeList(dto);
+		List<NoticeDTO> mainData =  nm.nlist(pd);
 		
 		System.out.println(mainData);
 		
 		mm.addAttribute("mainData", mainData);
+		mm.addAttribute("pdata", pd);
+
 		
-		
-		return "ad_page/board/list";
+		return "ad_page/integrate/list";
 	}
 	
 	@RequestMapping(value = {"/detail/{no}"})
@@ -47,21 +58,23 @@ public class IntegrateController {
 		mm.addAttribute("mainData", nm.adNoticeDetail(dto));
 
 		
-		return "ad_page/board/detail";
+		return "ad_page/integrate/detail";
 	}
 	
 	@GetMapping("/insert")
 	String insert(NoticeDTO dto) {
 		System.out.println("insert");
-		return "ad_page/board/insertForm";
+		return "ad_page/integrate/insertForm";
 	}
 	
 	@PostMapping("/insert")
 	String  insertRes(Model mm, NoticeDTO dto) {
 		System.out.println("insertRes");
 		nm.adNoticeInsert(dto);
+		int maxNo = nm.maxNo();
+		System.out.println(maxNo);
 		mm.addAttribute("msg", "입력되었습니다.");
-		mm.addAttribute("goUrl","/ad_page/integrate/detail/"+dto.getNo());
+		mm.addAttribute("goUrl","/ad_page/integrate/detail/"+maxNo);
 		System.out.println("InsertComplete:"+dto);
 		return "ad_page/product/alert";
 	}
@@ -72,7 +85,7 @@ public class IntegrateController {
 		
 		System.out.println(dto);
 		mm.addAttribute("mainData", nm.adNoticeDetail(dto));
-		return "ad_page/board/modifyForm";
+		return "ad_page/integrate/modifyForm";
 	}
 	
 	@PostMapping("/modify/{no}")

@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 public class MemberDTO {
 	Integer age;
-	String name,tell,birth,id,pw,rank,memo,address1,address2,address3,address4,address5,kind,pid,pname,sch,joinDateStr;
-	boolean gender;
+	String name,tell,birth,id,pw,rank,memo,address1,addr_detail,kind,pid,pname,sch,joinDateStr , newPw;
+	boolean gender , compulsory_chk , tell_chk , email_chk , nomal_chk;
 	Date joindate;
 	
 	public String getGenderStr() {

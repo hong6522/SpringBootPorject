@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class CalculateDTO {
 
-	String cal_cate, cal_name, cal_kind, cal_retext, cal_size, cal_color ,refundStr, sch, beforeDate, afterDate;
-	Integer cal_oriPri, cal_celPri, cal_code, cal_cnt;
+	String cal_cate, cal_name, cal_kind, cal_retext, cal_size, cal_color ,refundStr, sch, beforeDate, afterDate ,priStr;
+	Integer cal_oriPri, cal_celPri, cal_code, cal_cnt , cal_tot;
 	Boolean cal_refund;
 	Date cal_date;
 	

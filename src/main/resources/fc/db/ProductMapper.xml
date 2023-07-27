@@ -31,10 +31,48 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 		</where>
 	</select>
 	
+	
+	
+	<select id="propagelist" resultType="pDTO" parameterType="pDTO">
+		SELECT * FROM product
+		<where>
+		    <if test="pDTO.sch != null and pDTO.sch != ''">
+			 <trim suffix=" " suffixOverrides = " and | or">
+		      
+		        <if test="pDTO.sch!=null and pDTO.sch!='' and pDTO.sch!=('all')">
+                   proKind = #{pDTO.sch} and 
+                </if>
+		        
+		        <if test="pDTO.start !='' and pDTO.start!=null">
+	               <if test="pDTO.end !='' and pDTO.end!=null">
+	                  reg_date BETWEEN #{pDTO.start} AND #{pDTO.end} and
+	               </if>
+	            </if>
+	            
+	            <if test="pDTO.startPrice !='' and pDTO.startPrice != null">
+                <if test="pDTO.endPrice !='' and pDTO.endPrice!=null">
+	                  sellPrice BETWEEN #{pDTO.startPrice} AND #{pDTO.endPrice}
+	               </if>
+	            </if>
+		      </trim>
+		    </if>
+		  </where>
+  
+		    ORDER BY reg_date desc
+		    <if test="pd.start != null and pd.limit != null">
+		      LIMIT #{pd.start}, #{pd.limit}
+		    </if>
+		  
+	</select>
+	
+	
+	
 	<select id="pro_select" resultType="pDTO" parameterType="pDTO">
 		SELECT * FROM product
 		<where>
-			proKind = #{proKind}
+			proKind = #{proKind}     
+			AND kind = '진열함'
+			
 		</where>
 	</select>
 	
@@ -42,7 +80,7 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
 	<select id="pro_detail" resultType="pDTO" parameterType="pDTO">
 		SELECT * FROM product
 		<where>
-			num = #{num}
+			proName = #{proName}
 		</where>
 	</select>
 	
@@ -67,4 +105,18 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
         sellPrice = #{sellPrice}
         where proName = #{proName}
     </update>
+    
+    <delete id="prdDelete"  parameterType="pDTO">
+		delete from product where proName = #{proName}
+	</delete>
+    
+    <select id="protalcount" resultType="int">
+        SELECT COUNT(*) FROM product
+        <where>
+            <if test="sch != null">
+                id LIKE CONCAT('%', #{sch}, '%') OR title LIKE CONCAT('%', #{sch}, '%')
+            </if>
+        </where>
+    </select>
+    
 </mapper>

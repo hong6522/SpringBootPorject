@@ -52,7 +52,7 @@ layout:decorate="fc_total/template">
 	}
 	.main_wrapper{
 		width:1200px;
-		height:500px;
+		height:1600px;
 		margin:auto;
 	}
 	
@@ -64,22 +64,28 @@ layout:decorate="fc_total/template">
 		float:left;
 	}
 	.pro_wrapper{
-		width:200px;
+		width:240px;
 		height:350px;
 		border:1px soild #000;
-		background:#ff0;
 		float:left;
 		color:#000;
 		text-align: center;
+		box-sizing: border-box;
+		border-radius: 5px;
+		
+	}
+	.aaabbb{
+		margin-left:120px;
+		margin-top:80px;
 	}
 	#pro_img{
 		width:200px;
 		height:250px;
 	}
 	.pro_price{
-		background:#00f;
 		float:left;
 	}
+	
 </style>
 
 <script>
@@ -88,18 +94,25 @@ layout:decorate="fc_total/template">
 
 </script>
 <div class="main_wrapper">
-	<div class="main_top"></div>
+	<div class="main_top">
+	<span th:text=${cate} style="font-size: 2rem; text-align: center; display: block"></span>
+	</div>
 	<div class="main_midle">
 		<div th:each="dto : ${mainData}">
-			<a th:href="|/fc_pro/detail/${dto.num}|">
+			<a th:href="|/fc_pro/detail/${dto.proName}|">
+			<div class="aaabbb">
 				<div class="pro_wrapper">
 					<div><img th:src="|../productImg/${dto.pf1}|" alt="" id="pro_img"/></div>
-					<div th:text="${dto.proName}"></div>
-					<div th:each="cc : ${dto.colorStr}">
-						<div th:style="'background-color: ' + ${cc} + ' ;'" class="pro_color"></div>
+					<div th:text="${dto.proName}" style="width: 250px"></div>
+					<td th:text="${#numbers.formatCurrency(dto.sellPrice)}"></td>
+					
+					<div style="margin-left: 15px;">
+						<div th:each="cc : ${dto.colorStr}" class="colorr">
+							<div th:style="'background-color: ' + ${cc} + ' ;'" class="pro_color"></div>
+						</div>
 					</div>
-					<div th:text="${dto.sellPrice}" clas="pro_price">KWR</div>
 				</div>
+			</div>
 			</a>
 		</div>
 	</div>

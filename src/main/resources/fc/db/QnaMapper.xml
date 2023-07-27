@@ -44,6 +44,20 @@ PUBLIC "-//mybatis.org/DTD Mapper3.0//EN"
         </where>
     </select>
     
+    <select id="myPageBefore" resultType="int">
+        SELECT COUNT(*) FROM qna
+        <where>
+          id = #{id} and answer_chk = 0
+        </where>
+    </select>
+    
+     <select id="myPageAfter" resultType="int">
+        SELECT COUNT(*) FROM qna
+        <where>
+          id = #{id} and answer_chk = 1
+        </where>
+    </select>
+    
     
  <!--qna 디테일 -->   
     <select id="qdetail"  resultType="qnaDTO">

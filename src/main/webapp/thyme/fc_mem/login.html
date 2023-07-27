@@ -84,7 +84,7 @@ layout:decorate="fc_total/template">
    		<div class="login_main">
    			<div class="login_main_title">LOGIN</div>
    				<input type="text" id="login_id" placeholder="이메일" name="id"/>
-   				<input type="text" id="login_pw" placeholder="비밀번호" name="pw"/>
+   				<input type="password" id="login_pw" placeholder="비밀번호" name="pw"/>
 				<input type="submit" value="로그인" id="login_button" />
 </form>
    			<div class="logingroup">
@@ -97,16 +97,15 @@ layout:decorate="fc_total/template">
 		          <div onclick="kakaoLogout();">카카오 로그아웃</div>
 		      </a>-->
  
-   		<div class="login_user_set_wrapper">
-   			<a href=""><div class="login_user_set" th:text="아이디찾기"></div></a>
-   			<a href=""><div class="login_user_set" th:text="비밀번호찾기"></div></a>
-   			<a href=""><div class="login_user_set" th:text="회원가입"></div></a>
+   		<div class="login_user_set_wrapper" style="margin-top:30px;">
+   			<a href="/fc_mem/pwForm"><div class="login_user_set" th:text="비밀번호찾기" style="margin-left:60px;"></div></a>
+   			<a href="/fc_mem/join"><div class="login_user_set" th:text="회원가입"></div></a>
    		</div>
    </div>
     
 
     <script type="text/javascript">
-        var naver_id_login = new naver_id_login("kp49e667EXXMJhByMOAz", "http://localhost:80/mainPage");
+        var naver_id_login = new naver_id_login("kp49e667EXXMJhByMOAz", "http://localhost:80/mainPage/best");
         var state = naver_id_login.getUniqState();
         naver_id_login.setButton("green", 3,42);
         naver_id_login.setDomain("http://localhost:80");
@@ -146,7 +145,8 @@ layout:decorate="fc_total/template">
 			data:{type:"kakao"},
 			
 			success:function(ddd){	// 성공시
-				//alert("세션에 넣었다")
+				alert("로그인 성공하였습니다.")
+				location.href="/mainPage/best"
 			},
 			error:function(ee){		// 실패시
 				console.log(ee)

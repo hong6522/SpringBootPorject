@@ -17,7 +17,7 @@ public class QnaDTO {
 	boolean secret_chk , answer_chk;
 
 	
-	String title , type , content , id , getAnswer , sch , kind ,admin_Id , pw ;
+	String title , type , content , id , getAnswer , sch , kind , pw ,shipChk;
 	Date reg_date , answer_Date;
 
 	

@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import fc.db.AdQnaPData;
+import fc.db.ListPData;
 import fc.db.ProductDTO;
 import fc.db.ProductMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 @Controller
 @RequestMapping("/ad_page/product/")
 public class ProductController {
@@ -32,23 +30,39 @@ public class ProductController {
 	ProductMapper pm;
 	
 	@RequestMapping("list")
-	String list(Model mm,ProductDTO dto) {
-//		System.out.println("------------"+dto);
-				
-		List<ProductDTO> mainData = pm.pro(dto);
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초 ");
-//		DecimalFormat df = new DecimalFormat("#.###"); 
-		for(ProductDTO dd : mainData) {
-			dd.setReg_dateStr(sdf.format(dd.getReg_date()));
-//			String price = df.format(dto.getSellPrice());
-//			System.out.println("-------"+dd);
-		}
-		mm.addAttribute("mainData",mainData);
-		
-//		System.out.println("$#%^&*(*&^%$#@$%^-------------------------"+mainData);
-		return "ad_page/product/list";
-	}
+    String list(Model mm,ProductDTO dto, HttpServletRequest request) {
+//        System.out.println("------------"+dto);
+        System.out.println("prolist");
+
+
+        new AdQnaPData(request); // request객체에 "pd" 어트리뷰트 세팅(nowPage가 있을경우와 없을경우 확인을 위해, 처음 진입시 nowPage없음)
+        AdQnaPData pd = (AdQnaPData)request.getAttribute("pd"); // 리퀘스트로 받은 pd객체 대입
+        int qtotal = pm.protalcount(); // protalcount()메서드에서 테이블에서 총 로우 갯수 확인
+        System.out.println("tt1");
+
+        pd.setTotal(qtotal); // 페이지 데이터에 총 로우 갯수 세팅
+
+        System.out.println("tt2");
+        System.out.println(dto);
+
+        List<ProductDTO> mainData = pm.propagelist(pd, dto); // 페이지데이터와 dto객체로 시작페이지 끝페이지 확인
+//        List<ProductDTO> mainData = pm.pro(dto);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yy/ MM/ dd");
+//        DecimalFormat df = new DecimalFormat("#.###"); 
+
+        for(ProductDTO dd : mainData) {
+            dd.setReg_dateStr(sdf.format(dd.getReg_date()));
+//            String price = df.format(dto.getSellPrice());
+//            System.out.println("-------"+dd);
+        }
+
+        mm.addAttribute("pdata", pd);
+        mm.addAttribute("mainData",mainData);
+
+//        System.out.println("$#%^&(&^%$#@$%^-------------------------"+mainData);
+        return "ad_page/product/list";
+    }
 	
 	@GetMapping("/modify/{proName}")
     String detail(Model mm, ProductDTO dto) {
@@ -130,19 +144,19 @@ public class ProductController {
 	@PostMapping("add")
 	String addComplete(Model mm,ProductDTO dto,HttpServletRequest request,MultipartFile pf1Str,MultipartFile pf2Str,MultipartFile pf3Str) {
 		System.out.println(dto);
-	
+//	
 		dto.setPf1(dto.getPf1Str().getOriginalFilename());
-		dto.setPf2(dto.getPf2Str().getOriginalFilename());
-		dto.setPf3(dto.getPf3Str().getOriginalFilename());
-		
+//		dto.setPf2(dto.getPf2Str().getOriginalFilename());
+//		dto.setPf3(dto.getPf3Str().getOriginalFilename());
+////		
 		int res = pm.insert(dto);
 		
 		if(res ==1) {
 			mm.addAttribute("msg","상품이 추가되었습니다");
 			mm.addAttribute("goUrl","list");
 			fileSave(pf1Str,request);
-			fileSave(pf2Str,request);
-			fileSave(pf3Str,request);
+//			fileSave(pf2Str,request);
+//			fileSave(pf3Str,request);
 		}else {
 			mm.addAttribute("msg","추가에 실패하였습니다");
 			mm.addAttribute("goUrl","ad_page/product/add");
@@ -193,4 +207,19 @@ public class ProductController {
 	String inventory() {
 		return "ad_page/product/inventory";
 	}
+	@PostMapping("PrdDelete/{prdName}")
+    String PrdDelete(Model mm,ProductDTO dto,@PathVariable String prdName) {
+//        System.out.println("---**---"+fileName+"-----######------"+dto);
+
+
+        System.out.println(dto);
+        int cnt = pm.prdDelete(dto);
+
+
+
+        mm.addAttribute("msg", "삭제완료");
+        mm.addAttribute("goUrl", "/ad_page/product/list");
+
+        return "ad_page/product/alert";
+    }
 }

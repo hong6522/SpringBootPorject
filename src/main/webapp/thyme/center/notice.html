@@ -2,48 +2,110 @@
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="fc_total/template">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <th:block layout:fragment="title">
-<head th:replace="fc_parts/top"></head>
-	<title>Notice</title>
+<head th:replace="fc_parts/btstop">
 
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+</head>
+	<title>Notice</title>
 </th:block>
 
 <th:block layout:fragment="content">
-	<h2>Notice</h2>
+<style>
+
+
+.center{
+   margin: 55px;
+}
+.title {
+  font-weight: bold;
+
+ 
+}
+
+.title > td {
+  margin-top: 25px;
+}
+
+table {
+  margin: 0 auto;
+  text-align: center;
+  align-items: center; /* 왼쪽과 오른쪽을 자동으로 맞춤 */
+  margin-top: 25px;
+}
+
+td>a{
+	text-decoration:none;
+	color: black;
+	font-weight:bold;
+}
+
+td>a:hover{
+	color: #A6A6A6;
+	cursor: pointer;
+	transition:0.1s;
+}
+span>a{
+	color:black;
+	text-decoration:none;
+}
+
+
+.btn>a{
+	color:white;
+	text-decoration:none;
+}
+
+</style>
+
+	<h2 class="center" align="center">공지사항</h2>
 	 
-	<table border="" width=60%>
+	<table class="table table-striped " border="" style=width:60%>
 	<form action="?" th:object="${noticeDTO}">
-		<tr>
-			<td colspan="6" align="center">
-				<select name="kind" >
+		<div class="container">
+			<div class="row">
+			
+			<div class="col-md-4">
+				
+			</div>
+			<select name="kind" class="col-md-1 custom-select d-block">
 				<option value="title">제목</option>
-				<option value="id">아이디</option>
-			   </select>
-				<input type="text" th:field="*{sch}"/>		
-				<input type="submit" value="검색" />
-			</td>
-		</tr>
+			
+			</select>
+			
+			<div class="col-sm-3">       
+              <input name="sch"  type="text" class="form-control" placeholder="검색어 입력" aria-label="search" aria-describedby="button-addon">  
+            </div>
+            
+            <div class="col-sm-1">
+             <button class="btn" style="background-color: #000; color: white" type="submit" id="button-addon2">검색</button>
+            </div>
+            
+           </div>
+           </div>
 	</form>
 	
 	
-	<tr>
-		<td>번호</td>
-		<td>제목</td>
-		<td>아이디</td>
-		<td>등록일</td>
-		<td>조회수</td>
+	<tr class="title">
+		<th style="color:white; background-color: #434343;">번호</td>
+		<th style="color:white; background-color: #434343;">제목</td>
+	
+		<th style="color:white; background-color: #434343;">등록일</td>
+		<th style="color:white; background-color: #434343;">조회수</td>
 	
 	</tr>
 	<tr th:each="dto , dtoStat: ${mainData}">
-		 <td th:text="${pd.getStart() + dtoStat.index+1}"></td>
+		<td th:text="${pd.getStart() + dtoStat.index+1}"></td>
 		<td><a th:href="@{|noticeDetail/${dto.no}/${pd.nowPage}|}" th:text="${dto.title}"/></td>
-		<td th:text="${dto.id}"/>
+		
 		<td th:text="${dto.reg_dateStr}"/>
 		<td th:text="${dto.notice_cnt}"/>
-		
 	</tr>
-	
-	
 	
 	 
 <tr>
@@ -56,32 +118,20 @@ layout:decorate="fc_total/template">
             <a th:unless="${pd.nowPage == p}" th:href="@{'?nowPage=' + ${p}}" th:text="${p}"></a>
         </span>
         <span th:if="${pd.endPage < pd.totalPage}">
-            <a th:href="@{'?nowPage=' + ${pd.endPage + 1}}">▶</a>
+            <a  th:href="@{'?nowPage=' + ${pd.endPage + 1}}">▶</a>
         </span>
     </td>
 </tr>
-
-
 
 
 </table>
 	
 	
 </th:block>
+	
 
-
-
-
-
-
-
-
-<th:block layout:fragment="add-content">
-	<h4>이동</h4>
-	<a th:href="|/center/qna|" th:text="qna" />
-	<a th:href="|/center/review|" th:text="review" />
+<th:block layout:fragment="bts-foot">
+<body th:replace="fc_parts/btsfoot::bts-foot"></body>
 </th:block>
-<th:block layout:fragment="main-foot">
-<body th:replace="fc_parts/footer::main-foot"></body>
-</th:block>
+</html>
 </html>

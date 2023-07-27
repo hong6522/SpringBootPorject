@@ -2,6 +2,7 @@ package fc.db;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -11,6 +12,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BasketMapper {
 	
 	List<BasketDTO> basket_list(MemberDTO dto);
+	
+	ArrayList<BasketDTO> myPageBasket(MemberDTO dto);
 	
 	void add_basket(BasketDTO dto);
 	

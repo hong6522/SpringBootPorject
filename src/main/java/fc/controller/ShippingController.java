@@ -69,8 +69,20 @@ public class ShippingController {
 	@GetMapping("/ad_page/order/shippingList")
 	String shippingList(Model mm, ShippingDTO dto) {
 		
-		ArrayList<ShippingDTO> beforeData = shim.beforeList(dto);
+		System.out.println("수정 전uid: "+dto.getUid());
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");
+		
+		ArrayList<ShippingDTO> payComplete = shim.completeList(dto);
+		for (ShippingDTO td : payComplete) {
+			td.setOrder_dateStr(sdf2.format(td.getOrder_date()));
+			if(td.getOrder_cancleDate()==null) {
+				td.setCancleStr("환불정보가 없습니다.");
+			}else {
+				td.setCancleStr(sdf2.format(td.getOrder_cancleDate()));
+			}
+		}
+		
+		ArrayList<ShippingDTO> beforeData = shim.beforeList(dto);
 		for (ShippingDTO td : beforeData) {
 			td.setOrder_dateStr(sdf2.format(td.getOrder_date()));
 			if(td.getOrder_cancleDate()==null) {
@@ -102,6 +114,7 @@ public class ShippingController {
 			}
 		}
 		
+		mm.addAttribute("payComplete", payComplete);
 		mm.addAttribute("beforeData", beforeData);
 		mm.addAttribute("ingData", ingData);
 		mm.addAttribute("afterData", afterData);
@@ -111,14 +124,13 @@ public class ShippingController {
 	
 	@PostMapping("/ad_page/order/shippingList")
 	String shippingComplete(Model mm, ShippingDTO dto) {
+		
+		System.out.println("수정 후uid: "+dto);
 		System.out.println(dto.getSchNo()+","+dto.getShippingChk());
 		int res = shim.update(dto);
 		System.out.println(res);
-		String msg = "수정에 실패하였습니다.";
+		String msg = "수정 성공";
 		String goUrl = "/ad_page/order/shippingList";
-		if(res==1) {
-			msg = "수정완료하였습니다.";
-		}
 		
 		mm.addAttribute("msg", msg);
 		mm.addAttribute("goUrl", goUrl);

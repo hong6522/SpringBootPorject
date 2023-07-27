@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 
 <th:block layout:fragment="title">
@@ -18,8 +20,10 @@
 	}
 	.proDetail_wrapper{
 		width:1200px;
-		height:550px;
+		height:900px;
 		margin:auto;
+		padding-left:100px;
+		padding-top:50px;
 	}
 	#pro_img{
 		width:500px;
@@ -33,7 +37,7 @@
 	}
 	.detail_main_wrapper{
 		width:500px;
-		height:550px;
+		height:700px;
 		float:left;
 		margin-left:50px;
 	}
@@ -52,12 +56,15 @@
 	#sell_cnt{
 		width:250px;
 		height:30px;
+		
 	}
 	#detai_baskit_button{
 		color:#444;
-		width:250px;
-		height:60px;
+		width: 180px;
+    	height: 60px;
+    	margin-top: 5px;
 	}
+	
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -123,13 +130,15 @@ function Pay() {
     	    num: $("#hidden_num").val(),
     	    proName : $("#hidden_name").val(),
     	    color : $("#pro_color").val(),
-    	    size : $("#pro_size").val()
+    	    size : $("#pro_size").val(),
+    	    pf1 : $("#hidden_pf1").val(),
+    	    cate : $("#hidden_kind").val()
     	  },
     	  success: function(ddd) { // 성공시
-    	    alert("장바구니에 추가되었습니다.");
+    	   alert("장바구니에 추가되었습니다.");
     	  },
     	  error: function(ee) { // 실패시
-    	    alert("실패하였습니다.");
+    	  
     	  }
     	});
   }
@@ -142,40 +151,101 @@ function Pay() {
 
 
 
-<form name="frm">
+<form name="frm" style="height: 500px">
 <div class="proDetail_wrapper">
-	<div class="pro_img_wrapper"><img th:src="|../../img/${mainData.proImg}|" alt="" id="pro_img"/></div>
+	<div class="pro_img_wrapper"><img th:src="|../../productImg/${mainData.pf1}|" alt="" id="pro_img"/></div>
+	
+	
+	
 	<div class="detail_main_wrapper">
-		<div class="detail_menu" th:text="${mainData.proName}"></div>
-		<div class="detail_menu">
-		<select name="order_color" id="pro_color">
-			<div th:each="cc : ${mainData.colorStr}">
-				<option th:value="${cc}">[[${cc}]]</option>
-			</div>
-		</select>
-		</div>
-		<div class="detail_menu">
-		<select name="order_size" id="pro_size">
+	
+		<h2><b><div class="detail_menu" th:text="${mainData.proName}"></div></b></h2></br></br>
+		 <div style="width: 330px;height: 80px;border-radius: 5px;padding:5px;margin-top: -40px">
+            <span class="text-start" th:text="${mainData.proDetail}" ></span>
+
+               </div></br></br>
+		<b>판매가격</b></br>
+		<input  th:value="${#numbers.formatCurrency(mainData.sellPrice)}" readonly/>
+<!-- 						<span th:text="${#numbers.formatCurrency(mainData.sellPrice)}"></span> -->
+		<br/><br/><b>색상</b>
+		<br />
+
+        <div th:each="cc, idxStatus : ${mainData.colorStr}" style="display:inline-block;">
+            <div th:style="'background-color:' + ${cc} + '; width:25px; height:25px; border:1px solid black; cursor:pointer; margin: 5px;'"
+                 th:attr="data-name=${mainData.colorNameStr[idxStatus.index]}" onclick="selectColor(this)"></div>
+          </div>
+          <input type="hidden" name="order_color" value="" id="pro_color">
+
+          
+
+<script>
+  function selectColor(element) {
+    // 기존 선택된 박스의 테두리를 제거합니다.
+    const previousSelected = document.querySelector('.selected');
+    if (previousSelected) {
+      previousSelected.style.borderWidth = '1px';
+      previousSelected.style.borderColor = 'black';
+      previousSelected.classList.remove('selected');
+    }
+
+    // 선택된 색상 박스의 테두리를 강조합니다.
+    element.style.borderWidth = '3px';
+    element.style.borderColor = 'lime';
+    element.classList.add('selected');
+
+    // 선택된 색상 이름을 hidden input에 저장합니다.
+    document.querySelector('input[name="order_color"]').value = element.getAttribute('data-name');
+    document.querySelector('input[name="pro_color"]').value = element.getAttribute('data-name');
+
+  }
+</script>
+</br></br>
+		<b>사이즈</b>
+		<select name="order_size" id="pro_size" class="form-select form-select-sm mb-3" style="width:40%;margin-top: 5px">
 			<option value="S">S</option>
 			<option value="M">M</option>
 			<option value="L">L</option>
 			<option value="XL">XL</option>
 		</select>
-		</div>
-		<div class="detail_menu" th:text="${mainData.sellPrice}"></div>
+		
 		<input type="hidden" th:value="${mainData.sellPrice}" id="hidden_price" name="order_price"/>
 		<input type="hidden" th:value="${mainData.proName}" id="hidden_name" name="order_product"/>
 		<input type="hidden" th:value="${mainData.num}" id="hidden_num" name="order_num"/>
-		<input type="hidden" th:value="${mainData.kind}" id="hidden_kind" name="order_cate"/>
+		<input type="hidden" th:value="${mainData.proKind}" id="hidden_kind" name="order_cate"/>
+		<input type="hidden" th:value="${mainData.pf1}" id="hidden_pf1" name="order_pf1"/>
+
+		<b>수량</b>
 		<div class="detail_menu">
-			<input type="number" id="sell_cnt" name="order_cnt"/>
+			<div class="form-floating mb-3">
+				<input type="number" id="sell_cnt"  name="order_cnt"  th:if="${mainData.kind == '진열함'}" class="form-control" placeholder="수량"/>
+<!-- 				<label for="floatingInput">수량</label> -->
+				
+			</div>
+
+		
+		  <span th:if="${session.type}==null">
+            <a class="btn btn-primary" href="/fc_mem/login" role="button">로그인 후 구매하기</a>
+
+           </span>
+
+               <div th:unless="${session.type}==null">
+                   <input type="button" id="detai_baskit_button" value="장바구니" onclick="basketGo()" 
+                    th:if="${mainData.kind == '진열함'}" class="btn btn-dark" style="color: #fff"/>
+                  <input type="button" id="detai_baskit_button" value="구매하기" onclick="Pay()" 
+                    th:if="${mainData.kind == '진열함'}" class="btn btn-dark" style="color: #fff"/>
+
+                  <span th:unless="${mainData.kind == '진열함'}">현재 판매중지된 상품입니다.</span>
+
+               </div>
+
+      
+              
+		    
+		 
 		</div>
-		<div class="detail_menu">
-			<input type="button" id="detai_baskit_button" onclick="basketGo()" value="장바구니"/>
-		</div>
-		<div class="detail_menu">
-			<input type="button" id="detai_baskit_button" value="구매하기" onclick="Pay()"/>
-		</div>
+
+		
+		
 	</div>
 </div>
 </form>
@@ -184,7 +254,7 @@ function Pay() {
 </th:block>
 
 <th:block layout:frgment="main-foot">
-<body th:replace="fc_parts/footer::main-foot"></body>
+<body th:replace="fc_parts/btsfoot::bts-foot"></body>
 </th:block>
 
 </html>
